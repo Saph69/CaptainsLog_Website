@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Captain's Log</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+      <div class="newsletter-content">
+        <h2>
+          Never miss an Episode - Sign up to get notified as soon as a new
+          episode goes live!
+        </h2>
+        <form class="signup-form" id="emailForm">
+          <div class="form-group">
+            <input
+              type="email"
+              id="emailInput"
+              placeholder="Enter your email"
+              required
+            />
+            <span class="error-message" id="errorMessage"></span>
+          </div>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Hero Banner -->
+    <header class="hero-banner">
+      <div class="hero-content">
+        <h1>Ye Olde Captain's Journal</h1>
+      </div>
+      <div class="story-intro">
+        <p>
+          First mate Farack has been washed overboard, and hasn't been seen for
+          days! Follow the crew's epic adventures as they attempt to rescue
+          their first mate.
+        </p>
+      </div>
+      <div class="creator-credit">Created by Saph</div>
+      <div class="tagline">
+        All stories are generated with Argh-tificial Intelligence
+      </div>
+      <button class="reveal-button" id="revealButton">View Episodes</button>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+      <div class="episode-container" id="episodeContainer">
+        <!-- Episodes will be dynamically inserted here -->
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="client.js"></script>
+  </body>
+</html>
