@@ -1,3 +1,74 @@
+/* Add responsive styles */
+@media screen and (max-width: 768px) {
+  /* Hero content */
+  .hero-content h1 {
+    font-size: 3rem; /* Smaller title on mobile */
+    padding: 0 1rem;
+  }
+
+  /* Story intro */
+  .story-intro {
+    bottom: 100px;
+    padding: 0 1rem;
+  }
+
+  .story-intro p {
+    font-size: 1.1rem;
+  }
+
+  /* Newsletter */
+  .newsletter {
+    padding: 0.5rem;
+  }
+
+  .newsletter h2 {
+    font-size: 0.9rem;
+  }
+
+  .newsletter-content {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .signup-form {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* Episode cards */
+  .episode-container {
+    padding: 1rem;
+  }
+
+  .episode {
+    margin: 0 0.5rem 1.5rem 0.5rem;
+  }
+
+  /* Button and credits */
+  .reveal-button {
+    font-size: 1rem;
+    padding: 0.8rem 2rem;
+    bottom: 2rem;
+  }
+
+  .creator-credit,
+  .tagline {
+    font-size: 0.8rem;
+    padding: 0 1rem;
+  }
+}
+
+/* Add styles for even smaller screens */
+@media screen and (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .story-intro p {
+    font-size: 1rem;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -52,10 +123,10 @@ body {
 }
 
 .story-intro p {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: 1.4rem;
   color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   max-width: 1200px; /* Wider than other content */
   margin: 0 auto;
   line-height: 1.6;
@@ -92,16 +163,15 @@ body {
 
 /* Update hero title styles with pirate font */
 .hero-content h1 {
-  font-family: 'Pirata One', cursive;
+  font-family: "Pirata One", cursive;
   font-weight: normal; /* Pirata One works best with normal weight */
   font-size: 5rem; /* Larger size for better impact */
   margin-bottom: 1rem;
-  text-shadow: 3px 3px 6px rgba(0,0,0,0.6);
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
   color: #ffffff;
   letter-spacing: 3px;
   line-height: 1.2; /* Better spacing for the decorative font */
 }
-
 
 .hero-content .subtitle {
   font-family: "Montserrat", sans-serif;
