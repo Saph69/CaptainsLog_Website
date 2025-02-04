@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorContainer.style.display = 'none';
             
             console.log('Attempting to fetch episodes...');
-            const response = await fetch('https://func-website-backend.azurewebsites.net/api/episodes?code=3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg==', {
+            const response = await fetch('https://func-website-backend.azurewebsites.net/api/HttpTrigger1?code=3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg==', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json'
