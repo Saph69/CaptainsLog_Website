@@ -2,12 +2,19 @@
   "routes": [
     {
       "route": "/api/episodes",
-      "rewrite": "https://func-website-backend.azurewebsites.net/api/HttpTrigger1?code=%FUNCTION_KEY%",
-      "methods": ["GET"]
+      "rewrite": "https://func-website-backend.azurewebsites.net/api/HttpTrigger1",
+      "methods": ["GET"],
+      "headers": {
+        "x-functions-key": "%FUNCTION_KEY%"
+      }
     }
   ],
   "navigationFallback": {
     "rewrite": "index.html",
     "exclude": ["/api/*"]
+  },
+  "globalHeaders": {
+    "content-security-policy": "default-src 'self' 'unsafe-inline' https://func-website-backend.azurewebsites.net https://fonts.googleapis.com https://fonts.gstatic.com https://appfunccaptainslog.blob.core.windows.net; media-src https://appfunccaptainslog.blob.core.windows.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;",
+    "Access-Control-Allow-Origin": "*"
   }
 }
