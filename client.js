@@ -34,8 +34,10 @@ async function fetchEpisodes() {
         if (loadingSpinner) loadingSpinner.style.display = 'block';
         if (errorContainer) errorContainer.style.display = 'none';
         
-        // Use the proxied endpoint
-        const response = await fetch('/api/episodes');
+        const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1';
+        const functionKey = '3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg==';
+        
+        const response = await fetch(`${functionUrl}?code=${functionKey}`);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
