@@ -77,14 +77,14 @@ body {
 /* Hero Banner */
 .hero-banner {
   text-align: center;
-  padding: 80px 20px 20px;  /* Reduced bottom padding */
+  padding: 80px 20px 100px;  /* Increased bottom padding to ensure space for footer */
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
               url('captains-log-banner.jpg') center center/cover no-repeat;
   position: relative;
   min-height: 60vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;  /* Changed from center to flex-start */
+  justify-content: flex-start;
 }
 
 .hero-content h1 {
@@ -105,6 +105,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   color: #e0e0e0;
+  margin-bottom: 60px;  /* Added extra margin at the bottom */
 }
 
 .creator-credit {
@@ -202,21 +203,46 @@ audio {
 /* Keep your existing media queries at the bottom */
 
 .banner-footer {
-    position: absolute;  /* Position absolutely within banner */
-    bottom: 20px;       /* Distance from bottom */
+    position: absolute;
+    bottom: 20px;
     left: 0;
     right: 0;
-    padding: 0 20px;    /* Side padding */
+    padding: 0 20px;
 }
 
 .creator-credit {
     font-size: 1rem;
-    color: #d4af37;
+    color: #ffffff;
     margin-bottom: 5px;
 }
 
 .tagline {
     font-size: 0.9rem;
-    color: #e0e0e0;
+    color: #d4af37;
     font-style: italic;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+    .hero-banner {
+        padding-bottom: 120px;  /* Even more padding on mobile */
+    }
+
+    .story-intro {
+        font-size: 1.1rem;  /* Slightly smaller text on mobile */
+        padding: 15px;
+        margin-bottom: 80px;  /* More space on mobile */
+    }
+
+    .banner-footer {
+        bottom: 15px;
+    }
+
+    .creator-credit {
+        font-size: 0.9rem;  /* Slightly smaller on mobile */
+    }
+
+    .tagline {
+        font-size: 0.8rem;  /* Slightly smaller on mobile */
+    }
 }
