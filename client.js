@@ -1,6 +1,21 @@
+// Add event listener for the reveal button
+document.addEventListener('DOMContentLoaded', () => {
+    const revealButton = document.getElementById('revealButton');
+    if (revealButton) {
+        revealButton.addEventListener('click', fetchEpisodes);
+        console.log('Reveal button listener added');
+    } else {
+        console.error('Reveal button not found');
+    }
+});
+
 async function fetchEpisodes() {
     try {
         // First verify our DOM elements exist
+        const episodeContainer = document.getElementById('episodeContainer');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const errorContainer = document.getElementById('errorContainer');
+
         console.log('DOM elements check:', {
             episodeContainer: !!episodeContainer,
             loadingSpinner: !!loadingSpinner,
