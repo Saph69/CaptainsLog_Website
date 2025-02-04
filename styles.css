@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   background: #1a1a1a;
   color: #e0e0e0;
 }
@@ -77,9 +77,9 @@ body {
 /* Hero Banner */
 .hero-banner {
   text-align: center;
-  padding: 80px 20px 100px;  /* Increased bottom padding to ensure space for footer */
+  padding: 80px 20px 100px; /* Increased bottom padding to ensure space for footer */
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-              url('captains-log-banner.jpg') center center/cover no-repeat;
+    url("captains-log-banner.jpg") center center/cover no-repeat;
   position: relative;
   min-height: 60vh;
   display: flex;
@@ -88,7 +88,7 @@ body {
 }
 
 .hero-content h1 {
-  font-family: 'Pirata One', cursive;
+  font-family: "Pirata One", cursive;
   font-size: 3.5rem;
   color: #d4af37;
   margin-bottom: 30px;
@@ -96,16 +96,31 @@ body {
 }
 
 .story-intro {
-  max-width: 800px;
+  position: absolute;
+  bottom: 200px;
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 80%; /* Limit width to 80% of screen */
+  max-width: 1000px; /* Maximum width */
   margin: 0 auto 30px;
   padding: 20px;
   font-size: 1.2rem;
-  line-height: 1.6;
+  text-align: center;
+  z-index: 2;
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  color: #e0e0e0;
-  margin-bottom: 60px;  /* Added extra margin at the bottom */
+  color: rgba(255, 255, 255, 0.8); /* Dimmed white color */
+}
+
+.story-intro p {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.4rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  max-width: 1200px; /* Wider than other content */
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 .creator-credit {
@@ -121,17 +136,17 @@ body {
 }
 
 .reveal-button {
-  padding: 10px 25px;  /* Reduced padding */
+  padding: 10px 25px; /* Reduced padding */
   background-color: #d4af37;
   color: #1a1a1a;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;    /* Slightly smaller font */
+  font-size: 1rem; /* Slightly smaller font */
   transition: background-color 0.3s;
   font-weight: bold;
-  margin: 0 auto;     /* Center horizontally */
-  display: block;     /* Allows margin auto to work */
+  margin: 0 auto; /* Center horizontally */
+  display: block; /* Allows margin auto to work */
 }
 
 .reveal-button:hover {
@@ -163,7 +178,7 @@ body {
 .episode h2 {
   color: #d4af37;
   margin-bottom: 15px;
-  font-family: 'Pirata One', cursive;
+  font-family: "Pirata One", cursive;
   font-size: 1.8rem;
 }
 
@@ -203,46 +218,45 @@ audio {
 /* Keep your existing media queries at the bottom */
 
 .banner-footer {
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    padding: 0 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  padding: 0 20px;
 }
 
 .creator-credit {
-    font-size: 1rem;
-    color: #ffffff;
-    margin-bottom: 5px;
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 5px;
 }
 
 .tagline {
-    font-size: 0.9rem;
-    color: #d4af37;
-    font-style: italic;
+  font-size: 0.9rem;
+  color: #d4af37;
+  font-style: italic;
 }
 
 /* Mobile adjustments */
 @media screen and (max-width: 768px) {
-    .hero-banner {
-        padding-bottom: 120px;  /* Even more padding on mobile */
-    }
+  .hero-banner {
+    padding-bottom: 120px; /* Even more padding on mobile */
+  }
 
-    .story-intro {
-        font-size: 1.1rem;  /* Slightly smaller text on mobile */
-        padding: 15px;
-        margin-bottom: 80px;  /* More space on mobile */
-    }
+  .story-intro {
+    bottom: 100px; /* Keep mobile position the same */
+    padding: 0 1rem;
+  }
 
-    .banner-footer {
-        bottom: 15px;
-    }
+  .banner-footer {
+    bottom: 15px;
+  }
 
-    .creator-credit {
-        font-size: 0.9rem;  /* Slightly smaller on mobile */
-    }
+  .creator-credit {
+    font-size: 0.9rem; /* Slightly smaller on mobile */
+  }
 
-    .tagline {
-        font-size: 0.8rem;  /* Slightly smaller on mobile */
-    }
+  .tagline {
+    font-size: 0.8rem; /* Slightly smaller on mobile */
+  }
 }
