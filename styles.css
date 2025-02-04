@@ -111,9 +111,9 @@ body {
   position: absolute;
   bottom: 200px;
   left: 50%;
-  transform: translateX(-50%); /* Center horizontally */
-  width: 80%; /* Limit width to 80% of screen */
-  max-width: 1000px; /* Maximum width */
+  transform: translateX(-50%);
+  width: 80%;
+  max-width: 1000px;
   margin: 0 auto 30px;
   padding: 20px;
   font-size: 1.2rem;
@@ -122,7 +122,7 @@ body {
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  color: rgba(255, 255, 255, 0.8); /* Dimmed white color */
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .story-intro p {
@@ -256,8 +256,12 @@ audio {
   }
 
   .story-intro {
-    bottom: 100px; /* Keep mobile position the same */
-    padding: 0 1rem;
+    bottom: 100px;
+    width: 90%; /* Slightly wider on mobile */
+    padding: 15px;
+    font-size: 0.9rem; /* Smaller font size */
+    line-height: 1.4; /* Tighter line height */
+    margin: 0 auto 20px;
   }
 
   .banner-footer {
