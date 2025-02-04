@@ -1,21 +1,16 @@
 {
   "routes": [
     {
-      "route": "/api/*",
+      "route": "/api/episodes",
+      "serve": "https://func-website-backend.azurewebsites.net/api/HttpTrigger1",
       "methods": ["GET"],
-      "allowedRoles": ["anonymous"]
+      "allowedRoles": ["anonymous"],
+      "headers": {
+        "x-function-key": "%FUNCTION_KEY%"
+      }
     }
   ],
-  "responseOverrides": {
-    "401": {
-      "statusCode": 302,
-      "redirect": "/login"
-    }
-  },
   "navigationFallback": {
     "rewrite": "index.html"
-  },
-  "mimeTypes": {
-    ".json": "text/json"
   }
 }
