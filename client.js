@@ -34,14 +34,8 @@ async function fetchEpisodes() {
         if (loadingSpinner) loadingSpinner.style.display = 'block';
         if (errorContainer) errorContainer.style.display = 'none';
         
-        const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1';
-        const functionKey = window.__env__ && window.__env__.FUNCTION_KEY;
-        
-        if (!functionKey) {
-            throw new Error('Function key not found in environment variables');
-        }
-        
-        const response = await fetch(`${functionUrl}?code=${functionKey}`);
+        // Use the proxied endpoint
+        const response = await fetch('/api/episodes');
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
