@@ -1,115 +1,270 @@
-/* Base responsive styles */
-@media screen and (max-width: 768px) {
-  /* Newsletter Section */
-  .newsletter {
-    padding: 20px;
-  }
-
-  .newsletter h2 {
-    font-size: 1.2rem;
-    text-align: center;
-  }
-
-  .signup-form {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .form-group {
-    width: 100%;
-  }
-
-  .signup-form button {
-    width: 100%;
-    margin-top: 10px;
-  }
-
-  /* Hero Banner */
-  .hero-banner {
-    padding: 20px;
-  }
-
-  .hero-content h1 {
-    font-size: 2rem;
-    text-align: center;
-  }
-
-  .story-intro {
-    padding: 15px;
-    font-size: 1rem;
-  }
-
-  .creator-credit,
-  .tagline {
-    font-size: 0.9rem;
-  }
-
-  /* Episodes Section */
-  .episode {
-    padding: 15px;
-    margin: 10px 0;
-  }
-
-  .episode h2 {
-    font-size: 1.2rem;
-  }
-
-  .episode-meta {
-    flex-direction: column;
-    gap: 5px;
-    align-items: flex-start;
-  }
-
-  /* Audio Player */
-  .audio-player {
-    margin: 10px 0;
-  }
-
-  audio {
-    width: 100%;
-  }
-
-  /* Content Wrapper */
-  .content-wrapper {
-    padding: 10px;
-  }
-
-  .episode-container {
-    padding: 10px;
-  }
-
-  /* Loading and Error States */
-  .loading-spinner,
-  .error-container {
-    padding: 10px;
-    font-size: 1rem;
-  }
+/* Global Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: url('images/parchment.jpg') repeat;
+    color: #2c1810;
 }
 
-/* Extra small devices */
-@media screen and (max-width: 480px) {
-  .hero-content h1 {
+/* Newsletter Section */
+.newsletter {
+    background-color: rgba(44, 24, 16, 0.8);
+    color: #fff;
+    padding: 40px;
+    text-align: center;
+}
+
+.newsletter-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.newsletter h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.signup-form {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.form-group {
+    position: relative;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+.signup-form input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.signup-form button {
+    padding: 12px 30px;
+    background-color: #d4af37;
+    color: #2c1810;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.signup-form button:hover {
+    background-color: #c4a030;
+}
+
+.error-message {
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+}
+
+/* Hero Banner */
+.hero-banner {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-content h1 {
+    font-family: 'Pirata One', cursive;
+    font-size: 3.5rem;
+    color: #2c1810;
+    margin-bottom: 30px;
+}
+
+.story-intro {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    padding: 20px;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    background-color: rgba(44, 24, 16, 0.1);
+    border-radius: 8px;
+}
+
+.creator-credit {
+    font-style: italic;
+    margin-bottom: 10px;
+}
+
+.tagline {
+    font-weight: bold;
+    color: #d4af37;
+    margin-bottom: 30px;
+}
+
+.reveal-button {
+    padding: 15px 40px;
+    background-color: #2c1810;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s;
+}
+
+.reveal-button:hover {
+    background-color: #3d241b;
+}
+
+/* Content Section */
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.episode-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 8px;
+}
+
+.episode {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.episode h2 {
+    color: #2c1810;
+    margin-bottom: 15px;
+    font-family: 'Pirata One', cursive;
     font-size: 1.8rem;
-  }
-
-  .story-intro {
-    font-size: 0.9rem;
-  }
-
-  .reveal-button {
-    width: 100%;
-    margin: 10px 0;
-  }
 }
 
-/* Ensure audio controls are touch-friendly */
-@media (hover: none) and (pointer: coarse) {
-  audio {
-    height: 40px; /* Larger touch target */
-  }
+.episode-meta {
+    display: flex;
+    justify-content: space-between;
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+}
 
-  .reveal-button {
-    min-height: 44px; /* iOS minimum touch target size */
-    padding: 12px 20px;
-  }
+.audio-player {
+    width: 100%;
+}
+
+audio {
+    width: 100%;
+}
+
+/* Loading and Error States */
+.loading-spinner {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    display: none;
+}
+
+.error-container {
+    color: #ff6b6b;
+    text-align: center;
+    padding: 20px;
+    display: none;
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    .newsletter {
+        padding: 20px;
+    }
+
+    .newsletter h2 {
+        font-size: 1.2rem;
+    }
+
+    .signup-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    .signup-form button {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .hero-banner {
+        padding: 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .story-intro {
+        padding: 15px;
+        font-size: 1rem;
+    }
+
+    .creator-credit,
+    .tagline {
+        font-size: 0.9rem;
+    }
+
+    .episode {
+        padding: 15px;
+        margin: 10px 0;
+    }
+
+    .episode h2 {
+        font-size: 1.2rem;
+    }
+
+    .episode-meta {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-start;
+    }
+
+    .content-wrapper {
+        padding: 10px;
+    }
+
+    .episode-container {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .story-intro {
+        font-size: 0.9rem;
+    }
+
+    .reveal-button {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    audio {
+        height: 40px;
+    }
+
+    .reveal-button {
+        min-height: 44px;
+        padding: 12px 20px;
+    }
 }
