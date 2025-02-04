@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorContainer.style.display = 'none';
             
             console.log('Attempting to fetch episodes...');
-            const response = await fetch('https://func-website-backend.azurewebsites.net/api/episodes', {
+            const response = await fetch('https://func-website-backend.azurewebsites.net/api/episodes?code=3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg==', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json'
@@ -36,7 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Response status:', response.status);
             console.log('Response headers:', Object.fromEntries(response.headers));
             
-            const responseText = await response.text(); // Get raw response text
+            if (response.status === 404) {
+                throw new Error('API endpoint not found. Please verify the function URL and path.');
+            }
+
+            const responseText = await response.text();
             console.log('Raw response:', responseText);
             
             let episodes;
