@@ -1,31 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const revealButton = document.getElementById('revealButton');
-    if (revealButton) {
-        revealButton.addEventListener('click', handleRevealClick);
-        console.log('Reveal button listener added');
+    console.log('Page loaded - fetching episodes automatically');
+    fetchEpisodes(); // Load episodes immediately
+    
+    // Set up refresh button
+    const refreshButton = document.getElementById('revealButton');
+    if (refreshButton) {
+        refreshButton.textContent = 'Refresh Episodes';
+        refreshButton.addEventListener('click', handleRefreshClick);
+        console.log('Refresh button listener added');
     } else {
-        console.error('Reveal button not found');
+        console.error('Refresh button not found');
     }
 });
 
-// Separate function to handle reveal button click
-async function handleRevealClick() {
-    const revealButton = document.getElementById('revealButton');
-    const episodeContainer = document.getElementById('episodeContainer');
-    
-    revealButton.disabled = true;  // Prevent double-clicks
-    revealButton.textContent = 'Loading...';
+// Handle refresh button click
+async function handleRefreshClick() {
+    const refreshButton = document.getElementById('revealButton');
+    refreshButton.disabled = true;  // Prevent double-clicks
+    refreshButton.textContent = 'Refreshing...';
     
     await fetchEpisodes();
     
-    // Scroll to episode container
-    episodeContainer.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start'
-    });
-    
-    revealButton.textContent = 'Refresh Episodes';
-    revealButton.disabled = false;
+    refreshButton.textContent = 'Refresh Episodes';
+    refreshButton.disabled = false;
 }
 
 async function fetchEpisodes() {
@@ -37,57 +34,63 @@ async function fetchEpisodes() {
         if (loadingSpinner) loadingSpinner.style.display = 'block';
         if (errorContainer) errorContainer.style.display = 'none';
         
-        const response = await fetch('https://func-website-backend.azurewebsites.net/api/HttpTrigger1?code=3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg==');
+        const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1';
+        const functionKey = process.env.FUNCTION_KEY;
+        
+        const response = await fetch(`${functionUrl}?code=${functionKey}`);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        const data = await response.json();
+        console.log('1. Starting fetch episodes...');
+        const responseText = await response.text();
+        console.log('3. Raw response text:', responseText);
+        
+        let episodes;
+        try {
+            episodes = JSON.parse(responseText);
+            console.log('4. Parsed episodes:', episodes);
+        } catch (parseError) {
+            throw new Error(`Failed to parse JSON: ${responseText}`);
+        }
+        
+        if (!Array.isArray(episodes)) {
+            console.log('5. Unexpected data type:', typeof episodes);
+            throw new Error(`Expected array of episodes but got: ${typeof episodes}`);
+        }
+
+        console.log('6. Number of episodes:', episodes.length);
 
         // Clear existing episodes
         episodeContainer.innerHTML = '';
         
-        if (!data.blobs || data.blobs.length === 0) {
+        if (episodes.length === 0) {
+            console.log('7. No episodes found');
             errorContainer.style.display = 'block';
             errorContainer.textContent = 'No episodes found.';
             return;
         }
         
         // Add episodes to the container
-        data.blobs.forEach((episode, index) => {
+        episodes.forEach((episode, index) => {
+            console.log(`8. Processing episode ${index}:`, episode);
             const episodeElement = document.createElement('div');
             episodeElement.className = 'episode';
-            
-            const date = new Date(episode.lastModified);
-            const formattedDate = date.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-
-            // Create a more user-friendly title
-            const title = episode.name
-                .replace('.mp3', '')
-                .replace(/Captains Log day (\d+)/i, 'Day $1: Captain\'s Log');
-
             episodeElement.innerHTML = `
-                <h2>${title}</h2>
-                <div class="episode-meta">
-                    <span class="episode-date">${formattedDate}</span>
-                    <span class="episode-size">${formatFileSize(episode.size)}</span>
-                </div>
-                <div class="audio-player">
-                    <audio controls preload="none">
-                        <source src="${episode.url}" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                </div>
+                <h2>${episode.title || 'Untitled Episode'}</h2>
+                <audio controls>
+                    <source src="${episode.url}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="episode-date">${episode.date ? new Date(episode.date).toLocaleDateString() : 'No date'}</div>
+                <div class="episode-size">${formatFileSize(episode.size)}</div>
             `;
-            
             episodeContainer.appendChild(episodeElement);
+            console.log(`9. Added episode ${index} to container`);
         });
 
+        console.log('10. Finished processing all episodes');
     } catch (error) {
         console.error('Error fetching episodes:', error);
         errorContainer.style.display = 'block';
