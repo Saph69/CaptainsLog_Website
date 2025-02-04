@@ -76,6 +76,14 @@ async function fetchEpisodes() {
         const episodes = data.blobs;
         console.log('6. Number of episodes:', episodes.length);
 
+        // Sort episodes numerically by day number
+        episodes.sort((a, b) => {
+            // Extract day numbers from episode names
+            const dayA = parseInt(a.name.match(/day (\d+)/i)[1]);
+            const dayB = parseInt(b.name.match(/day (\d+)/i)[1]);
+            return dayB - dayA; // Sort in descending order (newest first)
+        });
+
         // Clear existing episodes
         if (episodeContainer) episodeContainer.innerHTML = '';
         
