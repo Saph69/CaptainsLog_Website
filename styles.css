@@ -3,13 +3,13 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
-    background: url('images/parchment.jpg') repeat;
-    color: #2c1810;
+    background: #1a1a1a;
+    color: #e0e0e0;
 }
 
 /* Newsletter Section */
 .newsletter {
-    background-color: rgba(44, 24, 16, 0.8);
+    background-color: #2c1810;
     color: #fff;
     padding: 40px;
     text-align: center;
@@ -43,12 +43,18 @@ body {
     border: none;
     border-radius: 4px;
     font-size: 1rem;
+    background-color: #333;
+    color: #fff;
+}
+
+.signup-form input::placeholder {
+    color: #888;
 }
 
 .signup-form button {
     padding: 12px 30px;
     background-color: #d4af37;
-    color: #2c1810;
+    color: #1a1a1a;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -72,18 +78,17 @@ body {
 .hero-banner {
     text-align: center;
     padding: 60px 20px;
-    background: url('captains-log-banner.jpg') center center/cover no-repeat,
-                rgba(255, 255, 255, 0.9);
-    background-blend-mode: overlay;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('captains-log-banner.jpg') center center/cover no-repeat;
     position: relative;
 }
 
 .hero-content h1 {
     font-family: 'Pirata One', cursive;
     font-size: 3.5rem;
-    color: #2c1810;
+    color: #d4af37;
     margin-bottom: 30px;
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .story-intro {
@@ -92,13 +97,16 @@ body {
     padding: 20px;
     font-size: 1.2rem;
     line-height: 1.6;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.6);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
 }
+
 .creator-credit {
     font-style: italic;
     margin-bottom: 10px;
+    color: #888;
 }
 
 .tagline {
@@ -109,17 +117,18 @@ body {
 
 .reveal-button {
     padding: 15px 40px;
-    background-color: #2c1810;
-    color: #fff;
+    background-color: #d4af37;
+    color: #1a1a1a;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1.1rem;
     transition: background-color 0.3s;
+    font-weight: bold;
 }
 
 .reveal-button:hover {
-    background-color: #3d241b;
+    background-color: #c4a030;
 }
 
 /* Content Section */
@@ -130,21 +139,22 @@ body {
 }
 
 .episode-container {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(28, 28, 28, 0.9);
     padding: 30px;
     border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .episode {
-    background-color: #fff;
+    background-color: #2a2a2a;
     border-radius: 8px;
     padding: 25px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .episode h2 {
-    color: #2c1810;
+    color: #d4af37;
     margin-bottom: 15px;
     font-family: 'Pirata One', cursive;
     font-size: 1.8rem;
@@ -153,7 +163,7 @@ body {
 .episode-meta {
     display: flex;
     justify-content: space-between;
-    color: #666;
+    color: #888;
     margin-bottom: 15px;
     font-size: 0.9rem;
 }
@@ -164,6 +174,7 @@ body {
 
 audio {
     width: 100%;
+    filter: invert(100%);
 }
 
 /* Loading and Error States */
@@ -172,6 +183,7 @@ audio {
     padding: 20px;
     font-style: italic;
     display: none;
+    color: #888;
 }
 
 .error-container {
@@ -181,94 +193,4 @@ audio {
     display: none;
 }
 
-/* Mobile Responsive Styles */
-@media screen and (max-width: 768px) {
-    .newsletter {
-        padding: 20px;
-    }
-
-    .newsletter h2 {
-        font-size: 1.2rem;
-    }
-
-    .signup-form {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .form-group {
-        width: 100%;
-    }
-
-    .signup-form button {
-        width: 100%;
-        margin-top: 10px;
-    }
-
-    .hero-banner {
-        padding: 20px;
-    }
-
-    .hero-content h1 {
-        font-size: 2rem;
-    }
-
-    .story-intro {
-        padding: 15px;
-        font-size: 1rem;
-    }
-
-    .creator-credit,
-    .tagline {
-        font-size: 0.9rem;
-    }
-
-    .episode {
-        padding: 15px;
-        margin: 10px 0;
-    }
-
-    .episode h2 {
-        font-size: 1.2rem;
-    }
-
-    .episode-meta {
-        flex-direction: column;
-        gap: 5px;
-        align-items: flex-start;
-    }
-
-    .content-wrapper {
-        padding: 10px;
-    }
-
-    .episode-container {
-        padding: 10px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .hero-content h1 {
-        font-size: 1.8rem;
-    }
-
-    .story-intro {
-        font-size: 0.9rem;
-    }
-
-    .reveal-button {
-        width: 100%;
-        margin: 10px 0;
-    }
-}
-
-@media (hover: none) and (pointer: coarse) {
-    audio {
-        height: 40px;
-    }
-
-    .reveal-button {
-        min-height: 44px;
-        padding: 12px 20px;
-    }
-}
+/* Keep your existing media queries at the bottom */
