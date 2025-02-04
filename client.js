@@ -35,7 +35,11 @@ async function fetchEpisodes() {
         if (errorContainer) errorContainer.style.display = 'none';
         
         const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1';
-        const functionKey = process.env.FUNCTION_KEY;
+        const functionKey = window.__env__ && window.__env__.FUNCTION_KEY;
+        
+        if (!functionKey) {
+            throw new Error('Function key not found in environment variables');
+        }
         
         const response = await fetch(`${functionUrl}?code=${functionKey}`);
         
