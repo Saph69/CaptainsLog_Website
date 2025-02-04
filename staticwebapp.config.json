@@ -2,15 +2,12 @@
   "routes": [
     {
       "route": "/api/episodes",
-      "serve": "https://func-website-backend.azurewebsites.net/api/HttpTrigger1",
-      "methods": ["GET"],
-      "allowedRoles": ["anonymous"],
-      "headers": {
-        "x-function-key": "%FUNCTION_KEY%"
-      }
+      "rewrite": "https://func-website-backend.azurewebsites.net/api/HttpTrigger1?code=%FUNCTION_KEY%",
+      "methods": ["GET"]
     }
   ],
   "navigationFallback": {
-    "rewrite": "index.html"
+    "rewrite": "index.html",
+    "exclude": ["/api/*"]
   }
 }
