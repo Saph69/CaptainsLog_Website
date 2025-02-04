@@ -1,25 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Page loaded - JavaScript is running!');
-    
-    const episodeContainer = document.getElementById('episodeContainer');
-    const loadingSpinner = document.getElementById('loadingSpinner');
-    const errorContainer = document.getElementById('errorContainer');
-    const revealButton = document.getElementById('revealButton');
-
-    // Check if elements are found
-    console.log('Elements found:', {
-        episodeContainer: !!episodeContainer,
-        loadingSpinner: !!loadingSpinner,
-        errorContainer: !!errorContainer,
-        revealButton: !!revealButton
-    });
-
-    // Add this to verify the button click is working
-    revealButton.addEventListener('click', () => {
-        console.log('Reveal button clicked!');
-        fetchEpisodes();
-    });
-
+// ... existing code ...
     async function fetchEpisodes() {
         try {
             loadingSpinner.style.display = 'block';
@@ -34,22 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             console.log('Response status:', response.status);
-            console.log('Response headers:', Object.fromEntries(response.headers));
             
-            if (response.status === 404) {
-                throw new Error('API endpoint not found. Please verify the function URL and path.');
-            }
-
-            const responseText = await response.text();
-            console.log('Raw response:', responseText);
-            
-            let episodes;
-            try {
-                episodes = JSON.parse(responseText);
-                console.log('Parsed episodes:', episodes);
-            } catch (parseError) {
-                throw new Error(`Failed to parse JSON: ${responseText}`);
-            }
+            const episodes = await response.json();
+            console.log('Episodes:', episodes);
             
             if (!Array.isArray(episodes)) {
                 throw new Error(`Expected array of episodes but got: ${typeof episodes}`);
@@ -59,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             episodeContainer.innerHTML = '';
             
             if (episodes.length === 0) {
-                console.log('No episodes found in response');
+                console.log('No episodes found');
                 errorContainer.style.display = 'block';
                 errorContainer.textContent = 'No episodes found.';
                 return;
@@ -71,9 +37,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const episodeElement = document.createElement('div');
                 episodeElement.className = 'episode';
                 episodeElement.innerHTML = `
-                    <h2>${episode.title || 'Untitled'}</h2>
-                    <p>${episode.content || 'No content available'}</p>
+                    <h2>${episode.title || 'Untitled Episode'}</h2>
+                    <audio controls>
+                        <source src="${episode.url}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
                     <div class="episode-date">${episode.date ? new Date(episode.date).toLocaleDateString() : 'No date'}</div>
+                    <div class="episode-size">${formatFileSize(episode.size)}</div>
                 `;
                 episodeContainer.appendChild(episodeElement);
             });
@@ -90,6 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Handle reveal button click
-    revealButton.addEventListener('click', fetchEpisodes);
-});
+    // Helper function to format file size
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+// ... existing code ...
