@@ -11,10 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
 // Separate function to handle reveal button click
 async function handleRevealClick() {
     const revealButton = document.getElementById('revealButton');
+    const episodeContainer = document.getElementById('episodeContainer');
+    
     revealButton.disabled = true;  // Prevent double-clicks
     revealButton.textContent = 'Loading...';
     
     await fetchEpisodes();
+    
+    // Scroll to episode container
+    episodeContainer.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start'
+    });
     
     revealButton.textContent = 'Refresh Episodes';
     revealButton.disabled = false;
