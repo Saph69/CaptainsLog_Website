@@ -161,7 +161,7 @@ async function handleEmailSubmission(event) {
         submitButton.disabled = true;
         submitButton.textContent = 'Subscribing...';
         
-        const response = await fetch('https://func-website-backend.azurewebsites.net/api/SaveEmail', {
+        const response = await fetch('https://func-website-backend.azurewebsites.net/api/SaveEmail?code=RQdbP3X1HQVIzQlNIYUMUViEYWOMlCB3XyyolliyZEhpAzFualSqnQ==', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
