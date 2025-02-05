@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Refresh button not found');
     }
+
+    // Add event listener to the form
+    const emailForm = document.getElementById('emailForm');
+    if (emailForm) {
+        emailForm.addEventListener('submit', handleEmailSubmission);
+    }
 });
 
 // Handle refresh button click
@@ -134,4 +140,51 @@ function formatFileSize(bytes) {
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+// Add this function to handle form submissions
+async function handleEmailSubmission(event) {
+    event.preventDefault();
+    
+    const emailInput = document.getElementById('emailInput');
+    const errorMessage = document.getElementById('errorMessage');
+    const submitButton = event.target.querySelector('button');
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailInput.value)) {
+        errorMessage.textContent = 'Please enter a valid email address';
+        return;
+    }
+
+    try {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Subscribing...';
+        
+        const response = await fetch('https://func-website-backend.azurewebsites.net/api/SaveEmail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: emailInput.value
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to subscribe');
+        }
+
+        // Success
+        emailInput.value = '';
+        errorMessage.textContent = '';
+        alert('Thank you for subscribing!');
+
+    } catch (error) {
+        console.error('Subscription error:', error);
+        errorMessage.textContent = 'Failed to subscribe. Please try again later.';
+    } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Subscribe';
+    }
 }
