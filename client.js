@@ -173,8 +173,13 @@ async function handleEmailSubmission(event) {
 
         const data = await response.json();
 
+        if (response.status === 409) {
+            errorMessage.textContent = 'This email is already subscribed';
+            return;
+        }
+
         if (!response.ok) {
-            throw new Error(data.error || 'Failed to subscribe');
+            throw new Error(data.message || 'Failed to subscribe');
         }
 
         // Success
@@ -184,7 +189,7 @@ async function handleEmailSubmission(event) {
 
     } catch (error) {
         console.error('Subscription error:', error);
-        errorMessage.textContent = 'Failed to subscribe. Please try again later.';
+        errorMessage.textContent = error.message || 'Failed to subscribe. Please try again later.';
     } finally {
         submitButton.disabled = false;
         submitButton.textContent = 'Subscribe';
