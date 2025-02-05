@@ -171,14 +171,18 @@ async function handleEmailSubmission(event) {
             })
         });
 
+        console.log('Response status:', response.status);
         const data = await response.json();
+        console.log('Response data:', data);
 
         if (response.status === 409) {
+            console.log('Duplicate email detected');
             errorMessage.textContent = 'This email is already subscribed';
             return;
         }
 
         if (!response.ok) {
+            console.log('Response not OK');
             throw new Error(data.message || 'Failed to subscribe');
         }
 
@@ -188,7 +192,11 @@ async function handleEmailSubmission(event) {
         alert('Thank you for subscribing!');
 
     } catch (error) {
-        console.error('Subscription error:', error);
+        console.error('Detailed subscription error:', {
+            message: error.message,
+            name: error.name,
+            stack: error.stack
+        });
         errorMessage.textContent = error.message || 'Failed to subscribe. Please try again later.';
     } finally {
         submitButton.disabled = false;
