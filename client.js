@@ -142,7 +142,7 @@ function formatFileSize(bytes) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
 }
 
-// Add this function to handle form submissions
+// Updated email submission handler
 async function handleEmailSubmission(event) {
     event.preventDefault();
     
@@ -171,8 +171,10 @@ async function handleEmailSubmission(event) {
             })
         });
 
+        const data = await response.json();
+
         if (!response.ok) {
-            throw new Error('Failed to subscribe');
+            throw new Error(data.error || 'Failed to subscribe');
         }
 
         // Success
