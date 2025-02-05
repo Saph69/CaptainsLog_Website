@@ -175,7 +175,7 @@ async function handleEmailSubmission(event) {
         const data = await response.json();
         console.log('Response data:', data);
 
-        if (response.status === 409) {
+        if (response.status === 400 && data.error === 'Email already exists in database') {
             console.log('Duplicate email detected');
             errorMessage.textContent = 'This email is already subscribed';
             return;
@@ -183,7 +183,7 @@ async function handleEmailSubmission(event) {
 
         if (!response.ok) {
             console.log('Response not OK');
-            throw new Error(data.message || 'Failed to subscribe');
+            throw new Error(data.error || data.message || 'Failed to subscribe');
         }
 
         // Success
