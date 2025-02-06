@@ -273,6 +273,41 @@ audio {
   margin: 0 10px;
 }
 
+.loading-container {
+    text-align: center;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 200px;
+}
+
+.pirate-ship {
+    animation: rockingBoat 3s ease-in-out infinite;
+}
+
+.pirate-ship img {
+    width: 100px;
+    height: auto;
+}
+
+.loading-text {
+    color: #c4a030;
+    font-style: italic;
+    margin-top: 10px;
+    animation: fadeInOut 2s infinite;
+}
+
+@keyframes rockingBoat {
+    0% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+    100% { transform: rotate(-5deg); }
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
 /* Mobile adjustments */
 @media screen and (max-width: 768px) {
   .hero-banner {
