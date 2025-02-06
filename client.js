@@ -53,7 +53,7 @@ async function fetchEpisodes(page = 1, itemsPerPage = 10) { // Increased items p
         if (errorContainer) errorContainer.style.display = 'none';
         
         const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1';
-        const functionKey = ProcessingInstruction.env.FUNC_LOAD_EPISODES
+        //const functionKey = ProcessingInstruction.env.FUNC_LOAD_EPISODES
         
         console.log('Making API request...');
         const response = await fetch(`${functionUrl}?code=${functionKey}`);
