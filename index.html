@@ -25,6 +25,24 @@
     />
   </head>
   <body>
+    <!-- Add this right after the opening <body> tag -->
+    <nav class="main-nav">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <a href="/">
+            <img src="/images/small-boat.svg" alt="Captain's Journal" />
+            <span>Captain's Journal</span>
+          </a>
+        </div>
+        <div class="nav-links">
+          <a href="/" class="nav-link active">Home</a>
+          <a href="/episodes" class="nav-link">Episodes</a>
+          <a href="/about" class="nav-link">About</a>
+          <a href="#newsletter" class="nav-link">Subscribe</a>
+        </div>
+      </div>
+    </nav>
+
     <!-- Newsletter Section -->
     <section class="newsletter">
       <div class="newsletter-content">
@@ -86,5 +104,38 @@
 
     <!-- Scripts -->
     <script src="client.js"></script>
+
+    <!-- Add this before closing </body> tag -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>About The Captain's Journal</h3>
+          <p>
+            Join us on a thrilling adventure through the mysterious tales of the
+            Captain's Log.
+          </p>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/episodes">Episodes</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="#newsletter">Subscribe</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Connect</h3>
+          <div class="social-links">
+            <a href="#" class="social-link">Twitter</a>
+            <a href="#" class="social-link">Instagram</a>
+            <a href="#" class="social-link">YouTube</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Captain's Journal. All rights reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>
