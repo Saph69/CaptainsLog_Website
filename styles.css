@@ -249,6 +249,30 @@ audio {
   font-style: italic;
 }
 
+
+.pagination {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  margin: 0 5px;
+  background-color: #c4a030;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #a38528;
+}
+
+.pagination span {
+  margin: 0 10px;
+}
+
 /* Mobile adjustments */
 @media screen and (max-width: 768px) {
   .hero-banner {
@@ -275,4 +299,5 @@ audio {
   .tagline {
     font-size: 0.8rem; /* Slightly smaller on mobile */
   }
+  
 }
