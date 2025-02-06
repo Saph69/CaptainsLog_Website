@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorDiv.textContent = '';
             errorDiv.className = 'error-message';
             
-            const response = await fetch('https://func-website-backend.azurewebsites.net/api/HttpTrigger2', {
+            const response = await fetch('https://func-website-backend.azurewebsites.net/api/SaveEmail?code=RQdbP3X1HQVIzQlNIYUMUViEYWOMlCB3XyyolliyZEhpAzFualSqnQ==', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 errorDiv.className = 'error-message success';
                 emailForm.reset();
                 setTimeout(closeModal, 2000);
-            } else if (response.status === 400 && data.message && data.message.includes('exists')) {
+            } else if (response.status === 400 && data.error === 'Email already exists in database') {
                 errorDiv.textContent = 'You are already signed up! ⚓';
                 errorDiv.className = 'error-message warning';
             } else {
