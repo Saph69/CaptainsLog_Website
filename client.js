@@ -52,7 +52,7 @@ async function fetchEpisodes(page = 1, itemsPerPage = 10) {
         if (loadingSpinner) loadingSpinner.style.display = 'block';
         if (errorContainer) errorContainer.style.display = 'none';
         
-        const functionUrl = '/api/HttpTrigger1';
+        const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1?code=3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg%3D%3D';
         
         console.log('Making API request...');
         const response = await fetch(functionUrl);
