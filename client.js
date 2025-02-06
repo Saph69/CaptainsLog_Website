@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Page loaded - fetching episodes automatically');
-    fetchEpisodes(); // Load episodes immediately
+    fetchEpisodes(1); // Explicitly start at page 1
     
     // Set up refresh button
     const refreshButton = document.getElementById('revealButton');
@@ -31,7 +31,7 @@ async function handleRefreshClick() {
     
     try {
         console.log('Calling fetchEpisodes...');
-        await fetchEpisodes();
+        await fetchEpisodes(1); // Reset to page 1 on refresh
         console.log('Fetch completed successfully');
     } catch (error) {
         console.error('Error in handleRefreshClick:', error);
@@ -41,8 +41,8 @@ async function handleRefreshClick() {
     refreshButton.disabled = false;
 }
 
-async function fetchEpisodes(page = 1, itemsPerPage = 5) {
-    console.log('fetchEpisodes started');
+async function fetchEpisodes(page = 1, itemsPerPage = 10) { // Increased items per page
+    console.log(`Fetching episodes for page ${page} with ${itemsPerPage} items per page`);
     const loadingSpinner = document.getElementById('loadingSpinner');
     const errorContainer = document.getElementById('errorContainer');
     const episodeContainer = document.getElementById('episodeContainer');
@@ -55,10 +55,13 @@ async function fetchEpisodes(page = 1, itemsPerPage = 5) {
         const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1';
         const functionKey = '3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg==';
         
+        console.log('Making API request...');
         const response = await fetch(`${functionUrl}?code=${functionKey}`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         const data = await response.json();
+        console.log(`Received ${data.blobs?.length || 0} episodes from API`);
+
         if (!data.blobs || !Array.isArray(data.blobs)) {
             throw new Error(`Expected array of episodes but got: ${typeof data.blobs}`);
         }
@@ -75,6 +78,8 @@ async function fetchEpisodes(page = 1, itemsPerPage = 5) {
         const startIndex = (page - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         const currentPageEpisodes = episodes.slice(startIndex, endIndex);
+
+        console.log(`Displaying episodes ${startIndex + 1} to ${Math.min(endIndex, episodes.length)} of ${episodes.length}`);
 
         // Clear and update episode container
         if (episodeContainer) {
@@ -106,9 +111,9 @@ async function fetchEpisodes(page = 1, itemsPerPage = 5) {
         if (paginationContainer) {
             paginationContainer.innerHTML = `
                 <div class="pagination">
-                    ${page > 1 ? `<button onclick="fetchEpisodes(${page - 1})">Previous</button>` : ''}
+                    ${page > 1 ? `<button onclick="fetchEpisodes(${page - 1}, ${itemsPerPage})">Previous</button>` : ''}
                     <span>Page ${page} of ${totalPages}</span>
-                    ${page < totalPages ? `<button onclick="fetchEpisodes(${page + 1})">Next</button>` : ''}
+                    ${page < totalPages ? `<button onclick="fetchEpisodes(${page + 1}, ${itemsPerPage})">Next</button>` : ''}
                 </div>
             `;
         }
