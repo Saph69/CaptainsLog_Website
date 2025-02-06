@@ -41,11 +41,12 @@ async function handleRefreshClick() {
     refreshButton.disabled = false;
 }
 
-async function fetchEpisodes() {
+async function fetchEpisodes(page = 1, itemsPerPage = 5) {
     console.log('fetchEpisodes started');
     const loadingSpinner = document.getElementById('loadingSpinner');
     const errorContainer = document.getElementById('errorContainer');
     const episodeContainer = document.getElementById('episodeContainer');
+    const paginationContainer = document.getElementById('paginationContainer');
 
     try {
         if (loadingSpinner) loadingSpinner.style.display = 'block';
@@ -54,75 +55,64 @@ async function fetchEpisodes() {
         const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1';
         const functionKey = '3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg==';
         
-        console.log('1. Making fetch request...');
         const response = await fetch(`${functionUrl}?code=${functionKey}`);
-        console.log('2. Fetch response received:', response.status);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const responseText = await response.text();
-        console.log('3. Response text:', responseText.substring(0, 200) + '...');
-        
-        let data;
-        try {
-            data = JSON.parse(responseText);
-            console.log('4. Parsed data:', data);
-        } catch (parseError) {
-            console.error('Parse error:', parseError);
-            throw new Error(`Failed to parse JSON: ${responseText}`);
-        }
-        
+        const data = await response.json();
         if (!data.blobs || !Array.isArray(data.blobs)) {
-            console.log('5. Data structure:', data);
-            throw new Error(`Expected array of episodes in data.blobs but got: ${typeof data.blobs}`);
+            throw new Error(`Expected array of episodes but got: ${typeof data.blobs}`);
         }
 
-        const episodes = data.blobs;
-        console.log('6. Number of episodes:', episodes.length);
-
-        // Sort episodes numerically by day number
-        episodes.sort((a, b) => {
-            // Extract day numbers from episode names
+        // Sort episodes
+        const episodes = data.blobs.sort((a, b) => {
             const dayA = parseInt(a.name.match(/day (\d+)/i)[1]);
             const dayB = parseInt(b.name.match(/day (\d+)/i)[1]);
-            return dayB - dayA; // Sort in descending order (newest first)
+            return dayB - dayA;
         });
 
-        // Clear existing episodes
-        if (episodeContainer) episodeContainer.innerHTML = '';
-        
-        if (episodes.length === 0) {
-            console.log('7. No episodes found');
-            if (errorContainer) {
-                errorContainer.style.display = 'block';
-                errorContainer.textContent = 'No episodes found.';
-            }
-            return;
+        // Calculate pagination
+        const totalPages = Math.ceil(episodes.length / itemsPerPage);
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const currentPageEpisodes = episodes.slice(startIndex, endIndex);
+
+        // Clear and update episode container
+        if (episodeContainer) {
+            episodeContainer.innerHTML = '';
+            
+            currentPageEpisodes.forEach(episode => {
+                const episodeElement = document.createElement('div');
+                episodeElement.className = 'episode';
+                
+                const name = episode.name.replace('.mp3', '')
+                    .replace(/^Captains Log day (\d+)/i, 'Day $1: Captain\'s Log');
+                
+                episodeElement.innerHTML = `
+                    <h2>${name}</h2>
+                    <audio controls>
+                        <source src="${episode.url}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="episode-date">
+                        ${episode.lastModified ? new Date(episode.lastModified).toLocaleDateString() : 'No date'}
+                    </div>
+                    <div class="episode-size">${formatFileSize(episode.size)}</div>
+                `;
+                episodeContainer.appendChild(episodeElement);
+            });
         }
-        
-        episodes.forEach((episode, index) => {
-            console.log(`8. Processing episode ${index}:`, episode);
-            const episodeElement = document.createElement('div');
-            episodeElement.className = 'episode';
-            
-            const name = episode.name.replace('.mp3', '').replace(/^Captains Log day (\d+)/i, 'Day $1: Captain\'s Log');
-            
-            episodeElement.innerHTML = `
-                <h2>${name}</h2>
-                <audio controls>
-                    <source src="${episode.url}" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
-                <div class="episode-date">${episode.lastModified ? new Date(episode.lastModified).toLocaleDateString() : 'No date'}</div>
-                <div class="episode-size">${formatFileSize(episode.size)}</div>
-            `;
-            if (episodeContainer) episodeContainer.appendChild(episodeElement);
-            console.log(`9. Added episode ${index}`);
-        });
 
-        console.log('10. Finished processing all episodes');
+        // Update pagination controls
+        if (paginationContainer) {
+            paginationContainer.innerHTML = `
+                <div class="pagination">
+                    ${page > 1 ? `<button onclick="fetchEpisodes(${page - 1})">Previous</button>` : ''}
+                    <span>Page ${page} of ${totalPages}</span>
+                    ${page < totalPages ? `<button onclick="fetchEpisodes(${page + 1})">Next</button>` : ''}
+                </div>
+            `;
+        }
+
     } catch (error) {
         console.error('Error in fetchEpisodes:', error);
         if (errorContainer) {
