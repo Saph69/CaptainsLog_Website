@@ -99,20 +99,6 @@ body {
   max-width: 800px;
   position: relative;
 }
-.small-boat-container {
-  position: absolute;
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 60px;
-  animation: floatBoat 3s ease-in-out infinite;
-}
-
-@keyframes floatBoat {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-10px); }
-}
 
 .hero-content h1 {
   font-family: "Pirata One", cursive;
