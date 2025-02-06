@@ -2,59 +2,48 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Page loaded - fetching episodes automatically');
     fetchEpisodes(1);
 
-    // Add event listener to the form
-    const emailForm = document.getElementById('emailForm');
-    if (emailForm) {
-        emailForm.addEventListener('submit', handleEmailSubmission);
-    }
-
     const modal = document.getElementById('newsletterModal');
     const subscribeLinks = document.querySelectorAll('a[href="#newsletter"]');
     const closeBtn = document.querySelector('.close-modal');
-    const errorMessage = document.querySelector('.error-message');
+    const emailForm = document.getElementById('emailForm');
+    
+    // Remove any existing error message divs to prevent duplicates
+    const existingErrorDivs = emailForm.querySelectorAll('.error-message');
+    existingErrorDivs.forEach(div => div.remove());
+    
+    // Create a single error message div
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'error-message';
+    emailForm.querySelector('.form-group').appendChild(errorDiv);
 
-    // Open modal when Subscribe is clicked
+    // Modal controls
     subscribeLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             modal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
+            document.body.style.overflow = 'hidden';
         });
     });
 
-    // Close modal when X is clicked
-    closeBtn.addEventListener('click', function() {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Restore scrolling
+    closeBtn.addEventListener('click', closeModal);
+    window.addEventListener('click', e => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.style.display === 'block') closeModal();
     });
 
-    // Close modal when clicking outside
-    window.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    });
-
-    // Close modal with Escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.style.display === 'block') {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    });
-
-    // Form submission
+    // Single form submission handler
     emailForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const email = document.getElementById('emailInput').value;
         const submitButton = emailForm.querySelector('button[type="submit"]');
-        const errorMessage = document.querySelector('.error-message');
         
         try {
             submitButton.disabled = true;
             submitButton.textContent = 'Subscribing...';
-            errorMessage.textContent = '';
+            errorDiv.textContent = '';
+            errorDiv.className = 'error-message';
             
             const response = await fetch('https://func-website-backend.azurewebsites.net/api/HttpTrigger2', {
                 method: 'POST',
@@ -66,35 +55,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const data = await response.json();
 
-            if (response.ok) {
-                showMessage('Thank you for subscribing! 🏴‍☠️', 'success');
+            if (response.status === 200) {
+                errorDiv.textContent = 'Thank you for subscribing! 🏴‍☠️';
+                errorDiv.className = 'error-message success';
                 emailForm.reset();
                 setTimeout(closeModal, 2000);
             } else if (response.status === 400 && data.message && data.message.includes('exists')) {
-                showMessage('You are already signed up! ⚓', 'warning');
+                errorDiv.textContent = 'You are already signed up! ⚓';
+                errorDiv.className = 'error-message warning';
             } else {
-                showMessage('Failed to subscribe. Please try again.', 'error');
+                errorDiv.textContent = 'Failed to subscribe. Please try again.';
+                errorDiv.className = 'error-message error';
             }
         } catch (error) {
-            console.error('Error:', error);
-            showMessage('A problem occurred. Please try again later.', 'error');
+            console.error('Subscription error:', error);
+            errorDiv.textContent = 'A problem occurred. Please try again later.';
+            errorDiv.className = 'error-message error';
         } finally {
             submitButton.disabled = false;
             submitButton.textContent = 'Subscribe';
         }
     });
 
-    function showMessage(message, type) {
-        errorMessage.textContent = message;
-        errorMessage.className = 'error-message ' + type;
-    }
-
     function closeModal() {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
-        // Reset form and error message when closing
         emailForm.reset();
-        errorMessage.textContent = '';
+        errorDiv.textContent = '';
+        errorDiv.className = 'error-message';
     }
 });
 
