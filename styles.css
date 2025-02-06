@@ -32,6 +32,9 @@ body {
   position: relative;
   flex-grow: 1;
   max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .signup-form input {
@@ -63,12 +66,33 @@ body {
   background-color: #c4a030;
 }
 
+.signup-form button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+}
+
 .error-message {
   color: #ff6b6b;
   font-size: 0.9rem;
-  position: absolute;
-  bottom: -20px;
-  left: 0;
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.error-message.success {
+  color: #2ecc71;
+  background-color: rgba(46, 204, 113, 0.1);
+}
+
+.error-message.warning {
+  color: #f1c40f;
+  background-color: rgba(241, 196, 15, 0.1);
+}
+
+.error-message.error {
+  color: #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.1);
 }
 
 /* Hero Banner */

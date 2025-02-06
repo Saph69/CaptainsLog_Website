@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('newsletterModal');
     const subscribeLinks = document.querySelectorAll('a[href="#newsletter"]');
     const closeBtn = document.querySelector('.close-modal');
+    const errorMessage = document.querySelector('.error-message');
 
     // Open modal when Subscribe is clicked
     subscribeLinks.forEach(link => {
@@ -42,6 +43,64 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.style.overflow = 'auto';
         }
     });
+
+    // Form submission
+    emailForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value;
+        const submitButton = emailForm.querySelector('button[type="submit"]');
+        
+        try {
+            // Disable submit button and show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = 'Subscribing...';
+            errorMessage.textContent = '';
+            
+            const response = await fetch('https://func-website-backend.azurewebsites.net/api/HttpTrigger2', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // Success case
+                showMessage('Thank you for subscribing! 🏴‍☠️', 'success');
+                emailForm.reset();
+                setTimeout(closeModal, 2000); // Close modal after 2 seconds
+            } else {
+                // Handle specific error cases
+                if (data.error && data.error.includes('already exists')) {
+                    showMessage('Yarr! You\'re already on our crew list! ⚓', 'warning');
+                } else {
+                    showMessage('Failed to subscribe. Please try again.', 'error');
+                }
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showMessage('A problem occurred. Please try again later.', 'error');
+        } finally {
+            // Re-enable submit button
+            submitButton.disabled = false;
+            submitButton.textContent = 'Subscribe';
+        }
+    });
+
+    function showMessage(message, type) {
+        errorMessage.textContent = message;
+        errorMessage.className = 'error-message ' + type;
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        // Reset form and error message when closing
+        emailForm.reset();
+        errorMessage.textContent = '';
+    }
 });
 
 // Handle refresh button click
