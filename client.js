@@ -7,6 +7,41 @@ document.addEventListener('DOMContentLoaded', () => {
     if (emailForm) {
         emailForm.addEventListener('submit', handleEmailSubmission);
     }
+
+    const modal = document.getElementById('newsletterModal');
+    const subscribeLinks = document.querySelectorAll('a[href="#newsletter"]');
+    const closeBtn = document.querySelector('.close-modal');
+
+    // Open modal when Subscribe is clicked
+    subscribeLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        });
+    });
+
+    // Close modal when X is clicked
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    });
 });
 
 // Handle refresh button click

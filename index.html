@@ -43,25 +43,6 @@
       </div>
     </nav>
 
-    <!-- Newsletter Section -->
-    <section class="newsletter">
-      <div class="newsletter-content">
-        <h2>Never miss an episode, sign up to be notified!</h2>
-        <form class="signup-form" id="emailForm">
-          <div class="form-group">
-            <input
-              type="email"
-              id="emailInput"
-              placeholder="Enter your email"
-              required
-            />
-            <span class="error-message" id="errorMessage"></span>
-          </div>
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-    </section>
-
     <!-- Hero Banner -->
     <header class="hero-banner">
       <div class="hero-content">
@@ -137,5 +118,30 @@
         <p>&copy; 2024 Captain's Journal. All rights reserved.</p>
       </div>
     </footer>
+
+    <!-- Remove the newsletter section from the top and add this at the bottom of the body -->
+    <div id="newsletterModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="newsletter">
+          <div class="newsletter-content">
+            <h2>Subscribe to Captain's Journal</h2>
+            <p>Be the first to know when new episodes are released!</p>
+            <form id="emailForm" class="signup-form">
+              <div class="form-group">
+                <input
+                  type="email"
+                  id="emailInput"
+                  placeholder="Enter your email"
+                  required
+                />
+                <div class="error-message"></div>
+              </div>
+              <button type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
