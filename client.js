@@ -9,6 +9,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Handle refresh button click
+async function handleRefreshClick() {
+    console.log('Starting refresh...');
+    const refreshButton = document.getElementById('revealButton');
+    refreshButton.disabled = true;  // Prevent double-clicks
+    refreshButton.textContent = 'Refreshing...';
+    
+    try {
+        console.log('Calling fetchEpisodes...');
+        await fetchEpisodes(1); // Reset to page 1 on refresh
+        console.log('Fetch completed successfully');
+    } catch (error) {
+        console.error('Error in handleRefreshClick:', error);
+    }
+    
+    refreshButton.textContent = 'Refresh Episodes';
+    refreshButton.disabled = false;
+}
+
 async function fetchEpisodes(page = 1, itemsPerPage = 10) {
     console.log(`Fetching episodes for page ${page} with ${itemsPerPage} items per page`);
     const loadingSpinner = document.getElementById('loadingSpinner');
@@ -20,8 +39,10 @@ async function fetchEpisodes(page = 1, itemsPerPage = 10) {
         if (loadingSpinner) loadingSpinner.style.display = 'block';
         if (errorContainer) errorContainer.style.display = 'none';
         
+        const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1?code=3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg%3D%3D';
+        
         console.log('Making API request...');
-        const response = await fetch('/api/ProxyFunction');
+        const response = await fetch(functionUrl);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         const data = await response.json();
