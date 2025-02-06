@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const email = document.getElementById('emailInput').value;
         const submitButton = emailForm.querySelector('button[type="submit"]');
+        const errorMessage = document.querySelector('.error-message');
         
         try {
-            // Disable submit button and show loading state
             submitButton.disabled = true;
             submitButton.textContent = 'Subscribing...';
             errorMessage.textContent = '';
@@ -67,23 +67,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (response.ok) {
-                // Success case
                 showMessage('Thank you for subscribing! 🏴‍☠️', 'success');
                 emailForm.reset();
-                setTimeout(closeModal, 2000); // Close modal after 2 seconds
+                setTimeout(closeModal, 2000);
+            } else if (response.status === 400 && data.message && data.message.includes('exists')) {
+                showMessage('You are already signed up! ⚓', 'warning');
             } else {
-                // Handle specific error cases
-                if (data.error && data.error.includes('already exists')) {
-                    showMessage('Yarr! You\'re already on our crew list! ⚓', 'warning');
-                } else {
-                    showMessage('Failed to subscribe. Please try again.', 'error');
-                }
+                showMessage('Failed to subscribe. Please try again.', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
             showMessage('A problem occurred. Please try again later.', 'error');
         } finally {
-            // Re-enable submit button
             submitButton.disabled = false;
             submitButton.textContent = 'Subscribe';
         }

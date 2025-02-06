@@ -24,8 +24,9 @@ body {
 
 .signup-form {
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
 }
 
 .form-group {
@@ -60,6 +61,7 @@ body {
   cursor: pointer;
   font-weight: bold;
   transition: background-color 0.3s;
+  width: 100%; /* Match input width */
 }
 
 .signup-form button:hover {
