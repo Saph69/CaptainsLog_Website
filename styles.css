@@ -764,3 +764,27 @@ audio {
     opacity: 1;
   }
 }
+
+/* Add to your existing footer styles */
+.footer-section a[href^="mailto"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+}
+
+.footer-section a[href^="mailto"]:hover {
+  color: #d4af37;
+  transform: translateX(5px);
+}
+
+.footer-section a[href^="mailto"]::after {
+  content: "✉️";
+  font-size: 0.9em;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.footer-section a[href^="mailto"]:hover::after {
+  opacity: 1;
+}
