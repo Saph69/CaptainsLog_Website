@@ -41,7 +41,7 @@ async function handleRefreshClick() {
     refreshButton.disabled = false;
 }
 
-async function fetchEpisodes(page = 1, itemsPerPage = 10) { // Increased items per page
+async function fetchEpisodes(page = 1, itemsPerPage = 10) {
     console.log(`Fetching episodes for page ${page} with ${itemsPerPage} items per page`);
     const loadingSpinner = document.getElementById('loadingSpinner');
     const errorContainer = document.getElementById('errorContainer');
@@ -53,10 +53,9 @@ async function fetchEpisodes(page = 1, itemsPerPage = 10) { // Increased items p
         if (errorContainer) errorContainer.style.display = 'none';
         
         const functionUrl = '/api/HttpTrigger1';
-        //const functionKey = "3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg=="
         
         console.log('Making API request...');
-        const response = await fetch(`${functionUrl}?code=${functionKey}`);
+        const response = await fetch(functionUrl);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         const data = await response.json();
