@@ -1,9 +1,0 @@
-{
-    "routes": [
-      {
-        "route": "/api/HttpTrigger1",
-        "rewrite": "https://func-website-backend.azurewebsites.net/api/HttpTrigger1",
-        "allowedRoles": ["anonymous"]
-      }
-    ]
-  }
