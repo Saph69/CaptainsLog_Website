@@ -1,5 +1,70 @@
-<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10,70 Q50,60 90,70 L95,80 Q50,70 5,80 Z" fill="#c4a030"/>
-    <path d="M40,30 L40,70 L60,70 L60,30 Z" fill="#8b7355"/>
-    <path d="M30,30 Q50,20 70,30 L60,70 L40,70 Z" fill="#c4a030"/>
+<svg width="200" height="150" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+    <!-- Ship Hull -->
+    <path d="M20,80 
+             C30,80 40,85 50,85
+             L150,85
+             C160,85 170,80 180,80
+             L190,100
+             C160,95 40,95 10,100 Z" 
+          fill="#8b4513"/>
+    
+    <!-- Main Deck -->
+    <path d="M40,85 L160,85 L155,75 L45,75 Z" fill="#c19a6b"/>
+    
+    <!-- Cannon Ports -->
+    <rect x="60" y="82" width="10" height="5" fill="#000"/>
+    <rect x="80" y="82" width="10" height="5" fill="#000"/>
+    <rect x="100" y="82" width="10" height="5" fill="#000"/>
+    <rect x="120" y="82" width="10" height="5" fill="#000"/>
+    
+    <!-- Main Mast -->
+    <rect x="95" y="30" width="10" height="45" fill="#8b4513"/>
+    
+    <!-- Main Sail (Furled) -->
+    <path d="M90,35 
+             C95,37 105,37 110,35
+             C105,40 95,40 90,35 Z" 
+          fill="#eee"/>
+    
+    <!-- Front Mast -->
+    <rect x="145" y="40" width="8" height="35" fill="#8b4513"/>
+    
+    <!-- Front Sail -->
+    <path d="M140,45 
+             C145,47 153,47 158,45
+             C153,50 145,50 140,45 Z" 
+          fill="#eee"/>
+    
+    <!-- Back Mast -->
+    <rect x="45" y="40" width="8" height="35" fill="#8b4513"/>
+    
+    <!-- Back Sail -->
+    <path d="M40,45 
+             C45,47 53,47 58,45
+             C53,50 45,50 40,45 Z" 
+          fill="#eee"/>
+    
+    <!-- Crow's Nest -->
+    <circle cx="100" cy="30" r="5" fill="#8b4513"/>
+    <path d="M95,30 L105,30" stroke="#8b4513" stroke-width="2"/>
+    
+    <!-- Jolly Roger -->
+    <rect x="97" y="15" width="16" height="12" fill="#000"/>
+    <circle cx="101" cy="19" r="2" fill="#fff"/>
+    <circle cx="109" cy="19" r="2" fill="#fff"/>
+    <path d="M101,23 L109,23 M105,21 L105,25" stroke="#fff" fill="none"/>
+    
+    <!-- Waves -->
+    <path d="M0,110 
+             C20,105 40,115 60,110
+             C80,105 100,115 120,110
+             C140,105 160,115 180,110
+             C200,105 220,115 240,110" 
+          stroke="#c4a030" fill="none" stroke-width="2"/>
+    <path d="M0,120 
+             C20,115 40,125 60,120
+             C80,115 100,125 120,120
+             C140,115 160,125 180,120
+             C200,115 220,125 240,120" 
+          stroke="#c4a030" fill="none" stroke-width="2"/>
 </svg> 
