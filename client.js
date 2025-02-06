@@ -1,19 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Page loaded - fetching episodes automatically');
-    fetchEpisodes(1); // Explicitly start at page 1
-    
-    // Set up refresh button
-    const refreshButton = document.getElementById('revealButton');
-    if (refreshButton) {
-        refreshButton.textContent = 'Refresh Episodes';
-        refreshButton.addEventListener('click', () => {
-            console.log('Button clicked!');
-            handleRefreshClick();
-        });
-        console.log('Refresh button listener added');
-    } else {
-        console.error('Refresh button not found');
-    }
+    fetchEpisodes(1);
 
     // Add event listener to the form
     const emailForm = document.getElementById('emailForm');
@@ -21,25 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
         emailForm.addEventListener('submit', handleEmailSubmission);
     }
 });
-
-// Handle refresh button click
-async function handleRefreshClick() {
-    console.log('Starting refresh...');
-    const refreshButton = document.getElementById('revealButton');
-    refreshButton.disabled = true;  // Prevent double-clicks
-    refreshButton.textContent = 'Refreshing...';
-    
-    try {
-        console.log('Calling fetchEpisodes...');
-        await fetchEpisodes(1); // Reset to page 1 on refresh
-        console.log('Fetch completed successfully');
-    } catch (error) {
-        console.error('Error in handleRefreshClick:', error);
-    }
-    
-    refreshButton.textContent = 'Refresh Episodes';
-    refreshButton.disabled = false;
-}
 
 async function fetchEpisodes(page = 1, itemsPerPage = 10) {
     console.log(`Fetching episodes for page ${page} with ${itemsPerPage} items per page`);
@@ -52,10 +20,8 @@ async function fetchEpisodes(page = 1, itemsPerPage = 10) {
         if (loadingSpinner) loadingSpinner.style.display = 'block';
         if (errorContainer) errorContainer.style.display = 'none';
         
-        const functionUrl = 'https://func-website-backend.azurewebsites.net/api/HttpTrigger1?code=3teAYWB1X3ArvHMD7_XypbjgEpk7Lo4VZBZzfZ2Pgd2GAzFu94tslg%3D%3D';
-        
         console.log('Making API request...');
-        const response = await fetch(functionUrl);
+        const response = await fetch('/api/ProxyFunction');
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         
         const data = await response.json();
