@@ -125,8 +125,21 @@ async function fetchEpisodes(page = 1, itemsPerPage = 10) {
         const data = await response.json();
         console.log(`Received ${data.blobs?.length || 0} episodes from API`);
 
-        if (!data.blobs || !Array.isArray(data.blobs)) {
-            throw new Error(`Expected array of episodes but got: ${typeof data.blobs}`);
+        if (!data.blobs || !Array.isArray(data.blobs) || data.blobs.length === 0) {
+            if (episodeContainer) {
+                episodeContainer.innerHTML = `
+                    <div class="loading-container">
+                        <div class="pirate-ship">
+                            <img src="/images/pirate-ship.svg" alt="Loading..." />
+                        </div>
+                        <div class="loading-text">Episodes coming soon! ☠️</div>
+                    </div>
+                `;
+            }
+            if (paginationContainer) {
+                paginationContainer.innerHTML = '';
+            }
+            return;
         }
 
         // Sort episodes

@@ -349,7 +349,7 @@ audio {
 }
 
 .pirate-ship img {
-  width: 200px; /* Increased size */
+  width: 200px;
   height: auto;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
 }
