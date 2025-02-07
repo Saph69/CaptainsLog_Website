@@ -153,33 +153,6 @@ body {
   vertical-align: middle;
 }
 
-.story-intro {
-  position: absolute;
-  bottom: 200px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  max-width: 1000px;
-  margin: 0 auto 30px;
-  padding: 20px;
-  font-size: 1.2rem;
-  text-align: center;
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.6);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.story-intro p {
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.4rem;
-  color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  max-width: 1200px; /* Wider than other content */
-  margin: 0 auto;
-  line-height: 1.6;
-}
 
 .creator-credit {
   font-style: italic;
