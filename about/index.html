@@ -1,37 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unsubscribe - Captain's Journal</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f5f5f5;
-        }
-        .message {
-            text-align: center;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            max-width: 400px;
-        }
-        h1 {
-            color: #c4a030;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
-<body>
-    <div class="message">
-        <h1>Unsubscribe</h1>
-        <p>Sorry guys, I haven't got around to programming this yet!</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>About - Captain's Journal</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/x-icon" href="/images/favicon-32x32.png" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <a href="/">
+            <img src="/images/pirate-ship.svg" alt="Captain's Journal" />
+            <span>Captain's Journal</span>
+          </a>
+        </div>
+        <div class="nav-links">
+          <a href="/" class="nav-link">Home</a>
+          <a href="/about" class="nav-link active">About</a>
+          <a href="#newsletter" class="nav-link">Subscribe</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <header class="hero-banner about-banner">
+      <div class="hero-content">
+        <h1>About The Journal</h1>
+      </div>
+      <div class="banner-footer">
+        <div class="tagline">The Story Behind the Stories</div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content-wrapper">
+      <div class="about-container">
+        <!-- Project Story Section -->
+        <section class="about-section">
+          <h2>The Project's Origins</h2>
+          <div class="about-content">
+            <img src="/images/about-illustration.jpg" alt="Project Illustration" class="about-image" />
+            <p>
+              Captain's Journal began as a creative experiment combining my passion
+              for technology with storytelling. Using advanced AI, each tale is
+              uniquely crafted to bring the golden age of piracy to life with a
+              fresh perspective.
+            </p>
+          </div>
+        </section>
+
+        <!-- Technical Stack Section -->
+        <section class="about-section">
+          <h2>Built With</h2>
+          <div class="tech-stack">
+            <div class="tech-item">
+              <img src="/images/azure-logo.svg" alt="Microsoft Azure" />
+              <span>Microsoft Azure</span>
+            </div>
+            <div class="tech-item">
+              <img src="/images/ai-logo.svg" alt="AI Technology" />
+              <span>AI Integration</span>
+            </div>
+            <!-- Add more tech stack items as needed -->
+          </div>
+        </section>
+
+        <!-- Creator Section -->
+        <section class="about-section creator-section">
+          <h2>About the Creator</h2>
+          <div class="creator-profile">
+            <img src="/images/profile-photo.jpg" alt="Jake Poulsom" class="creator-image" />
+            <div class="creator-info">
+              <h3>Jake Poulsom</h3>
+              <p class="creator-title">Microsoft 365 & Azure Expert</p>
+              <p class="creator-bio">
+                As a Microsoft technology enthusiast, I've combined my technical
+                expertise with creative storytelling to bring you these unique
+                pirate tales. When not coding or writing, I'm exploring new ways
+                to use AI in creative projects.
+              </p>
+              <div class="creator-links">
+                <a href="https://www.linkedin.com/in/jake-poulsom-3561271b5/" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   class="social-link">
+                  LinkedIn
+                </a>
+                <a href="mailto:thecaptain@captains-journal.com" class="social-link">
+                  Contact
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
     </div>
-</body>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <!-- ... existing footer content ... -->
+    </footer>
+
+    <!-- Newsletter Modal -->
+    <div id="newsletterModal" class="modal">
+      <!-- ... existing newsletter modal content ... -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="../client.js"></script>
+  </body>
 </html>
