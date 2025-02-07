@@ -208,7 +208,7 @@ body {
   text-align: center;
   padding: 120px 20px 100px; /* Increased top padding from 80px to 120px */
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/captains-log-banner.jpg") center center/cover no-repeat;
+    url("thecrew.png") center center/cover no-repeat;
   position: relative;
 
   min-height: 60vh;
