@@ -364,6 +364,17 @@ audio {
   animation: fadeInOut 2s infinite;
 }
 
+.author-link {
+  color: #007bff;
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.author-link:hover {
+  color: #0056b3;
+}
+
 /* Enhanced animations */
 @keyframes rockingBoat {
   0% {
@@ -586,12 +597,24 @@ audio {
 /* Mobile Adjustments */
 @media screen and (max-width: 768px) {
   .nav-links {
-    display: none; /* We'll add a mobile menu later */
+    display: none;
   }
 
   .footer-container {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 30px;
+  }
+
+  .footer-section ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .footer-section ul li {
+    margin-bottom: 0; /* Remove default margin since we're using gap */
   }
 
   .social-links {
