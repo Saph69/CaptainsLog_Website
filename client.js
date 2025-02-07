@@ -132,7 +132,7 @@ async function fetchEpisodes(page = 1, itemsPerPage = 10) {
                         <div class="pirate-ship">
                             <img src="/images/pirate-ship.svg" alt="Loading..." />
                         </div>
-                        <div class="loading-text">Episodes coming soon! ☠️</div>
+                        <div class="loading-text">New episodes coming soon! ☠️</div>
                     </div>
                 `;
             }
