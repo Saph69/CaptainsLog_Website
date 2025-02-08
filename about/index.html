@@ -115,12 +115,77 @@
               <br />
               and thus, the captains-journal was born.
             </p>
+
+            <h2>Okay, heres what i'll do!</h2>
+              I'll whip up a quick HTML page, host it in an Azure static website, write some simple code, host the episodes in a Azure blobs storage and voila!
+              <br>
+              <br>
+              Right ?
+              <br>
+              Right............... ?
+              <br>
+              <br>
+              <br>
+              Little did i know, what i was about to get myself into!
+              <h2>Humble Beginnings</h2>
+              Okay, i now have an AI agent that is convinced it's a captain of a pirate ship.
+              <br> 
+              It can now generate short stories in a text format, and output the .txt files locally on my machine.
+              <br>
+              This is cool, but i want to make a web series with daily episodes. Currently the agent can generates a short pirate story, save it as a .txt file, but next time the scrpt runs, it generates a new story and overwirtes the current .txt file.
+              <br>    
+              <br>
+              Okay, lets make some changes to the code!
+              <br>
+              <br>
+              Firstly, i need to update the agent itself.
+              <br>
+              Currently all the agent knows is, it is the captain of at pirate ship, and should tell short stories.
+              I want to update the agent to be able to generate a new episode every day, the new episode should be a follow-up to the previous episode.
+              If the last eipsode is captains_log_1.txt the next episode should be captains_log_2.txt and so on.
+            <br>
+              I started by updating the prompt for the agent.
+            <br>
+            <br>
+              <img src="/images/prompt-update.png" alt="Prompt Update">
+              <br>
+              <br>
+
+
+              I then made a few changes to the python script
+              <br>
+              The script now scans the local directy where the "captaions_log_X.txt files are created. If the script finds captains_log_1.txt it will then produce captains_log_2.txt, and so on.
+              If no .txt files are found, the script will create a new episode.
+              <br>
+              <br>
+              Okay, this is a good start, the agent is now able to generate a new episode every run, also name the file correctly, but the episodes are not consistant.
+              <br>
+               <br>
+              If i want to make a web series with daily episodes. For this to work, its extremely important that episdoes are consistant. Each episode should be a continuation of the previous one.
+              <br>
+              It won't work if story arch keeps changing, characters are suddenly in different locations, doing different things etc...
+              <br>
+              <br>
+              hmmmm what if i could generate a new episode every day, each episode following the same consistent story arch?
+              <br>
+              <br>
+              <h3>Enter The Captains assistant!</h3>
+              <br>
+              <br>  
+              <h2>The Voice of the Captain</h2>
+              <br>
+              <br>
+              <br>
+              <br>
+              
+              
           </div>
         </section>
 
         <!-- Technical Stack Section -->
         <section class="about-section">
-          <h2>Okay, heres what i'll do!</h2>
+
+          </pre>
           <div class="tech-stack">
             <div class="tech-item">
               <img src="/images/azure-logo.svg" alt="Microsoft Azure" />
@@ -132,7 +197,6 @@
             </div>
             <!-- Add more tech stack items as needed -->
           </div>
-          <h2>Oh god i've biten off more than i can chew!</h2>
         </section>
 
         <!-- Creator Section -->
