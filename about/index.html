@@ -364,18 +364,39 @@
               Oh dear, maybe i'm using to many tokens on my input, and thats the reason my output is so short.
               <br>
               Okay back to coding, there must be a way to to an overview of the token usage.
+              <br>
               Alright cool, manged to setup some code to monitor token usage, lets run some tests and see how we're looking!
               <br>
               <br>
               <img src="/images/token-usage.png" alt="Token Usage">
               <br>
               <br>
+              Okay according to my logs, i'm not even close to hitting 120k tokens (Which is the point where output limits would start to accour).
+              <br><br>
+              So what exactly is happening here?
               <br>
-              
-
+              Honestly i don't know, but i do know that i'm not using 120k tokens on my input. From what i can tell, the agent maybe just feels that the entry it has given is adequate, and doesn't need to add any more detail.
+              <br><br>
+              Prehaps i'm overcomplicating things. Maybe i should tell the agent to make each story be 4095 tokens in length.
+              <br><br>
+            
+              <img src="/images/Giveme4096tokens.png" alt="Give 4095 tokens">
+              <br><br>
+              At the same time i also updated the code to actaully display the toke size of the output. (Completation tokens)
+              <br>
+              Lets see how this works!
+              <br>
+              <br>
+              <img src="/images/completationtokens.png" alt="Token Usage">
+              <br>
+              SON OF A BITCH!
+              <br>
+              <h2>Temperature</h2>
+              <br>
               <h2>Audio Chunks</h2>
               <br>
               <h2>Migrating to Azure...</h2>
+              <br>
               <br>
               <h2>Azure Functions, and new ways to work</h2>
               <br>
