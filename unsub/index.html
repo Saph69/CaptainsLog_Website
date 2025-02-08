@@ -18,17 +18,16 @@
         const email = urlParams.get("email");
         const messageDiv = document.getElementById("message");
 
-        // Add debug logging
         console.log("Email from URL:", email);
 
         if (!email) {
-          messageDiv.textContent = "Invalid unsubscribe link";
+          messageDiv.textContent =
+            "Invalid unsubscribe link - no email provided";
           messageDiv.className = "message error";
           return;
         }
 
         try {
-          // Log the API URL being called
           const apiUrl = `https://app-func-captainslog.azurewebsites.net/api/UnsubscribeEmail?email=${encodeURIComponent(
             email
           )}`;
@@ -38,22 +37,28 @@
             method: "GET",
             headers: {
               Accept: "application/json",
+              "Cache-Control": "no-cache",
             },
           });
 
           console.log("Response status:", response.status);
 
-          // Read the response text first
           const responseText = await response.text();
           console.log("Response text:", responseText);
 
-          // Try to parse as JSON
           let data;
           try {
-            data = JSON.parse(responseText);
+            // Only try to parse JSON if we have a response
+            if (responseText) {
+              data = JSON.parse(responseText);
+            } else {
+              throw new Error("Empty response from server");
+            }
           } catch (parseError) {
             console.error("Failed to parse JSON:", parseError);
-            throw new Error("Invalid response format from server");
+            throw new Error(
+              `Server response error: ${responseText || "No response"}`
+            );
           }
 
           if (response.ok) {
@@ -61,12 +66,12 @@
             messageDiv.className = "message success";
           } else {
             messageDiv.textContent =
-              data.error || "Failed to unsubscribe. Please try again later.";
+              data?.error || "Failed to unsubscribe. Please try again later.";
             messageDiv.className = "message error";
           }
         } catch (error) {
           console.error("Error:", error);
-          messageDiv.textContent = "An error occurred. Please try again later.";
+          messageDiv.textContent = `Error: ${error.message}`;
           messageDiv.className = "message error";
         }
       });
