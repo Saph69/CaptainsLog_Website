@@ -154,6 +154,14 @@ body {
   vertical-align: middle;
 }
 
+.hero-content h2 {
+  font-family: 'Pirata One', cursive;
+  color: #c4a030;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-top: 10px;
+  font-size: 2rem;
+  text-align: center;
+}
 
 .creator-credit {
   font-style: italic;
