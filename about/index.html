@@ -394,10 +394,51 @@
               Test 2:
               <br>
               <img src="/images/outputtokens2.png" alt="Token Usage">
+              <br><br>
+              Wow, not even close to 4096! It completely ignored my input, even though i specifically stated i want to use all 4096 tokens.
+              Just to elaborate, it's not that i want it to output exactly 4096 tokens each time, that would be way to long for a daily episodeic adventure, but i definitely want more than 933 tokens..
+              <br><br>
+              Alright back to the drawing board, time to read up on the OpenAI documentation *AGAIN* and see if i can find anything else that can help me out.
               <br>
-              Wow, not even close to 4096, it completely ignored my input even though i specified stated i want to use all 4096 tokens.
+              Okay, turns out there is something called a"Stop_reason" parameter in the API.
+              <br>
+              Seems there can be mutiple reasons why the model stops generating.
               <br>
               <br>
+             *stop* = The Model chose to stop early
+              <br>
+              *length* = The Model hit the max token limit
+              <br>
+              *content_filter* = OpenAI blocked part of the output
+              <br> 
+              *null* = The Model stopped but no reason given
+              <br>
+              <br>
+              Again, time to add more dedugging and logging to the code, lets see if we can find the reason why the model is stopping.
+              <br>
+              <br>                 
+              <img src="/images/finishreason.png" alt="Stop Reason">
+              <br>
+              <br>
+              WELL SON OF A BITCH! IT JUST STOPPED, "BECAUSE IT FELT LIKE IT", EVEN THOUGH DADDY SPECIFICALLY SAID "GIVE ME 4096 TOKENS"
+              <br>
+              <br>
+              Okay lets try giving it the stop=none parameter. This means the model shouldn't stop no matter what.
+              <br><br>
+              <img src="/images/stopnone.png" alt="Stop None">
+              <br><br>
+              We'll also give it a little more convincing via a new prompt.
+              <br><br>
+             <img src="/images/dontstopearly.png" alt="Don't stop early">
+             <br><br>
+             YOU OW ME 4096 TOKENS, AND DADDY WANTS HIS TOKENS! - Just like Brad pit wants his scalps...
+             <br>
+             (This is Inglorious bastards reference, if you haven't seen the film, stop reading this blog and go watch it NOW!)
+             <br>
+             <br>
+             Disobeyed by my creation once again... 935 tokens.... "Cocks Shotgun"
+             <br>
+             <br>
               <h2>Temperature</h2>
               <br>
               <h2>Audio Chunks</h2>
