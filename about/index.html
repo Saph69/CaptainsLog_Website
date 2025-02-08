@@ -103,7 +103,7 @@
               <br />
               Soon, before i knew it, i had created character profiles, back
               stories, locations, world building, pirate lore, and a whole lot
-              more! I sat for hours, listening to the stories my agent was
+              more! I sat for hours, reading the stories my agent was
               telling me, and i was hooked!
               <br />
               <br />
@@ -117,7 +117,7 @@
             </p>
 
             <h2>Okay, heres what i'll do!</h2>
-              I'll whip up a quick HTML page, host it in an Azure static website, write some simple code, host the episodes in a Azure blobs storage and voila!
+              I'll whip up a quick HTML page, host it in an Azure static website, write some simple code, host the text episodes in a Azure blobs storage and voila!
               <br>
               <br>
               Right ?
@@ -126,7 +126,9 @@
               <br>
               <br>
               <br>
-              Little did i know, what i was about to get myself into!
+              mwahahha, Jake your poor little innocent flower, you have no idea what your about to get yourself into!
+              <br>
+              <br>
               <h2>Humble Beginnings</h2>
               Okay, i now have an AI agent that is convinced it's a captain of a pirate ship.
               <br> 
@@ -170,14 +172,58 @@
               <br>
               <br>
               <h3>Enter The Captains assistant!</h3>
-              <br>
+              Okay, so i needed a way for the AI to keep track of the story, character arcs, locations visited, and especially what happened in the previous episode.
+                <br>
+                I managed to achieve this by adding an assistant to the prompt. The Assistant is responsible for reading all previous logs created in the story so far.
+                <br>
+                <br>
+                So how does this work?
+                <br>
+                <br>
+                Just like like the main agent, the assistant first checks the local file directory for any existing .txt files.
+                Any existing .txt files found are passed to the assistant, the assistant then reads all exsisting .txt files and passes the content to the main agent.
+                The main agent then receives a new prompt, with the assistant's memory as the context.
+                <br>
+                <br>
+                In this case, if text files are found the agent will receive the prompt -  "Please write the next log entry, continuing the story from all previous logs while maintaining consistency in the story and character development" 
+                <br>
+                <br>
+                If no text files were found, the agent will receivve the prompt - "You can write a complete log entry without worrying about length restrictions. Focus on maintaining story consistency and providing a complete narrative."
+                <br>
+                <br>
+                I'm now able to generate consistant episodes, with a continous story arch.
+                <br>
+                Pretty cool right?
+                <br>
+                <br>
+                but, now it's time to take it to the next level.
+                <br>
+                <br>
+                <br>
+                
               <br>  
+              <img src="/images/captains_asistant.png" alt="Assistant">
               <h2>The Voice of the Captain</h2>
               <br>
+              <h2>Token Drama</h2>
+              <br>
+              <h2>Audio Chunks</h2>
+              <br>
+              <h2>Migrating to Azure...</h2>
+              <br>
+              <h2>Azure Functions, and new ways to work</h2>
+              <br>
+              <h2>Securing the code</h2>
+              <br>
+              <h2>Have i bitten off more than i can chew?</h2>
+              <br>
+              <h2>I think the website is is ready</h2>
+              <br>
+              <h2>The doubt...</h2>
+
               <br>
               <br>
-              <br>
-              
+
               
           </div>
         </section>
