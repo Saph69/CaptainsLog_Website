@@ -269,7 +269,7 @@
               <br>
               What this means is, the maximum output for each openAI API call can not exceed 4096 tokens.
               <br><br>
-              So how are tokens calculated?
+              So what are tokens and how are they calculated?
               <br><br>
               Tokens are calculated by the number of words in the text. Tokens are pieces of words or characters that the AI processes to understand and generate text.
               They are not the same as words but represent fragments of words, whole words, or even punctuation.
@@ -306,7 +306,73 @@
               <br><br>
               Errrmmm..... i'll be right back, i need to figure out whats going on! (Yes i'm finding this out now as i write this blog)
               <br><br>
+              Oh hi there! Im back!
+              <br>
+              Sure, for you, it's like i never left, but i've actually been gone for hours, yup, thats right, hours! Another rabit hole into the depth of AI.
+              I learnt some stuff when i was gone.... wanna hear it ?
               <br><br>
+              Okay heres the deal.....
+              Turns out there is a direct correlation between the number of tokens in the input and the output.
+              <br><br>
+              How Input Size Affects Output
+              <br><br>
+              GPT-4 Turbo has a max context length of 128k tokens (input + output combined).
+              <br>
+              Output tokens are capped at 4096 per request (this is a separate limitation).
+              <br>
+              The more input tokens you use, the fewer output tokens are available.
+              <br><br>
+              <table class="token-limits">
+                <thead>
+                    <tr>
+                        <th>Input Size (Tokens)</th>
+                        <th>Max Possible Output (Tokens)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1,000</td>
+                        <td>4,096 ✅ <span class="note">(Full response possible)</span></td>
+                    </tr>
+                    <tr>
+                        <td>3,000</td>
+                        <td>4,096 ✅ <span class="note">(Full response possible)</span></td>
+                    </tr>
+                    <tr>
+                        <td>10,000</td>
+                        <td>4,096 ✅ <span class="note">(Still full output possible, as long as the total stays under 128k)</span></td>
+                    </tr>
+                    <tr>
+                        <td>120,000</td>
+                        <td>8,000 ⚠️ <span class="note">(Limited output tokens remaining)</span></td>
+                    </tr>
+                    <tr>
+                        <td>125,000</td>
+                        <td>3,000 ⚠️ <span class="note">(Very limited output tokens remaining)</span></td>
+                    </tr>
+                    <tr>
+                        <td>127,000</td>
+                        <td>1,000 ⚠️ <span class="note">(Critically low output tokens remaining)</span></td>
+                    </tr>
+                    <tr>
+                        <td>128,000</td>
+                        <td>0 ❌ <span class="note">(No room for output! Model won't generate anything)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+              <br>
+              Oh dear, maybe i'm using to many tokens on my input, and thats the reason my output is so short.
+              <br>
+              Okay back to coding, there must be a way to to an overview of the token usage.
+              Alright cool, manged to setup some code to monitor token usage, lets run some tests and see how we're looking!
+              <br>
+              <br>
+              <img src="/images/token-usage.png" alt="Token Usage">
+              <br>
+              <br>
+              <br>
+              
+
               <h2>Audio Chunks</h2>
               <br>
               <h2>Migrating to Azure...</h2>

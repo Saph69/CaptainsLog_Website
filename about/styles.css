@@ -141,7 +141,61 @@
   margin-bottom: 15px;
   font-family: "Pirata One", cursive;
 }
+.token-limits {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
 
+.token-limits thead {
+  background-color: #2c3e50;
+  color: #ffffff;
+}
+
+.token-limits th,
+.token-limits td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.token-limits tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.token-limits tbody tr:hover {
+  background-color: rgba(44, 62, 80, 0.1);
+}
+
+.token-limits .note {
+  color: #666;
+  font-size: 0.9em;
+  margin-left: 8px;
+}
+
+/* Alternating row colors */
+.token-limits tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* Responsive design */
+@media screen and (max-width: 600px) {
+  .token-limits {
+      font-size: 14px;
+  }
+  
+  .token-limits th,
+  .token-limits td {
+      padding: 8px 10px;
+  }
+  
+  .token-limits .note {
+      display: block;
+      margin-top: 4px;
+  }
+}
 .audio-preview audio {
   width: 100%;
   margin-top: 10px;
