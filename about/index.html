@@ -753,7 +753,7 @@
                <br><br>
                For my use case, i'm not expecting any of these limitations to be an issue.
                <br><br>
-               <img src="/images/staticsite.png" alt="Static Website">
+               <img src="/images/staticsite.png" alt="Static Website" style="width: 70%;">
                <br><br>
                I choose to use Github Actions to deploy the static website.
                <br>
@@ -779,7 +779,7 @@
                <br><br>
                Wahooo we now have a website! Theres nothing on it, but we have a website!
                <BR></BR>
-               <img src="/images/itsawebsite.png" alt="Website">
+               <img src="/images/itsawebsite.png" alt="Website" style="width: 70%;">
                <br><br>
                 <h2>The website vision</h2>
                 I knew exactly what i wanted for the website, wherever or not i could achive it, would be another matter.
@@ -882,13 +882,39 @@
           As i mentioned earlier, once the website goes live, i want everything to be completely autonomous.
           <br>
           <br>
-          This means i want the AI Agent to be able to generate a new episode, upload it to the Azure Blob Storage, and update the website with the new episode, all by itself, without any interaction from me.
+          This means i want the AI Agent to be able to generate a new episode, upload it to the Azure Blob Storage, and update the website with the new episode.
+          <br>All without any interaction from me.
+          <br>
+          <br>
+          We can achieve the first step of this plan by using a Time-Trigger in the Azure Function - Once we have moved the code into its new home, inside a cozzy Azure Function, we can set the function to run at a specific time each day.
+          <br>
+          This will however require quite a bit of modifcation to the existing code.
+          <br>
+          Remember up until this point, the AI Agent was running on my local machine. This means it's always been generating files and saving them locally in the same folder as the script.
+          <br><br>
+          We now need to setup an Azure Storage Account and modify the code to save the files there instead of locally.
+          <br>
+          <br>
+          Nothing to facy here, i'll just deploy the cheapest storage Account possible, LSR, general purpose V1, no zone redundancy or anything like that.
+          <br>
+          <br>
+          <img src="/images/storageaccount.png" alt="Storage Account" style="width: 70%;">
+          <br><br>
+          <br>
+          Inside the storage account, i'll create a new container called "captainslog" (yea, yea, this was actually before the whole domain name, but fuck it, we are keeping it!)
+          <br>
+          <br>
+          <img src="/images/storagecontainer.png" alt="Storage Container" style="width: 70%;">
+          <br><br>
+          Alright cool, we now have all of the infrastructure in place, so now we can start to modify the code to save the files to the Azure Blob Storage instead of locally.
           <br>
           <br>
           <br>
           <br>
           <br>
           <br>
+          <br>
+          
           
           
 
