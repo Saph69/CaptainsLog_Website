@@ -452,9 +452,104 @@
              I may re-vist this later, but for now i'm going to focus on the next set of problems.
              <br>
              <br>
+             <h2>Temperature</h2>
+             <p>
+               Before I completely move on from this token drama, I'd like to touch quickly on the "Temperature" parameter, as this can essentially also effect the output length.
+             </p>
+             <p>
+               Temperature is a key setting in AI models (like GPT-4 Turbo) that controls how random or predictable the AI's responses are. It affects the creativity, coherence, and unpredictability of the output.
+             </p>
+             <p>
+               The temperature parameter is a float between 0 and 1.
+             </p>
+
+             <div class="temperature-section">
+               <h3>🔥 How Temperature Works</h3>
+               
+               <div class="temperature-level">
+                 <h4>Low Temperature (0.1 - 0.4) → More Predictable, Logical Responses</h4>
+                 <ul>
+                   <li>The AI sticks to safer, more deterministic answers</li>
+                   <li>Good for technical, fact-based, or structured tasks</li>
+                   <li>Example: AI follows strict patterns and rarely improvises</li>
+                 </ul>
+               </div>
+
+               <div class="temperature-level">
+                 <h4>Medium Temperature (0.5 - 0.7) → Balanced Responses</h4>
+                 <ul>
+                   <li>A mix of coherence and creativity</li>
+                   <li>Ideal for storytelling, brainstorming, and engaging conversations</li>
+                   <li>Example: AI follows logical structures but adds some variation and personality</li>
+                 </ul>
+               </div>
+
+               <div class="temperature-level">
+                 <h4>High Temperature (0.8 - 1.2) → Wild, Creative, Unpredictable</h4>
+                 <ul>
+                   <li>The AI takes risks and improvises more</li>
+                   <li>Great for jokes, poetry, and wacky storytelling</li>
+                   <li>Example: AI generates surreal, chaotic, or unexpected responses</li>
+                 </ul>
+               </div>
+
+               <div class="pirate-example">
+                 <h3>🎭 How Temperature Affects a Pirate AI</h3>
+                 <p>Let's say we ask the AI: "What does a pirate say when he finds buried treasure?"</p>
+
+                 <div class="temperature-example">
+                   <h4>🚨 Low Temperature (0.2)</h4>
+                   <p class="response">"Arrr, we found the treasure! Let's take it back to the ship."</p>
+                   <p class="note">(Boring, expected, factual.)</p>
+                 </div>
+
+                 <div class="temperature-example">
+                   <h4>⚖️ Medium Temperature (0.6)</h4>
+                   <p class="response">"Shiver me timbers! This be a chest of gold fit for a king! Now who be havin' a key?"</p>
+                   <p class="note">(More personality, but still structured.)</p>
+                 </div>
+
+                 <div class="temperature-example">
+                   <h4>🔥 High Temperature (1.0+)</h4>
+                   <p class="response">"Blimey! It be a chest full o' socks! NOOO! The map was upside down again!"</p>
+                   <p class="note">(Completely chaotic and hilarious!)</p>
+                   <br>
+                   I'm building a chaotic comedic pirate adventure, i think we all know which setting i'll be going with!
+                 </div>
+               </div>
+             </div>
+             <h2>A quick recap</h2>
+             Okay, lets quickly review where we're at!
+             <br><br>
+             We now have an AI agent thats convinced it's the most feared and legendary pirate to ever sail the seas. ✅ 
+             <br><br>
+             It can produce a believable and engaging story, with a mix of personality and structure. ✅
+             <br><br>
+             It can now consistantly follow the story structure and keep story lines and characters consistent. ✅
+             <br><br>
+             We have a way to monitor the overall token usage. ✅
+             <br><br>
+             We have a way to control the temperature of the output. ✅
              <br>
              <br>
-             <h2>Audio Chunks</h2>
+             Outputs are generally larger than 1200 tokens, which is a good start! ✅
+             <br><br>
+             Model stil defies daddys orders at giving an output of anything close to 4096 tokens! ❌
+             <br><br>
+             <h2>Audio Chunks -  The Departening!</h2>
+             Alright, time for another problem to solve!
+             <br>
+             With the model now consistantly outputting a good length of text, i've now got a new problem.
+             <br>
+             <br>
+             Turns out the OpenAI TTS (text to speach) API has a max input limited of 4096 Characters per request, which is aprroximately 5 minutes of audio.
+             <br>
+             <img src="/images/depart.png" alt="Departing">
+             <br>
+             <br>
+             <h2>The website!</h2>
+             <br> 
+             <br>
              <br>
              <h2>Migrating to Azure...</h2>
              <br>
