@@ -815,10 +815,103 @@
                 I feel like it improved alot since then, but i'll let you be the judge of that.
                 <br>
                 <h2>Migrating the AI Agent to Azure Functions</h2>
+                Okay here we go again, this is where things start to get a little spicy!
+                <br> (But not as spicy as when i start playing with HTTP triggers, incase you haven't guessed that allready from the title of the next segment)
+                <br><br>
+                Okay it's been a while since we last talked about the AI Agent, so i'll quickly recap what we have done so far. 
                 <br>
+                <br>
+                <b>We have an AI Agent that belives it's the most feared and legendary pirate to ever sail the seas.</b> ✅ 
+                <br><br>
+                <b>The AI Agent can generate a believable and engaging story, with a mix of personality and structure.</b> ✅ 
+                <br><br>
+                <b>We have an AI Assitant that keeps track of the story and keeps the characters and their story archs consistent.</b> ✅ 
+                <br><br>
+                <b>We have a way to monitor our overall token usage.</b> ✅ 
+                <br><br>
+                <b>We have a way to control the temperature of the output.</b> ✅ 
+                <br><br>
+                <b>We have a way to split the journal entries into chunks of 4000 characters.</b> ✅ 
+                <br><br>
+                <b>We have a way to then stitch the audio files back together, outputting a single mp3 file.</b> ✅ 
+                <br><br>
+                <b>We still have a disobiedient model, that likes to defy daddys orders, and will never give an output of anything close to 4096 tokens.</b> ✅ 
+                <br><br>
+                In a nutshell, we are able to run the script, each time the script runs it will generate a new journal entry which is a continuation of the previous entry.
+                <br><br>
+                I'm pretty happy with the progress on the AI Agent, so far. The stories it tells are quite entertaining, yet i'm still constantly changing my prompts to try and get the best possible results.
+                <br>I'll probably be consistantly changing the prompts, right up until i go live with the first episode.
+                <br><br>
+                The one thing i'm not 100% happy with at the moment is the voice of the AI Agent.
+                <br>
+                I still haven't found the right voice to tell the story, but luckily this is not something that takes alot of code to change.
+                <br>
+               <h3>Okay, so Azure Functions? What is a Azure Function?</h3> <img src="/images/azurefunctions-icon.svg" alt="Azure Function">
+                <br>
+
+                <br>
+                An Azure Function is a serverless computing service that allows you to run small pieces of code (functions) in the cloud without managing a full server or infrastructure.
+                <br>
+              Think of it as "event-driven, auto-scaling code execution" in the cloud. It automatically scales, only runs when needed, and you pay only for what you use.
+           <br><br>
+           1️⃣ You write a function → A small piece of code that does a specific task.
+           <br><br>
+           2️⃣ It is triggered by an event → Example: HTTP request, file upload, database change.
+           <br><br>
+           3️⃣ Azure automatically runs the function when triggered.
+           <br><br>
+           4️⃣ It scales up or down automatically based on demand.
+           <br><br>
+           Oh and did i mention it's free?
+           <br><br>
+           Yes, there is a completely free teir for Azure functions! There are of course some limitations (some of which did create some extra headaches and extra work for me)
+           <br><br>
+           The Free Tier provides 1 million requests and 400,000 GB-seconds of resource consumption per month at no charge.
+           <br><br>
+           Again, AMAZING value! (I swear this is not sponsored by Microsoft, i'm not even sure they know i exist)
+           <br><br>
+            There are however a few caveats to be aware of with the free teir.
+           <br><br>
+           The Consumption Plan does not support VNet integration - This is not a deal breaker, it means intergrating with some Azure resources a little more difficult, but it does however support managed identity, so that helps.
+           <br><br>
+           "Cold Start Latency: Infrequently used functions may experience delays during startup, potentially impacting performance for time-sensitive applications"
+           <br><br>
+           This is the biggest issue with the free teir. It's not an issue with this particular function, but it will be a issue with some of the functions we build later.
+
+          <h3>Okay now we know what an Azure Function is, but why do i want to move my code there?</h3>
+          As i mentioned earlier, once the website goes live, i want everything to be completely autonomous.
+          <br>
+          <br>
+          This means i want the AI Agent to be able to generate a new episode, upload it to the Azure Blob Storage, and update the website with the new episode, all by itself, without any interaction from me.
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <h2>HTTP Triggers, i'm about to pull the trigger on myself</h2>
                 <br>
-                <h2>Azure Function - Loading the Episodes automaticlly to the site</h2>
+                <h2>Azure Function - Loading the Episodes automatically to the site</h2>
                 <br>
                 <h2>Azure Function - The Subscribe Feature</h2>
                 <br>
@@ -842,11 +935,11 @@
           <section class="about-section" aria-label="Technical Stack">
             <div class="tech-stack">
               <div class="tech-item">
-                <img src="/images/azure-logo.svg" alt="Microsoft Azure" />
+                <img src="/images/azure-logo.svg" alt="Microsoft Azure" style="width: 25%" />
                 <span>Microsoft Azure</span>
               </div>
               <div class="tech-item">
-                <img src="/images/ai-logo.svg" alt="AI Technology" />
+                <img src="/images/ai-logo.svg" alt="AI Technology" style="width: 25%" />
                 <span>AI Integration</span>
               </div>
               <!-- Add more tech stack items as needed -->
