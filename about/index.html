@@ -39,6 +39,9 @@
     <meta property="twitter:title" content="About The Captain's Journal - AI-Generated Pirate Adventures" />
     <meta property="twitter:description" content="Discover how AI technology brings pirate stories to life in The Captain's Journal. Learn about our unique blend of artificial intelligence and storytelling." />
     <meta property="twitter:image" content="https://captains-journal.com/images/og-image.jpg" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-numbers/prism-line-numbers.min.css">
   </head>
   <body>
     <main>
@@ -895,13 +898,13 @@
           We now need to setup an Azure Storage Account and modify the code to save the files there instead of locally.
           <br>
           <br>
-          Nothing to facy here, i'll just deploy the cheapest storage Account possible, LSR, general purpose V1, no zone redundancy or anything like that.
+          Nothing to fancy here, i'll just deploy the cheapest storage Account possible, LSR, general purpose V1, no zone redundancy or anything like that.
           <br>
           <br>
           <img src="/images/storageaccount.png" alt="Storage Account" style="width: 70%;">
           <br><br>
           <br>
-          Inside the storage account, i'll create a new container called "captainslog" (yea, yea, this was actually before the whole domain name, but fuck it, we are keeping it!)
+          Inside the storage account, i'll create a new container called "captainslog" (yea, yea, this was actually before the whole domain name dobackal, but fuck it, we are keeping this now!)
           <br>
           <br>
           <img src="/images/storagecontainer.png" alt="Storage Container" style="width: 70%;">
@@ -909,13 +912,298 @@
           Alright cool, we now have all of the infrastructure in place, so now we can start to modify the code to save the files to the Azure Blob Storage instead of locally.
           <br>
           <br>
+          Okay, there are a few different ways we could do this, but I ended up using Access Keys to access the Azure storage account from the function.
+          <br>
+          <br>
+          Another cool thing about Azure Functions, is that they have support for enviroment variables - This means i can hide things like API keys, connection strings, and other sensitive information in the function app environment variables.
+          <br>
+          Which means i can Share the code with you guys!
+          <br>
+          <h3>Here's the full code for the AI Agent Function</h3>
+          <pre class="line-numbers"><code class="language-python">
+            from openai import OpenAI
+            from azure.storage.blob import BlobServiceClient
+            import azure.functions as func
+            import re
+            import logging
+            import os
+            from io import BytesIO
+            
+            #Updated
+            
+            client = OpenAI(
+                api_key=os.environ["OPENAI_API_KEY"]
+            )
+            
+            # Initialize Azure Blob Storage client
+            connection_string = os.environ["AZURE_STORAGE_CONNECTION_STRING"]
+            blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+            container_name = "captainslog"  # Name of your container
+            container_client = blob_service_client.get_container_client(container_name)
+            
+            def natural_sort_key(s):
+                """Helper function to sort strings with numbers naturally"""
+                return [int(text) if text.isdigit() else text.lower()
+                        for text in re.split(r'(\d+)', s)]
+            
+            def main(mytimer: func.TimerRequest) -> None:
+                try:
+                    logging.info('=== NEW FUNCTION EXECUTION STARTING ===')
+                    
+                    # Initialize previous_logs list
+                    previous_logs = []
+            
+                    # List all blobs in the container
+                    logging.info("Starting to list blobs in container...")
+                    all_blobs = list(container_client.list_blobs())
+                    logging.info(f"Found {len(all_blobs)} total blobs in container")
+                    for blob in all_blobs:
+                        logging.info(f"Found blob: {blob.name}")
+            
+                    # Only get .txt files and sort them
+                    log_files = sorted([blob.name for blob in all_blobs 
+                                      if blob.name.startswith("Captains Log day") and 
+                                      blob.name.endswith(".txt")],
+                                     key=natural_sort_key)
+                    logging.info(f"Filtered to {len(log_files)} log files: {log_files}")
+            
+                    # Determine the next day number
+                    next_day = 1  # Default to day 1 if no files exist
+                    if log_files:
+                        # Get the most recent log file
+                        latest_log = log_files[-1]
+                        logging.info(f"Latest log file found: {latest_log}")
+                        # Extract the day number from the filename using regex
+                        day_match = re.search(r"Captains Log day (\d+)\.txt", latest_log)
+                        if day_match:
+                            next_day = int(day_match.group(1)) + 1
+                            logging.info(f"Extracted day number: {next_day-1}, next day will be: {next_day}")
+                        else:
+                            logging.warning(f"Could not extract day number from filename: {latest_log}")
+                            raise ValueError("Invalid log file name format")
+                    else:
+                        logging.info("No existing log files found, starting with day 1")
+            
+                    logging.info(f"=== CONFIRMED: Generating log for day {next_day} ===")
+            
+                    # When saving files, double-check the day number
+                    log_filename = f"Captains Log day {next_day}.txt"
+                    audio_filename = f"Captains Log day {next_day}.mp3"  # Simplified audio filename
+                    
+                    # Verify the file doesn't already exist before proceeding
+                    blob_client = container_client.get_blob_client(log_filename)
+                    try:
+                        blob_client.get_blob_properties()
+                        logging.error(f"File already exists: {log_filename}")
+                        raise ValueError(f"File already exists: {log_filename}")
+                    except Exception as e:
+                        if "BlobNotFound" in str(e):
+                            logging.info(f"Confirmed file does not exist: {log_filename}")
+                        else:
+                            raise
+            
+                    # Read all previous logs if they exist
+                    previous_logs = []
+                    # Read all previous logs from Azure
+                    for log_file in log_files:
+                        blob_client = container_client.get_blob_client(log_file)
+                        previous_logs.append(blob_client.download_blob().readall().decode('utf-8'))
+            
+                    Context = """
+            THIS IS WHERE THE SUPER AMAZING PIRATE PROMPT NORMALLY LIVES, 
+            BUT CONTAINS MASSIVE CHARACTER AND STORY SPOILERS, SO I'VE REMOVED IT!
+            
+            """
+            
+                    # Get token counts for the context
+                    context_tokens = client.chat.completions.create(
+                        model="gpt-4-turbo",
+                        messages=[{"role": "developer", "content": Context}],
+                        max_tokens=1  # Minimal response to just get token count
+                    ).usage.prompt_tokens
+            
+                    logging.info(f"Context tokens: {context_tokens}")
+            
+                    # Track tokens for previous logs
+                    previous_logs_tokens = 0
+                    messages = [{"role": "developer", "content": Context}]
+            
+                    # Read all previous logs and count their tokens
+                    for log_file in log_files:
+                        blob_client = container_client.get_blob_client(log_file)
+                        log_content = blob_client.download_blob().readall().decode('utf-8')
+                        previous_logs.append(log_content)
+                        messages.append({"role": "assistant", "content": log_content})
+                        
+                        log_tokens = client.chat.completions.create(
+                            model="gpt-4-turbo",
+                            messages=[{"role": "assistant", "content": log_content}],
+                            max_tokens=1
+                        ).usage.prompt_tokens
+                        previous_logs_tokens += log_tokens
+                        logging.info(f"Log entry tokens: {log_tokens}")
+            
+                    if previous_logs:
+                        messages.append({
+                            "role": "developer", 
+                            "content": "Please write the next journal entry, continuing the story from all previous logs while maintaining consistency in the story and character development.  Do **not** stop early. If you feel the response is complete, keep expanding with more vivid descriptions, character thoughts, and action.  Add extra detail, dialogue, and inner monologues if needed."
+                        })
+            
+                    messages.append({
+                        "role": "developer", 
+                        "content": "You MUST write a complete log entry using the full 4096 tokens. Do not stop early. Take your time, add more details, inner monologues, or setup for future events. Keep writing until you hit the token limit."
+                    })
+            
+                    completion = client.chat.completions.create(
+                        model="gpt-4-turbo",
+                        store=True,
+                        messages=messages,
+                        max_tokens=4096,
+                        stop=None,
+                        temperature=0.8
+                    )
+            
+                    ai_message = completion.choices[0].message.content
+                    finish_reason = completion.choices[0].finish_reason  # Get the finish reason
+                    
+                    # Get output tokens count
+                    output_tokens = client.chat.completions.create(
+                        model="gpt-4-turbo",
+                        messages=[{"role": "assistant", "content": ai_message}],
+                        max_tokens=1
+                    ).usage.prompt_tokens
+            
+                    # Log token usage statistics - making it more visible with separate log entries
+                    usage = completion.usage
+                    logging.info("========== TOKEN USAGE STATISTICS ==========")
+                    logging.info(f"Prompt Tokens: {usage.prompt_tokens}")
+                    logging.info(f"Completion Tokens: {usage.completion_tokens}")
+                    logging.info(f"Output Tokens: {output_tokens}")
+                    logging.info(f"Total Tokens: {usage.total_tokens}")
+                    logging.info(f"Previous Logs Tokens: {previous_logs_tokens}")
+                    logging.info(f"Context Tokens: {context_tokens}")
+                    logging.info(f"Finish Reason: {finish_reason}")  # Log the finish reason
+                    logging.info("===========================================")
+            
+                    logging.info(f"Successfully generated completion for day {next_day}")
+            
+                except Exception as e:
+                    logging.error(f"OpenAI API error: {str(e)}", exc_info=True)
+                    raise
+            
+                try:
+                    # Save text to Azure
+                    log_filename = f"Captains Log day {next_day}.txt"
+                    blob_client = container_client.get_blob_client(log_filename)
+                    blob_client.upload_blob(ai_message.encode('utf-8'), overwrite=True)
+                    logging.info(f"Successfully saved text to blob: {log_filename}")
+            
+                except Exception as e:
+                    logging.error(f"Blob storage error: {str(e)}", exc_info=True)
+                    raise
+            
+                # Split text into chunks of 4000 characters at sentence boundaries
+                def split_text(text, chunk_size=4000):
+                    chunks = []
+                    current_chunk = ""
+                    sentences = text.split('. ')
+                    
+                    for sentence in sentences:
+                        if len(current_chunk) + len(sentence) < chunk_size:
+                            current_chunk += sentence + '. '
+                        else:
+                            chunks.append(current_chunk)
+                            current_chunk = sentence + '. '
+                    if current_chunk:
+                        chunks.append(current_chunk)
+                    return chunks
+            
+                # Split text into chunks and process audio
+                try:
+                    logging.info('Starting text chunk processing...')
+                    text_chunks = split_text(ai_message)
+                    logging.info(f'Successfully split text into {len(text_chunks)} chunks')
+            
+                    # Create a single audio file regardless of chunks
+                    audio_filename = f"Captains Log day {next_day}.mp3"
+                    combined_audio = BytesIO()
+                    
+                    logging.info(f'Processing {len(text_chunks)} audio chunks...')
+                    for i, chunk in enumerate(text_chunks):
+                        try:
+                            logging.info(f'Processing chunk {i+1} of {len(text_chunks)}')
+                            speech_response = client.audio.speech.create(
+                                model="tts-1",
+                                voice="ash",
+                                input=chunk
+                            )
+                            # Append this chunk's audio data to our combined buffer
+                            combined_audio.write(speech_response.content)
+                            
+                        except Exception as e:
+                            logging.error(f"ERROR processing audio chunk {i+1}: {str(e)}", exc_info=True)
+                            raise
+            
+                    # Reset buffer position to start
+                    combined_audio.seek(0)
+                    
+                    # Upload the single combined audio file
+                    blob_client = container_client.get_blob_client(audio_filename)
+                    blob_client.upload_blob(combined_audio.getvalue(), overwrite=True)
+                    logging.info(f"Successfully saved combined audio to blob: {audio_filename}")
+            
+                    logging.info('Audio processing completed successfully')
+            
+                    try:
+                        # Log text response details
+                        logging.info(f"Text response length: {len(ai_message)}")
+                        logging.info(f"Text saved to Azure as {log_filename}")
+                    except Exception as e:
+                        logging.error(f"Error logging text details: {str(e)}", exc_info=True)
+                        # Don't raise here, continue to function completion
+            
+                    try:
+                        # Function completion message
+                        logging.info('Python timer trigger function completed successfully')
+                        return  # Explicitly return from the function
+                    except Exception as e:
+                        logging.error(f"Error in final logging: {str(e)}", exc_info=True)
+                        # Don't raise here, let function complete
+            
+                except Exception as e:
+                    logging.error(f"Critical error in audio processing: {str(e)}", exc_info=True)
+                    raise
+            
+            
+            </code></pre>
+          <br><br>
+          Oh yea, remember way back when, when I had the issues with the audio files, and getting them stiched together ? and I mentioned it would be a problem later ?
+          <br>
+          Well turns out the that Pydub (which was the libary i was using to stiche the audio files together), requires FFmpeg to be installed to work.
+          <br>Of course this didn't exsist within my Azure Function, so when i first migrated everything, i had a bunch of errors and couldn't understand why the script kept crashing.
+          <br>Turns out, this was the issue.
+          <br><br>Thats why i ended up changing to BytesIO, which turned out to be a much better solution.
+          <br>BytesIO is a file-like object in Python that allows you to read and write binary data in memory (RAM) instead of a physical file.
+          <br>This is much more efficient and faster than using a physical file, so it actaully turned out to be a blessing in disguise.
+          <br>
+          <br>
+          Okay recap time again!
+          <br>
+          <br>
+          We now have the code for the AI Agent inside an Azure Function, the function is triggered by a Time-Trigger, which means it will run at a specific time each day.
+          <br>
+          <br>
+          The function will then generate a new episode, save it to an Azure Blob Storage.
+          <br>
+          <br>
+          Perfect, we are making progress!
+          <br>
+          <br>
+          Now we just need create a container on the website, which will house the audio player, and to figure out how to automcatailly update the website when a new episode goes live
           <br>
           <br>
           <br>
           <br>
-          <br>
-          
-          
           
 
 
@@ -1024,5 +1312,8 @@
 
     <!-- Scripts -->
     <script src="../client.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
   </body>
 </html>
