@@ -684,9 +684,84 @@
              Little did i know, this would not actually be an adequate solution, after moving to the code to Azure Functions, but if i told you that now, we would be getting ahead of ourselves!
              <br>
              <br>
-             <h2>The website!</h2>
+             <h2>Early beginnings of the website</h2>
+             Oh yea, remember at the start of this blog i mentioned i was going to build the website from scratch?
              <br>
              <br>
+             i think i mentioned .....
+             <br>
+             <br>
+             <b>"Okay, heres what i'll do!</b>
+             <br>
+             I'll whip up a quick HTML page, host it in an Azure static website, write some simple code, host the text episodes in a Azure blobs storage and voila!"
+             <br>
+             <br>
+             yeeaaaa..... we're only just getting to this part now!
+             <br>
+             <br>
+             Anyhow, I'll be hosting the website in an Azure static website (Suprise Suprise!)
+             <br> <BR>
+            Frist things first, lets Create a completely new Resource Group in Azure that will house all the resource we will use for this project.
+             <br><br>
+             RG-CaptainsLog - Check ✅ 
+             <br><br>
+             The astute amounst you will maybe ask - "why are there so many things called "CaptainsLog"? and not Captains Journal? and why do you often refer to things as log entries instead of journal entries?"
+             <br>
+             <br>
+             and to that i say - SHHHHHHH be patient, we'll get to that!
+             <br>
+             <br>
+             Okay resource group is deployed, now lets deploy the static website.
+             <br>
+             <br>
+             <img src="/images/rgdeployed.png" alt="Resource Group">
+             <br><br>
+             A few notes on the Azure Static Website. - It is completely Free, supports custom doamins, and even hosts a free SSL certificate.
+             <br>
+             Crazy Value! - I presume this is Microsofts way of getting people slowly onboard, and when their website explodes in popularity, their froced to moved up to the paid teir.
+             <br><br>
+             However, there are a few limitations to be aware of in the free teir:
+             <br><br>
+             Bandwidth: There's a monthly data transfer limit of 100 GB.
+             <br>
+             Storage Capacity: Each app is limited to 250 MB of storage.
+             <br>
+             Custom Domains: You can configure up to 2 custom domains per app.
+             <br>
+             Staging Environments: The Free plan allows for 3 staging environments per app.
+             <br>
+             Service Level Agreement (SLA): The Free plan does not include an SLA, which means there's no guaranteed uptime or support.
+             <br><br>
+             For my use case, i'm not expecting any of these limitations to be an issue.
+             <br><br>
+             <img src="/images/staticsite.png" alt="Static Website">
+             <br><br>
+             I choose to use Github Actions to deploy the static website.
+             <br>
+             This means i can push my code to my Github repository, and the Github Actions workflow will deploy the static website to Azure.
+             <br><br>
+             To put this in simple terms: Whenever i make any changes to my code, i can then "upload" the new code to my Github repository. Inside my Github repository there is a small "worker bot" that is constantly monitoring for new changes.
+             <br>
+             If the worker bot detects a new change, it will then trigger the Github Actions workflow to deploy the new changes to the static website.
+             <br>
+             <br>
+             The new code will then be displayed correctly on the website. - Nice and simple work flow!
+             <br><br>
+             Great! Now i need a custom domainname for the website, i'm thinking "CaptainsLog.com" - Yea you're allready ahead of me here right ?
+             <br>
+             <br>
+             <img src="/images/domainname.png" alt="CaptainsLog - Domain Name">
+             <br><br>
+             SON OF A BITCH!
+             <br><br>
+             <div class="tenor-gif-embed" data-postid="23416426" data-share-method="host" data-aspect-ratio="1.77778" data-width="50%"><a href="https://tenor.com/view/so-pissed-im-work-mad-gif-23416426">So Pissed GIF</a>from <a href="https://tenor.com/search/so-gifs">So GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+             <br><br>
+             After alot of back and fourth brainstorming different name ideas, and constantly being disapointed by the fact the domain was already taken, i finally settled on "captains-journal.com"
+             <br><br>
+             Wahooo we now have a website! Theres nothing on it, but we have a website!
+             <BR></BR>
+             <img src="/images/itsawebsite.png" alt="Website">
+             <br><br>
              <h2>Migrating to Azure...</h2>
              <br>
               <br>
