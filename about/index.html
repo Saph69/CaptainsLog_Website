@@ -536,14 +536,57 @@
              <br><br>
              Model stil defies daddys orders at giving an output of anything close to 4096 tokens! ❌
              <br><br>
-             <h2>Audio Chunks -  The Departening!</h2>
-             Alright, time for another problem to solve!
+             <h2>Txt Chunks n' Audio Chunks -  The Departening!</h2>
+             Alright, another day another problem!
+             <br><br>
+             With the model now consistantly outputting a good length of text, a new issues arises.
              <br>
-             With the model now consistantly outputting a good length of text, i've now got a new problem.
              <br>
+             Turns out the OpenAI TTS (text to speach) API has a max input limit of 4096 Characters per request, which is aprroximately 5 minutes of audio.
              <br>
-             Turns out the OpenAI TTS (text to speach) API has a max input limited of 4096 Characters per request, which is aprroximately 5 minutes of audio.
+             Some of the journal entries are over 4096 characters, but some are not......
              <br>
+             The ones that are over 4096 are getting automatically truncated when being passed to the TTS API.
+             <br>
+             This means, if a journal entry is over 4096 (Lets say for example we have a journal entry of 7000 characters)
+             The TTS API will only pass the first 4096 characters to the API, generate the audio for that chunk, then just stop.
+             <br>
+             Giving you only 4096 characters of audio, and leaving the rest of the journal entry untold.
+             <br><br>
+             This is an issue...
+             <br><br>
+             Luckily this is afairly simple problem to solve.
+             <br>
+             We know the limit for each TTS submission can max be 4096 characters, so we just need to split each journal entry into chunks of less than 4096 characters.
+            <br>
+            (Remembner we are now talking about characters, NOT tokens)
+            <br><br>
+            Alright, lets play it safe and split each journal entry into chucks of 4000 characters, this way we are sure we will not hit the limit.
+            <br>
+            This can easily be done by doing a some simple string manipulation in the code.
+            <br>
+            Some of the important things to consider however, is making sure the string split doesn't accour mid word, or mid sentence.
+            <br>
+            I found the best way to do this, was to make sure each split happened after a full stop.
+            <br>
+            <br>
+            <img src="/images/split.png" alt="Split">
+            <br>
+            <br>
+             Okay great, we are now able to hear the full log, without missing any data!
+             <br>
+             but rarely are things so simple...... 
+            <br>
+             Beacuase the text journal entries are being split into seperate files, and than fed to the TTS API in chunks of 4000 characters, this means the audio files outputted are also split into 4000 character chunks.
+             <br><br>
+             Now we find ourselves in the situation, were we can have up to 3 seperate audio files for one journal entry.
+             <br><br>
+             This is no good... The plan is to have a web series, were the audio files will be streamed directly from the website.
+             <br>
+             This should be seemless for the end user, and they should only have to deal with one audio file per episode.
+             <br><br>
+             We need to fix this!
+             <br><br>
              <img src="/images/depart.png" alt="Departing">
              <br>
              <br>
