@@ -1453,9 +1453,9 @@
                 So lets break it down.
                 <br>
                 <br>We need some sort of a "sign up" form on the website.
-                <br>We then need some way of storing these emails in a database.
+                <br>We then need some way of storing emails in a database.
                 <br>Then we need a way of monitoring the blob storage for new episodes.
-                <br>If a new episoe is found in blob storage it should trigger 2 functions.
+                <br>If a new episode is found in blob storage it should trigger 2 functions.
                 <br>1. The function we have already built, that loads the episdoes to the website.
                 <br>2. A new function that emails all emails addresses in the database, informing them that a new episode is available.
                 <br>
@@ -1530,7 +1530,7 @@
                 My original plan for the storing the email addresses was to use an Azure SQL database, but that would actually be overkill for this project.
                 <br>
                 So instead I ended up using Azure table storage, which is a much simpler and cheaper solution.
-                <br>
+                <br><br>
                 I created a table in the exsisting azure storage account, and then created a new function to handle the requests.
                 <br><br>
                 <pre class="line-numbers"><code class="language-javascript">
@@ -1633,10 +1633,10 @@
                   };
                 </code></pre>
                 <br>
-                The function then also does a few pre flight checks, to make sure the email is valid, and that it doesn't already exist in the database.
+                The function also does a few pre flight checks, to make sure the email is valid, and that it doesn't already exist in the database.
                 <br>
                 <br>
-                If the email is valid, and doesn't already exist in the database, the function will add the email to the table, under the "subscribers" partition key, and at the same time add a timestamp to the record.
+                If these checks pass, the function will add the email to the table, under the "subscribers" partition key, and add a timestamp to the record.
                 <br>
                 <br>
                 Awesome users now have the ability to subscribe to the Captain's Journal!
@@ -1648,11 +1648,11 @@
                 <br>
                 <br>
                 Basicly, we just need to build a new function, that does the apposite of the subscribe function we just built.
-                <br>Instead of adding an email to the database, it will search for a email in the database, and if it finds it, it will remove it from the database.
+                <br>Instead of adding an email to the database, it will search for a specific email in the database, if it finds the email, it will remove it from the database.
                 <br><br>
                 However, there is a small caveat.
                 <br>
-                This can't be a button on the website, or a trigger from the website, it has to be a link inside the email users recieve when a new episode goes live.
+                This can't be a button on the website, or a trigger from the website. It has to be a link inside the email end users recieve, when a new episode goes live.
                 <br><br>
                 <img src="/images/unsublink.png" alt="Unsubscribe Link">
                 <br><br>
@@ -1662,11 +1662,11 @@
                 <br><br>
                 So how does this work?
                 <br><br>
-                The important thing to note here is the link in the buttom of the code.
+                The important thing to take note of here, is the link in the buttom of the code.
                 <br>Take note of the (EncodeURIComponent(email)) part.
                 <br>What this does is, it encodes the email address of the user that clicked the link, into the actual link itself.
                 <br>When the user clicks the link, it redirects the user to https://captains-journal.com/unsub - Navigating to this page normally will do nothing.
-                <br>However, navigating to the page with the encoded email address in the URL, will trigger a small script.
+                <br>However, navigating to the page with a encoded email address in the URL, will trigger a small script.
                 <br><br>
                 <pre class="line-numbers"><code class="language-javascript">
                     document.addEventListener("DOMContentLoaded", async () => {
@@ -1821,19 +1821,20 @@
                  <br>The function then passes the result back to the script, which then displays a message to the user, informing them that they have been unsubscribed from the newsletter.
                  <br><br>
                  <img src="/images/unsubexample.png" alt="Unsubscribe Example">
-                  <br><br> This is the one that really broke me. There are so many moving parts to this, and everything has to work in sync, or it wont work.
+                  <br><br> This is the part that really broke me. There are so many moving parts to this, and everything has to work in sync, or it wont work.
                   <br><br>but oh boy does it feel good watching it work like a well oiled machine!
                  <h3>Sending Emails when a new episdoe goes live</h3>
-                The final peice of the puzzle is to send the users an email when a new episode goes live.
-                <br>
-                This part was actually suprisingly simple.
-                <br>Turns out, Azure functions have a built in trigger called a "Blob Trigger".
+                Okay, we're almost there! Time for the final peice of the puzzle!
+                <br><br> We need to create a Function that will send an email to all users in the database when a new episode goes live.
+                <br><br>
+                This part was actually surprisingly simple.
+                <br><br>Turns out, Azure functions have a built in trigger called a "Blob Trigger".
                 <br>This trigger is used to trigger a function when a new blob is created in the storage account
                 <br>(Or in our case, when a new episode is created).
                 <br>
                 <br>
                 Basicly, we just write a simple script that triggers when a new item is created in the blob storage, the script then checks if it's a .mp3 file.
-                <br>if the new blob is a .mp3 file, the script then sends an email to all email addresses in the database.
+                <br>if the new blob is a .mp3 file, the script then sends an email to all email addresses in the database informing them that a new episode is available.
                 <br>
                 <br>
                 <h3>The Blob Trigger Function</h3>
@@ -1931,19 +1932,6 @@ await transporter.sendMail({
             </div>
           </section>
 
-          <!-- Technical Stack Section -->
-          <section class="about-section" aria-label="Technical Stack">
-            <div class="tech-stack">
-              <div class="tech-item">
-                <img src="/images/azure-logo.svg" alt="Microsoft Azure" style="width: 5%" />
-              </div>
-              <div class="tech-item">
-                <img src="/images/ai-logo.svg" alt="AI Technology" style="width: 15%" />
-              </div>
-              <!-- Add more tech stack items as needed -->
-            </div>
-          </section>
-
           <!-- Creator Section -->
           <section class="about-section creator-section" aria-label="About the Creator">
             <h2>About the Creator</h2>
@@ -1955,6 +1943,8 @@ await transporter.sendMail({
               <div class="creator-info">
                 <h3>Jake Poulsom</h3>
                 <p class="creator-title">Microsoft 365 & Azure Expert</p>
+                <img src="/images/azure-logo.svg" alt="Microsoft Azure" style="width: 3%" />
+                <img src="/images/ai-logo.svg" alt="AI Technology" style="width: 15%" />
                 <p class="creator-bio">
                   As a Microsoft technology enthusiast, I've combined my technical
                   expertise with creative storytelling to bring you these unique
