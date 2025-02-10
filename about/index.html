@@ -1602,14 +1602,202 @@
                 <br><br>
                 <img src="/images/unsublink.png" alt="Unsubscribe Link">
                 <br><br>
+                The code for the email is as follows:
+                <br><br>
                 <img src="/images/emailcode.png" alt="Email Code">
                 <br><br>
-                <h3>Sending users Emails when a new episdoe goes live</h3>
+                The important thing to note here is the link in the buttom of the code.
+                <br>Take note of the (EncodeURIComponent(email)) part.
+                <br>What this does is, it encodes the email address of the user that clicked the link, within the link.
+                <br>This means we can then use this inforamtion to trigger the unsubscribe function.
+                <br>The function will then check if the email exists in the database, and if it does, it will remove the email from the database.
+                <br><br>
+                <h3>The Unsubscribe Function</h3>
+                <pre class="line-numbers"><code class="language-python">
+                  import logging
+                  import azure.functions as func
+                  from azure.data.tables import TableServiceClient
+                  from azure.core.exceptions import ResourceNotFoundError
+                  import json
+                  import os
+                  
+                  def main(req: func.HttpRequest) -> func.HttpResponse:
+                      logging.info('UnsubscribeEmail function triggered')
+                  
+                      headers = {
+                          "Content-Type": "application/json",
+                          "Access-Control-Allow-Origin": "*"
+                      }
+                  
+                      try:
+                          email = req.params.get('email')
+                          logging.info(f'Processing unsubscribe request for email: {email}')
+                  
+                          if not email:
+                              return func.HttpResponse(
+                                  body=json.dumps({"error": "Email parameter is required"}),
+                                  headers=headers,
+                                  status_code=400
+                              )
+                  
+                          # Connect to table storage
+                          connection_string = os.environ["AZURE_STORAGE_CONNECTION_STRING"]
+                          table_service = TableServiceClient.from_connection_string(connection_string)
+                          table_client = table_service.get_table_client("subscribers")
+                          
+                          try:
+                              # Use the known partition key and email as row key
+                              partition_key = "subscribers"
+                              row_key = email
+                              
+                              logging.info(f'Attempting to delete entity with PartitionKey: {partition_key}, RowKey: {row_key}')
+                              
+                              # Delete the entity
+                              table_client.delete_entity(
+                                  partition_key=partition_key,
+                                  row_key=row_key
+                              )
+                              
+                              logging.info(f'Successfully deleted entity for email: {email}')
+                              return func.HttpResponse(
+                                  body=json.dumps({
+                                      "message": "Successfully unsubscribed",
+                                      "email": email
+                                  }),
+                                  headers=headers,
+                                  status_code=200
+                              )
+                              
+                          except ResourceNotFoundError:
+                              logging.warning(f'No subscription found for email: {email}')
+                              return func.HttpResponse(
+                                  body=json.dumps({
+                                      "error": "Email not found or already unsubscribed"
+                                  }),
+                                  headers=headers,
+                                  status_code=404
+                              )
+                              
+                          except Exception as e:
+                              logging.error(f'Table operation error: {str(e)}')
+                              return func.HttpResponse(
+                                  body=json.dumps({
+                                      "error": f"Failed to process unsubscribe request: {str(e)}"
+                                  }),
+                                  headers=headers,
+                                  status_code=500
+                              )
+                  
+                      except Exception as e:
+                          logging.error(f'Error: {str(e)}')
+                          return func.HttpResponse(
+                              body=json.dumps({
+                                  "error": f"Internal server error: {str(e)}"
+                              }),
+                              headers=headers,
+                              status_code=500
+                          );
+                  </code></pre>
+                <h3>Sending Emails when a new episdoe goes live</h3>
+                The final peice of the puzzle is to send the users an email when a new episode goes live.
                 <br>
-                
+                This part was actually suprisingly simple.
+                <br>Turns out, Azure functions have a built in trigger called a "Blob Trigger".
+                <br>This trigger is used to trigger a function when a new blob is created in the storage account
+                <br>(Or in our case, when a new episode is created).
                 <br>
                 <br>
+                Basicly, we just write a simple script that triggers when a new item is created in the blob storage, the script then checks if it's a .mp3 file.
+                <br>if the new blob is a .mp3 file, the script then sends an email to all email addresses in the database.
+                <br>
+                <br>
+                <h3>The Blob Trigger Function</h3>
+                <pre class="line-numbers"><code class="language-javascript">
+         
+const { TableClient } = require("@azure/data-tables");
+const nodemailer = require("nodemailer");
+
+module.exports = async function (context, myBlob) {
+    context.log("Blob trigger function processed blob:", context.bindingData.name);
+
+    try {
+        // Only process .mp3 files
+        if (!context.bindingData.name.toLowerCase().endsWith('.mp3')) {
+            context.log('Not an MP3 file, skipping...');
+            return;
+        }
+
+        // Get all subscribers from Table Storage
+        const tableClient = TableClient.fromConnectionString(
+            process.env.STORAGE_CONNECTION_STRING,
+            "Subscribers"
+        );
+
+        const subscribers = [];
+        const iterator = tableClient.listEntities();
+        for await (const entity of iterator) {
+            subscribers.push(entity.email);
+        }
+
+        context.log(`Found ${subscribers.length} subscribers`);
+
+        // Configure email transport for Microsoft 365
+        const transporter = nodemailer.createTransport({
+            host: "smtp.office365.com",
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: process.env.EMAIL_USER, // Your Microsoft 365 email
+                pass: process.env.EMAIL_PASS  // Your Microsoft 365 password or app password
+            },
+            tls: {
+                ciphers: 'SSLv3'
+            }
+        });
+
+        // Send emails to all subscribers
+        const episodeName = context.bindingData.name.replace('.mp3', '');
+        
+        for (const email of subscribers) {
+            // ... (keep all the code the same until the sendMail part) ...
+
+            // ... (keep all the code the same until the sendMail part) ...
+
+         // ... (keep all the code the same until the sendMail part) ...
+
+await transporter.sendMail({
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: `New Episode: ${episodeName}`,
+    html: `
+  INSIDE THIS AREA OF THE SCRIPT IS THE HTML CODE FOR THE EMAIL, WHICH I SHOWED IN THE PREVIOUS SECTION.
+  I CAN'T DISPLAY IT IN THIS PREVIEW SINCE THE PREVIEW IS SET TO JUST DISPLAY THE JAVASCRIPT CODE.
+  THE SCREENSHOT WITH THE  (EncodeURIComponent(email)) LINK
+
+// ... (keep the rest of the code the same) ...
+
+// ... (keep the rest of the code the same) ...
+
+// ... (keep the rest of the code the same) ...
+            context.log(`Email sent to ${email}`);
+        }
+
+        context.log('All notification emails sent successfully');
+
+    } catch (error) {
+        context.log.error('Error processing blob trigger:', error);
+        throw error;
+    }
+};
+                </code></pre>
                 <h2>How it all works</h2>
+                Wow, that was alot of work!
+                <BR></BR>
+                Lets summerize what we have done, and how everything works!
+                <br>
+                <br>
+                We have a fully automated system that sends emails to users when a new episode goes live.
+                <br>
                 <br>
                 <h2>The doubt...</h2>
                 <br>
