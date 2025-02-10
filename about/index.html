@@ -1393,19 +1393,227 @@
               <img src="/images/mediaplayer.png" alt="Media Player">
                 <br>
                 <h2>Azure Function - The Subscribe Feature</h2>
+                Okay, if i'd had known how much work this would be for such a minor feature (That probablly barely anyone will use), i'd had probably just left it out.
+                <br>I'm not going to lie, this was a royal ball ache to get working.
+                <br>
+                But, i'll be honest, i'm glad i went through with it, because it was a great learning experience, and i'm sure there are a few people who will use it.
+                <br>
+                <br>
+                So lets break it down.
+                <br>
+                <br>We need some sort of a "sign up" form on the website.
+                <br>We then need some way of storing these emails in a database.
+                <br>Then we need a way of monitoring the blob storage for new episodes, and triggering an event to email all emails addresses in the database when a new episode is generated.
+                <br>
                 <br>
                 <h3>Storing users Emails in a database</h3>
+                Okay firstly we create a nice looking subscription form, matching the style of the rest of the website.
                 <br>
-                <h3>Sending users Emails when a new episdoe goes live</h3>
+                <br>
+                <img src="/images/subscribebox.png" alt="Subscribe Form">
+                <br><br>
+                Then we create some Javasrcipt to handle the form submission.
+                <br> Along with some error handling, to give the user feedback on their submission.
+                <br>
+                For example: We need to make some simple checks like, is the email already in the database, is the input in a valid email address format etc.
+                <br>
+                <br>
+                <pre class="line-numbers"><code class="language-javascript">
+                  // Single form submission handler
+                  emailForm.addEventListener('submit', async function(e) {
+                      e.preventDefault();
+                      const email = document.getElementById('emailInput').value;
+                      const submitButton = emailForm.querySelector('button[type="submit"]');
+                      
+                      try {
+                          submitButton.disabled = true;
+                          submitButton.textContent = 'Subscribing...';
+                          errorDiv.textContent = '';
+                          errorDiv.className = 'error-message';
+                          
+                          const response = await fetch('AZURE_FUNCTION_URL', {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({ email })
+                          });
+              
+                          const data = await response.json();
+              
+                          if (response.status === 200) {
+                              errorDiv.textContent = 'Thank you for subscribing! 🏴‍☠️';
+                              errorDiv.className = 'error-message success';
+                              emailForm.reset();
+                              setTimeout(closeModal, 2000);
+                          } else if (response.status === 400 && data.error === 'Email already exists in database') {
+                              errorDiv.textContent = 'You are already signed up! ⚓';
+                              errorDiv.className = 'error-message warning';
+                          } else {
+                              errorDiv.textContent = 'Failed to subscribe. Please try again.';
+                              errorDiv.className = 'error-message error';
+                          }
+                      } catch (error) {
+                          console.error('Subscription error:', error);
+                          errorDiv.textContent = 'A problem occurred. Please try again later.';
+                          errorDiv.className = 'error-message error';
+                      } finally {
+                          submitButton.disabled = false;
+                          submitButton.textContent = 'Subscribe';
+                      }
+                  });
+              
+                  function closeModal() {
+                      modal.style.display = 'none';
+                      document.body.style.overflow = 'auto';
+                      emailForm.reset();
+                      errorDiv.textContent = '';
+                      errorDiv.className = 'error-message';
+                  }
+              
+              
+                </code></pre>
+                <br><br>
+                My original plan for the storing the email addresses was to use an Azure SQL database, but that would actually be overkill for this project.
+                <br>
+                So instead I ended up using Azure table storage, which is a much simpler and cheaper solution.
+                <br>
+                I created a table in the exsisting azure storage account, and then created a new function to handle the requests.
+                <br><br>
+                <pre class="line-numbers"><code class="language-javascript">
+                  const { TableClient, odata } = require("@azure/data-tables");
+
+                  module.exports = async function (context, req) {
+                      context.log('Starting email subscription process...');
+                  
+                      try {
+                          // Enable CORS
+                          context.res = {
+                              headers: {
+                                  'Access-Control-Allow-Credentials': 'true',
+                                  'Access-Control-Allow-Origin': '*',
+                                  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+                                  'Access-Control-Allow-Headers': 'Content-Type',
+                              }
+                          };
+                  
+                          // Handle preflight requests
+                          if (req.method === 'OPTIONS') {
+                              context.res.status = 204;
+                              return;
+                          }
+                  
+                          // Validate request
+                          const email = req.body && req.body.email;
+                          if (!email) {
+                              throw new Error('Email is required');
+                          }
+                  
+                          // Connect to Table Storage
+                          const tableClient = TableClient.fromConnectionString(
+                              process.env.STORAGE_CONNECTION_STRING,
+                              "Subscribers"
+                          );
+                  
+                          // Check if email already exists
+                          try {
+                              await tableClient.getEntity("subscribers", email.toLowerCase());
+                              // If we get here, the email exists
+                              context.res = {
+                                  status: 400,
+                                  headers: {
+                                      'Content-Type': 'application/json',
+                                      'Access-Control-Allow-Origin': '*'
+                                  },
+                                  body: { 
+                                      error: 'Email already exists in database'
+                                  }
+                              };
+                              return;
+                          } catch (error) {
+                              // If error is "not found", continue with subscription
+                              if (error.statusCode !== 404) {
+                                  throw error;
+                              }
+                          }
+                  
+                          // Create entity
+                          const entity = {
+                              partitionKey: "subscribers",
+                              rowKey: email.toLowerCase(),
+                              email: email,
+                              dateAdded: new Date().toISOString()
+                          };
+                  
+                          // Add to table
+                          await tableClient.createEntity(entity);
+                  
+                          context.res = {
+                              status: 200,
+                              headers: {
+                                  'Content-Type': 'application/json',
+                                  'Access-Control-Allow-Origin': '*'
+                              },
+                              body: { 
+                                  message: 'Subscription successful' 
+                              }
+                          };
+                  
+                      } catch (error) {
+                          context.log.error('Detailed error:', {
+                              message: error.message,
+                              stack: error.stack,
+                              name: error.name
+                          });
+                          
+                          context.res = {
+                              status: 500,
+                              headers: {
+                                  'Access-Control-Allow-Origin': '*',
+                                  'Content-Type': 'application/json'
+                              },
+                              body: {
+                                  error: error.message || 'Failed to process subscription'
+                              }
+                          };
+                      }
+                  };
+                </code></pre>
+                <br>
+                The function then also does a few pre flight checks, to make sure the email is valid, and that it doesn't already exist in the database.
+                <br>
+                <br>
+                If the email is valid, and doesn't already exist in the database, the function will add the email to the table, under the "subscribers" partition key, and at the same time add a timestamp to the record.
+                <br>
+                <br>
+                Awesome users now have the ability to subscribe to the Captain's Journal!
                 <br>
                 <h3>Creating the unsubscribe feature</h3>
+                Okay, now that we have given people the ability to subscribe, we also need to give them the ability to unsubscribe.
+                <br>
+                If i'm going to be doing daily releases, people might get fed up of getting emails everyday, so it's only fair they have the option to unsubscribe.
+                <br>
+                <br>
+                Basicly, we just need to build a new function, that does the apposite of the subscribe function we just built.
+                <br>
+                However, there is a small caveat.
+                <br>
+                This won't be a button on the website, it will be a link inside the email "New episode now live" which is the email that will be sent to the users when a new episode goes live.
+                <br><br>
+                <img src="/images/unsublink.png" alt="Unsubscribe Link">
+                <br><br>
+                <img src="/images/emailcode.png" alt="Email Code">
+                <br><br>
+                <h3>Sending users Emails when a new episdoe goes live</h3>
+                <br>
+                
                 <br>
                 <br>
                 <h2>How it all works</h2>
                 <br>
                 <h2>The doubt...</h2>
                 <br>
-
+               
                 
             </div>
           </section>
@@ -1415,11 +1623,9 @@
             <div class="tech-stack">
               <div class="tech-item">
                 <img src="/images/azure-logo.svg" alt="Microsoft Azure" style="width: 5%" />
-                <span>Microsoft Azure</span>
               </div>
               <div class="tech-item">
                 <img src="/images/ai-logo.svg" alt="AI Technology" style="width: 15%" />
-                <span>AI Integration</span>
               </div>
               <!-- Add more tech stack items as needed -->
             </div>
@@ -1481,5 +1687,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/line-numbers/prism-line-numbers.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-markup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
   </body>
 </html>
