@@ -665,9 +665,10 @@
                <br>
                <br>
                <h2>Cursor has entered the chat!</h2>
-               <a href="https://www.cursor.com/" target="_blank">Cursor</a>
                <br><br>
-               <img src="/images/cursorlogo.png" alt="Cursor Logo" style="width: 20%;">
+               <a href="https://www.cursor.com/" target="_blank">
+                 <img src="/images/cursorlogo.png" alt="Cursor Logo" style="width: 20%; border-radius: 50%;">
+               </a>
                <br><br>
                What is Cursor you ask?
                <br><br>
@@ -1278,14 +1279,13 @@
           <br>I also created a mega cute little pirate ship, which is a little animation that will play.
           <br>This serves as a placeholder for when no episodes are available, or when episodes are loading.
           <br><br>
-          Obviously, this also consisted of a bunch of cs work in the styles.css file, and a bit of javascript to make the animaiton of on the ship.
-         <br><br>Alright now we need to create some Javascript to make a HTTP request to an Azure Function, requesting any available episodes.
+          Obviously, this also consisted of a bunch of css work in the styles.css file, and a bit of javascript to make the animaiton of on the ship.
          <br>
          <br>
          <img src="/images/rockingship.gif" alt="Rocking ship" style="width: 70%;">
          <br><br>
          God dam it's so cute and charming, this might be my favorite part of the entire website!
-         <br><br>
+         <br><br>Anyhow, now we need to create some Javascript to make a HTTP request to an Azure Function, requesting any available episodes.
          <h3>The JavaScript Code</h3>
          <pre class="line-numbers"><code class="language-javascript">
          async function fetchEpisodes(page = 1, itemsPerPage = 10) {
@@ -1432,14 +1432,21 @@
          <img src="/images/howitworks.png" alt="How it works">
               <br>     
               <br>  
-              So with this method, as soon as .mp3 file is available in the blob storage, the media player will automatically update and display the new episode ready for listening!
+              So with this method, as soon as .mp3 file is available in the blob storage, the media player will automatically update and display the new episode ready for streaming!
               <br><br>
               <img src="/images/mediaplayer.png" alt="Media Player">
                 <br>
                 <h2>Azure Function - The Subscribe Feature</h2>
-                Okay, if i'd had known how much work this would be for such a minor feature (That probablly barely anyone will use), i'd had probably just left it out.
-                <br>I'm not going to lie, this was a royal ball ache to get working.
+                Okay, at this point i'm almost 2 weeks deep into this project.
+                <br>What went from being a quick "in out adventure" into the world of AI Agents, has now turned into a full blown project. Consuming all of my free evenings, and weekends.
+                <br><br>
+                <div class="tenor-gif-embed" data-postid="22364490" data-share-method="host" data-aspect-ratio="1.77778" data-width="50%"><a href="https://tenor.com/view/rick-morty-rick-and-morty-20minutes-adventure-quick-adventure-gif-22364490">Rick Morty GIF</a>from <a href="https://tenor.com/search/rick-gifs">Rick GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+                <br><br>I'm obsessed, and i need to bring this project to fruition!
                 <br>
+                <br>
+                However, if i'd had known how much work this was about to become, for such a minor feature (That probablly barely anyone will use), i'd had probably just had left it out.
+                <br><br>I'm not going to lie, this was a royal ball ache to get working!
+                <br><br>
                 But, i'll be honest, i'm glad i went through with it, because it was a great learning experience, and i'm sure there are a few people who will use it.
                 <br>
                 <br>
@@ -1447,10 +1454,12 @@
                 <br>
                 <br>We need some sort of a "sign up" form on the website.
                 <br>We then need some way of storing these emails in a database.
-                <br>Then we need a way of monitoring the blob storage for new episodes, and triggering an event to email all emails addresses in the database when a new episode is generated.
+                <br>Then we need a way of monitoring the blob storage for new episodes.
+                <br>If a new episoe is found in blob storage it should trigger 2 functions.
+                <br>1. The function we have already built, that loads the episdoes to the website.
+                <br>2. A new function that emails all emails addresses in the database, informing them that a new episode is available.
                 <br>
-                <br>
-                <h3>Storing users Emails in a database</h3>
+                <h3>Step 1 - Storing users Emails in a database</h3>
                 Okay firstly we create a nice looking subscription form, matching the style of the rest of the website.
                 <br>
                 <br>
@@ -1639,22 +1648,89 @@
                 <br>
                 <br>
                 Basicly, we just need to build a new function, that does the apposite of the subscribe function we just built.
-                <br>
+                <br>Instead of adding an email to the database, it will search for a email in the database, and if it finds it, it will remove it from the database.
+                <br><br>
                 However, there is a small caveat.
                 <br>
-                This won't be a button on the website, it will be a link inside the email "New episode now live" which is the email that will be sent to the users when a new episode goes live.
+                This can't be a button on the website, or a trigger from the website, it has to be a link inside the email users recieve when a new episode goes live.
                 <br><br>
                 <img src="/images/unsublink.png" alt="Unsubscribe Link">
                 <br><br>
-                The code for the email is as follows:
+                We're using another Azure function to send this email (which we'll get to in a moment) but here's a snippet of the part of the code, that actually creates the email and the link inside the email.
                 <br><br>
                 <img src="/images/emailcode.png" alt="Email Code">
                 <br><br>
+                So how does this work?
+                <br><br>
                 The important thing to note here is the link in the buttom of the code.
                 <br>Take note of the (EncodeURIComponent(email)) part.
-                <br>What this does is, it encodes the email address of the user that clicked the link, within the link.
-                <br>This means we can then use this inforamtion to trigger the unsubscribe function.
-                <br>The function will then check if the email exists in the database, and if it does, it will remove the email from the database.
+                <br>What this does is, it encodes the email address of the user that clicked the link, into the actual link itself.
+                <br>When the user clicks the link, it redirects the user to https://captains-journal.com/unsub - Navigating to this page normally will do nothing.
+                <br>However, navigating to the page with the encoded email address in the URL, will trigger a small script.
+                <br><br>
+                <pre class="line-numbers"><code class="language-javascript">
+                    document.addEventListener("DOMContentLoaded", async () => {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const email = urlParams.get("email");
+                        const messageDiv = document.getElementById("message");
+                    
+                        console.log("Email from URL:", email);
+                    
+                        if (!email) {
+                            messageDiv.textContent = "Invalid unsubscribe link - no email provided";
+                            messageDiv.className = "message error";
+                            return;
+                        }
+                    
+                        try {
+                            const apiUrl = `https://app-func-captainslog.azurewebsites.net/api/UnsubscribeEmail?email=${encodeURIComponent(email)}`;
+                            console.log("Calling API:", apiUrl);
+                    
+                            const response = await fetch(apiUrl, {
+                                method: "GET",
+                                headers: {
+                                    Accept: "application/json",
+                                    "Cache-Control": "no-cache",
+                                },
+                            });
+                    
+                            console.log("Response status:", response.status);
+                    
+                            const responseText = await response.text();
+                            console.log("Response text:", responseText);
+                    
+                            let data;
+                            try {
+                                // Only try to parse JSON if we have a response
+                                if (responseText) {
+                                    data = JSON.parse(responseText);
+                                } else {
+                                    throw new Error("Empty response from server");
+                                }
+                            } catch (parseError) {
+                                console.error("Failed to parse JSON:", parseError);
+                                throw new Error(
+                                    `Server response error: ${responseText || "No response"}`
+                                );
+                            }
+                    
+                            if (response.ok) {
+                                messageDiv.textContent = `You have been successfully unsubscribed from the Captain's Journal newsletter.`;
+                                messageDiv.className = "message success";
+                            } else {
+                                messageDiv.textContent =
+                                    data?.error || "Failed to unsubscribe. Please try again later.";
+                                messageDiv.className = "message error";
+                            }
+                        } catch (error) {
+                            console.error("Error:", error);
+                            messageDiv.textContent = `Error: ${error.message}`;
+                            messageDiv.className = "message error";
+                        }
+                    });
+                    </code></pre>
+                <br>This script will then trigger the Azure unsubscribe function, passing on the encoded email address within the link.
+                <br>The Azure function will then scan the database for the email address, if the email address is found, it will be removed from the database.
                 <br><br>
                 <h3>The Unsubscribe Function</h3>
                 <pre class="line-numbers"><code class="language-python">
@@ -1742,7 +1818,12 @@
                               status_code=500
                           );
                   </code></pre>
-                <h3>Sending Emails when a new episdoe goes live</h3>
+                 <br>The function then passes the result back to the script, which then displays a message to the user, informing them that they have been unsubscribed from the newsletter.
+                 <br><br>
+                 <img src="/images/unsubexample.png" alt="Unsubscribe Example">
+                  <br><br> This is the one that really broke me. There are so many moving parts to this, and everything has to work in sync, or it wont work.
+                  <br><br>but oh boy does it feel good watching it work like a well oiled machine!
+                 <h3>Sending Emails when a new episdoe goes live</h3>
                 The final peice of the puzzle is to send the users an email when a new episode goes live.
                 <br>
                 This part was actually suprisingly simple.
