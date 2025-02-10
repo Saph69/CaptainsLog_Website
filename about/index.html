@@ -101,7 +101,7 @@
                 hadn't really looked much into AI agents myself.
                 <br />
                 <br />
-                So i decided to look into it and see what all the fuss was about.
+                So, i decided to look into it and see what all the fuss was about.
                 I started to read about the latest tools and techniques, and how
                 these "AI Agents" work. I purchased a subscription to openAI and
                 started to play around with the API. I quickly discovered that
@@ -121,12 +121,13 @@
                 <br />
                 Soon, before i knew it, i had created character profiles, back
                 stories, locations, world building, pirate lore, and a whole lot
-                more! I sat for hours, reading the stories my agent was
+                more! I sat for hours reading the stories my agent was
                 telling me, and i was hooked!
                 <br />
                 <br />
                 Thats when i had the thought, "I wonder if other people would
-                enjoy these wacky stories as much as i have?" I had been looking
+                enjoy these wacky stories as much as i have?"
+                <br><br> I had been looking
                 for a creative project i could really sink my teeth into, and this
                 seemed like a fun idea!
                 <br />
@@ -140,7 +141,7 @@
                 <br>
                 Right ?
                 <br>
-                Right............... ?
+                errrr Right............... ?
                 <br>
                 <br>
                 <br>
@@ -148,11 +149,12 @@
                 <br>
                 <br>
                 <h2>Humble Beginnings</h2>
-                Okay, i now have an AI agent that is convinced it's a captain of a pirate ship.
+                Okay, so at this point i now have an AI agent that is convinced it's a captain of a pirate ship.
                 <br> 
                 It can now generate short stories in a text format, and output the .txt files locally on my machine.
                 <br>
-                This is cool, but i want to make a web series with daily episodes. Currently the agent can generates a short pirate story, save it as a .txt file, but next time the scrpt runs, it generates a new story and overwirtes the current .txt file.
+                This is cool, but i want to make a web series with daily episodes. 
+                <br>Currently the agent can generates a short pirate story, save it as a .txt file, but next time the scrpt runs, it generates a new story and overwirtes the current .txt file.
                 <br>    
                 <br>
                 Okay, lets make some changes to the code!
@@ -161,7 +163,7 @@
                 Firstly, i need to update the agent itself.
                 <br>
                 Currently all the agent knows is, it is the captain of at pirate ship, and should tell short stories.
-                I want to update the agent to be able to generate a new episode every day, the new episode should be a follow-up to the previous episode.
+                <br>I want to update the agent to be able to generate a new episode every day, the new episode should be a follow-up to the previous episode.
                 If the last eipsode is captains_log_1.txt the next episode should be captains_log_2.txt and so on.
               <br>
                 I started by updating the prompt for the agent.
@@ -178,12 +180,13 @@
                 If no .txt files are found, the script will create a new episode.
                 <br>
                 <br>
-                Okay, this is a good start, the agent is now able to generate a new episode every run, also name the file correctly, but the episodes are not consistant.
+                Okay, good start!
+                <br>The agent is now able to generate a new episode every run, it also names the .txt file correctly, (Depending on if this is the first episode, or previous episodes exist) but the actual episodes and story telling is not consistant.
                 <br>
                  <br>
                 If i want to make a web series with daily episodes. For this to work, its extremely important that episdoes are consistant. Each episode should be a continuation of the previous one.
                 <br>
-                It won't work if story arch keeps changing, characters are suddenly in different locations, doing different things etc...
+                This won't work if the story arch keeps changing, characters are suddenly in different locations, doing different things etc...
                 <br>
                 <br>
                 hmmmm what if i could generate a new episode every day, each episode following the same consistent story arch?
@@ -192,14 +195,15 @@
                 <h3>Enter The Captains assistant!</h3>
                 Okay, so i needed a way for the AI to keep track of the story, character arcs, locations visited, and especially what happened in the previous episode.
                   <br>
-                  I managed to achieve this by adding an assistant to the prompt. The Assistant is responsible for reading all previous logs created in the story so far.
+                  I managed to achieve this by adding an assistant to the prompt.
+                  <br> The Assistant is responsible for reading all previous logs generated for the story so far.
                   <br>
                   <br>
                   So how does this work?
                   <br>
                   <br>
                   Just like like the main agent, the assistant first checks the local file directory for any existing .txt files.
-                  Any existing .txt files found are passed to the assistant, the assistant then reads all exsisting .txt files and passes the content to the main agent.
+                  If any .txt files are found, the assistant then reads through all content and comits it to memory.
                   The main agent then receives a new prompt, with the assistant's memory as the context.
                   <br>
                   <br>
@@ -209,12 +213,13 @@
                   If no text files were found, the agent will receivve the prompt - "You can write a complete log entry without worrying about length restrictions. Focus on maintaining story consistency and providing a complete narrative."
                   <br>
                   <br>
-                  I'm now able to generate consistant episodes, with a continous story arch.
-                  <br>
+                  I'm now able to generate consistent episodes that maintain a smooth and continuous story arc, ensuring each installment seamlessly connects to the next.
+                  <br> This allows for ongoing character development, engaging plot progression, and a more immersive storytelling experience.
+                  <br><br>
                   Pretty cool right?
                   <br>
                   <br>
-                  but, now it's time to take it to the next level.
+                  but, what if we didn't have to read the stories ourself?
                   <br>
                   <br>
                   <br>
@@ -225,7 +230,7 @@
                 This is where things start to get really interesting. (and also a little wacky 😂)
                 <br>
                 <br>
-                I'm now able to generate a new episode every day, with a continous story arch, characters, locations, and a continous story.
+                I'm now able to generate a new episode every run, with a continous story arch, characters, locations, and a continous story.
                 but it's just text.....
                 <br>
                 what if i could generate a audio version of each episode?
@@ -245,9 +250,10 @@
                 I went with the voice "Ash" as i felt this was the voice that sounded best for a narrator. However, i wansn't 100% happy with the voice, so i deciced to experiment a bit, and this is where things get a bit wacky 😂
                 <br><br>
                 First i tried cloneing my own voice, and creating an AI version of myself to read the text.
-                This actually worked better than i expected, which made it all the more creepy! One thing is listening to your own voice, but listening to yourself say things you've neveer said, or read words completely different was just to weird for me.
-                <br><br>
-                For those interested, here is a little preview of this freak!
+                This actually worked better than i expected, which made it all the more creepy!
+                <br> One thing is listening to your own voice, but listening to yourself say things you've neveer said, or read words completely different to how you would normally read them, was just a little to weird for me.
+                <br><br>It also tried to make me sound waaaaaaaaaaaaay posher then i am, which again, doesn't really work for a pirate story.
+                <br><br>For those interested - here is a little preview of AI Jake!
 
                 <!-- Add the first audio player -->
                 <div class="audio-preview">
@@ -260,10 +266,10 @@
 
                 <br>
                 <br>
-                Next up i toke the pirate approach!
-                <br>
-                I read a bunch of text in a pirate voice, and tried to create an ai version of the voice,
-                Needless to say, this evening i got alot of strange looks from my better half, as i sat yelling pirate slurs into my microphone.
+                Next up, i dawned my pirate hat and eyepatch, and attempted to make a pirate AI voice. 
+                <br><br>
+                This was achieved by reading a bunch of text in my best pirate voice.
+                Needless to say, this evening i got alot of strange looks from my better half, as i sat yelling pirate slurs to myself for a good couple of hours.
                 <br><br>
                 This it what It ended up producing😂😂
 
@@ -275,7 +281,7 @@
                         Your browser does not support the audio element.
                     </audio>
                     <br><br>
-                    As i sit writing this blog, i'm still now entirely sure what voice i'm going to go with for the finished produt. I still have alot of experimentation to do with different API's and prodcuts, so i guess you'll have to wait and see!
+                    As i sit writing this blog, i'm still not entirely sure what voice i'm going to go with for the finished product. I still have alot of experimentation to do with different API's and prodcuts, so i guess you'll have to wait and see!
                 </div>
 
                 <br>
@@ -283,14 +289,14 @@
                 <h2>Token Drama</h2>
                 4096, a number that probablly doesn't mean anything to most people, but to me it was a number i needed to overcome!
                 <br><br>
-                So what is this mysterious number 4096 you ask? - 4096 is the "token limit" for the OpenAI API.
+                So what is this mysterious number 4096 you ask? - 4096 is the "token limit" for any OpenAI API reponse.
                 <br>
                 What this means is, the maximum output for each openAI API call can not exceed 4096 tokens.
                 <br><br>
-                So what are tokens and how are they calculated?
+                Okay, so what the hell is a a "Token" ? and how are they calculated?
                 <br><br>
                 Tokens are calculated by the number of words in the text. Tokens are pieces of words or characters that the AI processes to understand and generate text.
-                They are not the same as words but represent fragments of words, whole words, or even punctuation.
+                <br>They are not the same as words but represent fragments of words, whole words, or even punctuation.
                 <br>
                 <br>
                 In English, 1 token ≈ 4 characters (on average).
@@ -302,7 +308,7 @@
                 Longer words like "artificially" may be split into multiple tokens.
                 <br><br>
                 For example:
-                <br><br>
+                <br>
                 <table></table>
                 <br>
                 "Hello"	= 1 token
@@ -315,8 +321,8 @@
                  <br>
                 "The treasure is near."	= 5 tokens
                 <br><br>
-                So if 1 token is on average 4 characterS in English, and the average English word is 5 characters long (Including spaces), we can estimate that the output legnth of 4096 tokens, should be around 3200 words.
-                3200 words should be around 25 minutes of audio at normal narration pace of 130 words per minute (According to ChatGPT)
+                Since 1 token is, on average, 4 characters in English, and the average English word is around 5 characters long (including spaces), we can estimate that an output of 4096 tokens would contain roughly 3280 words.
+                <br>At a normal narration pace of 130 words per minute, this would translate to about 25 minutes of audio. (According to ChatGPT)
                 <br><br>
                 Wait a second! Why are my audio files only around 3 and a half minutes long ?!?!
                 <br><br>
@@ -327,7 +333,7 @@
                 Oh hi there! Im back!
                 <br>
                 Sure, for you, it's like i never left, but i've actually been gone for hours, yup, thats right, hours! Another rabit hole into the depth of AI.
-                I learnt some stuff when i was gone.... wanna hear it ?
+                <br><br>but hey! I learnt some stuff when i was gone.... wanna hear it ?
                 <br><br>
                 Okay heres the deal.....
                 Turns out there is a direct correlation between the number of tokens in the input and the output.
@@ -339,7 +345,9 @@
                 Output tokens are capped at 4096 per request (this is a separate limitation).
                 <br>
                 The more input tokens you use, the fewer output tokens are available.
-                <br><br>
+                <br>Allthough this is a limitation first kicks in after 120k tokens.
+                <br>
+                <br>
                 <table class="token-limits">
                   <thead>
                       <tr>
@@ -379,10 +387,10 @@
                   </tbody>
               </table>
                 <br>
-                Oh dear, maybe i'm using to many tokens on my input, and thats the reason my output is so short.
-                <br>
-                Okay back to coding, there must be a way to to an overview of the token usage.
-                <br>
+                Oh dear, maybe i'm using to many tokens in my input, and thats the reason my output is so short?
+                <br><br>
+                Okay back to coding, there must be a way to get an overview of the token usage.
+                <br><br>
                 Alright cool, manged to setup some code to monitor token usage, lets run some tests and see how we're looking!
                 <br>
                 <br>
@@ -391,9 +399,13 @@
                 <br>
                 Okay according to my logs, i'm not even close to hitting 120k tokens (Which is the point where output limits would start to accour).
                 <br><br>
-                So what exactly is happening here?
+                As you can see on the above screenshot, my prompt is only using 5035 tokens (This test was done generateing the third episode in a on-going saga, so there ware 2 previous logs that needed to be loaded to memory, these logs were at total of 1486 tokens)
+                <br>Giving us a grand total of 6033 tokens.
                 <br>
-                Honestly i don't know, but i do know that i'm not using 120k tokens on my input. From what i can tell, the agent maybe just feels that the entry it has given is adequate, and doesn't need to add any more detail.
+                <br>
+                So what exactly is happening here?
+                <br><br>
+                Honestly i'm not exactly sure, but i do know, i'm not using anywehre near 120k tokens on my input. From what i can tell, the agent maybe just feels that the entry it has given is adequate, and doesn't need to add any more detail.
                 <br><br>
                 Prehaps i'm overcomplicating things. Maybe i should tell the agent to make each story be 4095 tokens in length.
                 <br><br>
@@ -413,14 +425,17 @@
                 <br>
                 <img src="/images/outputtokens2.png" alt="Token Usage">
                 <br><br>
-                Wow, not even close to 4096! It completely ignored my input, even though i specifically stated i want to use all 4096 tokens.
+                Wow, not even close to 4096! I'm not evening close to hitting the input limit, or the output limit.
+                <br>
+                It also completely ignored the fact i told it specifically to use all 4096 tokens.
+                <br><br>
                 Just to elaborate, it's not that i want it to output exactly 4096 tokens each time, that would be way to long for a daily episodeic adventure, but i definitely want more than 933 tokens..
                 <br><br>
                 Alright back to the drawing board, time to read up on the OpenAI documentation *AGAIN* and see if i can find anything else that can help me out.
-                <br>
+                <br><br>
                 Okay, turns out there is something called a"Stop_reason" parameter in the API.
                 <br>
-                Seems there can be mutiple reasons why the model stops generating.
+                Seems there can be mutiple reasons why the model may stop generating content.
                 <br>
                 <br>
                *stop* = The Model chose to stop early
@@ -441,7 +456,7 @@
                 WELL SON OF A BITCH! IT JUST STOPPED, "BECAUSE IT FELT LIKE IT", EVEN THOUGH DADDY SPECIFICALLY SAID "GIVE ME 4096 TOKENS"
                 <br>
                 <br>
-                Okay lets try giving it the stop=none parameter. This means the model shouldn't stop no matter what.
+                Okay lets try giving it the stop=none parameter -  This means the model *should* not stop no matter what.
                 <br><br>
                 <img src="/images/stopnone.png" alt="Stop None">
                 <br><br>
@@ -454,8 +469,17 @@
                (This is Inglorious bastards reference, if you haven't seen the film, stop reading this blog and go watch it NOW!)
                <br>
                <br>
+               Did you watch it ?
+               <br><br>
+               Amazing right? Quentin Tarantino really is a genius!
+               <br><br>
+               eeerr,, ummm.. anywaaaaayyyyyy.... Where were we?
+               <br><br>
+               Ah yes, the disobedience of my creation!
+               <br>Lets try run the model again with the new improved prompt.
+               <br><br>
                <img src="/images/disobeyed.png" alt="Disobeyed">
-               <br>
+               <br><br>
                Disobeyed by my creation once again... 1161 tokens....
                <br>
                <br>
@@ -468,7 +492,7 @@
                <br>
                One thing i have noticed however, is that the model seems to generate longer and longer outputs as the series goes on.
                <br>
-               I'm presuming this is probably because i'm constantly feeding the model with the previous episodes, giving it more and more context.
+               I'm presuming this is probably because i'm constantly feeding the model with the previous episodes, giving it more and more data to work with.
                <br>
                So presumably, the series will get more and more detailed as it goes on.
                <br>
@@ -567,7 +591,9 @@
                <br>
                <br>
                Turns out the OpenAI TTS (text to speach) API has a max input limit of 4096 Characters per request, which is aprroximately 5 minutes of audio.
-               <br>
+               <br><br>
+               (It's imporatnt to mention here, we are now talking about characters, NOT tokens)
+               <br><br>
                Some of the journal entries are over 4096 characters, but some are not......
                <br>
                The ones that are over 4096 are getting automatically truncated when being passed to the TTS API.
@@ -579,11 +605,10 @@
                <br><br>
                This is an issue...
                <br><br>
-               Luckily this is afairly simple problem to solve.
+               Luckily this is a fairly simple problem to solve.
                <br>
                We know the limit for each TTS submission can max be 4096 characters, so we just need to split each journal entry into chunks of less than 4096 characters.
-              <br>
-              (Remembner we are now talking about characters, NOT tokens)
+              <br>(Remembner we are now talking about characters, NOT tokens)
               <br><br>
               Alright, lets play it safe and split each journal entry into chucks of 4000 characters, this way we are sure we will not hit the limit.
               <br>
@@ -597,11 +622,11 @@
               <img src="/images/split.png" alt="Split">
               <br>
               <br>
-               Okay great, we are now able to hear the full log, without missing any data!
-               <br>
+               Okay great, we are now able to pass a full journal entry to the TTS API, without missing any data!
+               <br><br>
                but rarely are things so simple...... 
-              <br>
-               Beacuase the text journal entries are being split into seperate files, and than fed to the TTS API in chunks of 4000 characters, this means the audio files outputted are also split into 4000 character chunks.
+              <br><br>
+               Beacuase the text journal entries are being split into seperate chunks, and than fed to the TTS API in chunks of 4000 characters, this means the audio files outputted by the TTS API are also split into the same 4000 character chunks.
                <br><br>
                Now we find ourselves in the situation, were we can have up to 3 seperate audio files for one journal entry.
                <br><br>
@@ -622,7 +647,7 @@
               <h4>i'm not not a front end developer, i'm not a back end developer, and i'm certainly not a software engineer!</h4>
                I work as a Cloud Architect, where my primary focus is designing and implementing cloud solutions inside Microsoft 365 and Azure.
                <br>
-               (These skills will will come into play later in the blog, but for now, i just want to focus on the code.)
+               (These skills will will come into play later in the adventure, but for now, lets focus on the code.)
                <br><br>
                My standard day mainly consists of designing and maintaining IT infrastructure, with a large focus on cybersecurity and compliance.
                <br>
@@ -642,6 +667,8 @@
                <h2>Cursor has entered the chat!</h2>
                <a href="https://www.cursor.com/" target="_blank">Cursor</a>
                <br><br>
+               <img src="/images/cursorlogo.png" alt="Cursor Logo" style="width: 20%;">
+               <br><br>
                What is Cursor you ask?
                <br><br>
                Cursor is an AI-powered code editor designed to assist developers by integrating AI-driven coding features, such as autocompletions, debugging assistance, and smart code suggestions.
@@ -660,9 +687,9 @@
                <BR></BR>
                <div class="tenor-gif-embed" data-postid="27665965" data-share-method="host" data-aspect-ratio="1.77778" data-width="100%"><a href="https://tenor.com/view/hacker-meme-work-hard-you-can-do-it-gif-27665965">Hacker Meme GIF</a>from <a href="https://tenor.com/search/hacker-gifs">Hacker GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
                <br><br><br>
-              I know this is a touchy subject for many people.
+                I know this is a touchy subject for many people.
                <br>
-               Alot of people are worried about loosing jobs, income etc to AI, and thats understandable, but what i will say is.....
+               Many people are understandably concerned about AI replacing jobs and impacting income. While those concerns are valid, what I will say is..."
                <br>
                <h4>If you are a front end devleoper, web developer, or anyone whos sepends most of their time in a IDE developing code.
                 <br><u>If you are not uisng an AI assistant, you are wasting your time and your companies time!</u></h4>
@@ -672,13 +699,15 @@
                <br>
                 I'd watch junior IT staff generating Powerscripts to solve smalll problems.
                <br>
-               Back then it was 50/50 if the script even worked, and the Junior IT staff member had no freaking idea, what the code did or how the script worked.
+               Back then it was 50/50 if the script even worked!
+               <br> The Junior IT staff member had no freaking idea what the code did, how it worked, or what it could potentially do to the machine is was running on.
                <br>
                I always thought to myself "wow thats so dumb, you really don't learn anything from just generating code you don't understand"
                <br><br>
-               With that being said, i think it comes down to how you use the tools.
-               <br>
-               If you are 100% reliant on an AI to generate code (that you don't understand) your not going to learn anything. However, if you refuse to embrace these tools, your competition will outpace you—becoming more efficient, more effective, and ultimately leave you behind.
+               I do still feel this way today, but with that being said, i think it comes down to how you use these tools.
+               <br><br>
+               If you are 100% reliant on an AI to generate all of your code (and you have no understanding of whats being displayed on your screen) your not going to learn anything.
+               <br> However, if you refuse to embrace these tools, your competition will outpace you—becoming more efficient, more effective, and ultimately leave you behind.
                <br><br>
                I think i'll end this section with a quote from Charles Darwin.
                <br><br>
@@ -693,7 +722,12 @@
                <br>
                Okay, thats not exactly how it happened.....
                <br><br>
-                I had already found some information on a python libary called "pydub" which could be used for manipulating audio files.
+                While googling for a solution, i found some information obout a python libary called "pydub" which could be used for manipulating audio files.
+                <br>
+                <br>
+                "Pydub is a Python library used for manipulating and processing audio files. It provides an easy-to-use API for loading, converting, trimming, merging, and applying effects to audio files without needing deep knowledge of audio processing."
+                <br>
+                <br>
                 With a little help from Cursor, i was able to whip some code together, and VOLIAAA, we now have a way to stitch audio files together!
                <br>
                <br>
@@ -703,7 +737,7 @@
                Lovely...
                <br>
                <br>
-               Little did i know, this would not actually be an adequate solution, after moving to the code to Azure Functions, but if i told you that now, we would be getting ahead of ourselves!
+               I would show you the code, but uuumm some stuff happened and i errrrr... don't have it anymore, but if i told you that now, we would be getting ahead of ourselves!
                <br>
                <br>
                <h2>Early beginnings of the website</h2>
@@ -727,7 +761,7 @@
                <br><br>
                RG-CaptainsLog - Check ✅ 
                <br><br>
-               The astute amounst you will maybe ask - "why are there so many things called "CaptainsLog"? and not Captains Journal? and why do you often refer to things as log entries instead of journal entries?"
+               The astute amounst you may ask - "why are there so many things called "CaptainsLog"? and not "Captains Journal"? and why do you keep refering to "journal entries" as "log entries".
                <br>
                <br>
                and to that i say - SHHHHHHH be patient, we'll get to that!
@@ -764,12 +798,12 @@
                <br><br>
                To put this in simple terms: Whenever i make any changes to my code, i can then "upload" the new code to my Github repository. Inside my Github repository there is a small "worker bot" that is constantly monitoring for new changes.
                <br>
-               If the worker bot detects a new change, it will then trigger the Github Actions workflow to deploy the new changes to the static website.
+               If the worker bot detects a new change, it will then trigger the Github Actions workflow and deploy the new changes to the static website.
                <br>
                <br>
                The new code will then be displayed correctly on the website. - Nice and simple work flow!
                <br><br>
-               Great! Now i need a custom domainname for the website, i'm thinking "CaptainsLog.com" - Yea you're allready ahead of me here right ?
+               Great! Now i need a custom domainname for the website, i'm thinking "Captainslog.com" - Yea you're allready ahead of me here right ?
                <br>
                <br>
                <img src="/images/domainname.png" alt="CaptainsLog - Domain Name">
@@ -780,7 +814,8 @@
                <br><br>
                After alot of back and fourth brainstorming different name ideas, and constantly being disapointed by the fact the domain was already taken, i finally settled on "captains-journal.com"
                <br><br>
-               Wahooo we now have a website! Theres nothing on it, but we have a website!
+               I brought the custom domain, did some wizzardry with the DNS settings, and boom! We now have a website hosted on Azure!
+               <BR> Theres nothing on it, but we have a website!
                <BR></BR>
                <img src="/images/itsawebsite.png" alt="Website" style="width: 70%;">
                <br><br>
@@ -796,18 +831,21 @@
                 <br>
                 <b>Smooth audio playback</b> - Streaming of audio files directly from Azure Blob Storage, with an easy to use embedded audio player.
                 <br>
-                <b>Subscribe Feature</b> - I wanted users to be able to subscribe to the website, and receive email notifications when a new episode is released.
+                <b>Subscribe Feature</b> - I wanted users to be able to subscribe to the website, and receive email notification when a new episode is released.
                 <br>
-                <b>Character bios</b> - I've developed many characters for the series, it would be cool having a character bio section, with AI generated art from my character designs.
+                <b>Character bios</b> - I've developed many characters for the series, it would be cool having some sort of character bio section, with AI generated art of my character designs.
                 <br>
                 <b>Mobile Performance</b> - I wanted the website to be mobile friendly, alowing users to listen to the episodes on the go.
                 <br>
                 <b>100% autonomous</b> - Episodes should be generated automatically on a set schedule, automatically upoaded to the azure blob storage and presentated ready for streaming on the website (Without any interaction from me)
                 <br><br>
+                When i realease this demon spawn to the world, it will be completely out of my hands!
+                <br>
+                <br>
                 Time to get to work!
                 <br>
                 <br>
-                With my secret weapon, Cursor, i was able to whip up a quick prototype for the website in no time at all.
+                With my secret weapon(Cursor), i was able to whip up a quick prototype for the website in no time at all.
                 <br>
                 <br>
                 Obviously the website went through many iterations, heres a little taster of one of the early iterations.
@@ -816,11 +854,8 @@
                 <img src="/images/originalwebconcept.png" alt="Original Web Concept" style="width: 70%;">
                 <br><br>
                 I feel like it improved alot since then, but i'll let you be the judge of that.
-                <br>
-                <h2>Migrating the AI Agent to Azure Functions</h2>
-                Okay here we go again, this is where things start to get a little spicy!
-                <br> (But not as spicy as when i start playing with HTTP triggers, incase you haven't guessed that allready from the title of the next segment)
                 <br><br>
+                <h2>A quick recap of the AI Agent</h2>
                 Okay it's been a while since we last talked about the AI Agent, so i'll quickly recap what we have done so far. 
                 <br>
                 <br>
@@ -849,7 +884,7 @@
                 <br>
                 I still haven't found the right voice to tell the story, but luckily this is not something that takes alot of code to change.
                 <br>
-               <h3>Okay, so Azure Functions? What is a Azure Function?</h3> <img src="/images/azurefunctions-icon.svg" alt="Azure Function">
+               <h3>Okay, time to move the AI Agent to Azure -  but what's an Azure Function?</h3> <img src="/images/azurefunctions-icon.svg" alt="Azure Function">
                 <br>
 
                 <br>
@@ -891,9 +926,9 @@
           <br>
           We can achieve the first step of this plan by using a Time-Trigger in the Azure Function - Once we have moved the code into its new home, inside a cozzy Azure Function, we can set the function to run at a specific time each day.
           <br>
-          This will however require quite a bit of modifcation to the existing code.
-          <br>
-          Remember up until this point, the AI Agent was running on my local machine. This means it's always been generating files and saving them locally in the same folder as the script.
+          This will however require quite a bit of modifcation to the existing code!
+          <br><br>
+          Remember, up until this point, the AI Agent was running on my local machine. This means it's always been generating files and saving them locally in the same folder as the script.
           <br><br>
           We now need to setup an Azure Storage Account and modify the code to save the files there instead of locally.
           <br>
@@ -904,19 +939,19 @@
           <img src="/images/storageaccount.png" alt="Storage Account" style="width: 70%;">
           <br><br>
           <br>
-          Inside the storage account, i'll create a new container called "captainslog" (yea, yea, this was actually before the whole domain name dobackal, but fuck it, we are keeping this now!)
+          Inside the storage account, i'll create a new container called "captainslog" (yea, yea, this was actually before the whole domain name debacle, but fuck it, we are keeping the name now!)
           <br>
           <br>
           <img src="/images/storagecontainer.png" alt="Storage Container" style="width: 70%;">
           <br><br>
-          Alright cool, we now have all of the infrastructure in place, so now we can start to modify the code to save the files to the Azure Blob Storage instead of locally.
+          Alright cool, we now have all of the infrastructure in place, we can now start to modify the code to save the files to the Azure Blob Storage instead of locally on my machine.
           <br>
           <br>
           Okay, there are a few different ways we could do this, but I ended up using Access Keys to access the Azure storage account from the function.
           <br>
           <br>
           Another cool thing about Azure Functions, is that they have support for enviroment variables - This means i can hide things like API keys, connection strings, and other sensitive information in the function app environment variables.
-          <br>
+          <br><br>
           Which means i can Share the code with you guys!
           <br>
           <h3>Here's the full code for the AI Agent Function</h3>
@@ -1193,19 +1228,19 @@
           We now have the code for the AI Agent inside an Azure Function, the function is triggered by a Time-Trigger, which means it will run at a specific time each day.
           <br>
           <br>
-          The function will then generate a new episode, save it to an Azure Blob Storage.
+          The function will then generate a new episode, save the .txt file from the output, and the .mp3 file to the Azure Blob Storage.
           <br>
           <br>
           Perfect, we are making progress!
           <br>
           <br>
-          Now we just need create a container on the website, which will house the audio player, and to figure out how to automcatailly update the website when a new episode goes live
+          Now we just need create a container on the website, which will house the audio player, and to figure out how to automcatailly update the website whenever a new episode is avaialble in the blob storage.
           <br>
           <h2>HTTP Triggers - Making me want to pull the trigger on myself</h2>
           This next section, was by far the most difficult part of the whole project.
           <br>I knew what HTTP Triggers were, but i had never worked with them before, again, i'm not a web developer, so this was a fairly new concept for me.
           <br>This combined with my pathetic lack of knowledge when it comes to javascript, ment this was gunna be a real challenge.
-          <br><br>For this all to work seemlessly, i needed HTML, Python, javascript, and a whole lot of trial and error!
+          <br><br>For this all to work seemlessly, i needed HTML, Python, javascript, HTTP Triggers and a whole lot of trial and error!
           <br><br>Luckily for me, i had my two new best friends at the ready! - ChatGPT and Cursor!
           <br><br>Okay, time to tackle the first step, getting any episodes in the blog container, to be streamable on the site, and all new episodes to be added to the site automatically.
          <h2>Azure Function - Loading the Episodes</h2>
@@ -1240,8 +1275,17 @@
               &lt;/div>
           &lt;/div>
           </code></pre>
-          <br>Here i also created a mega cute little pirate ship, which is a little animation that will play, whiile we wait for episodes to load.
+          <br>I also created a mega cute little pirate ship, which is a little animation that will play.
+          <br>This serves as a placeholder for when no episodes are available, or when episodes are loading.
+          <br><br>
+          Obviously, this also consisted of a bunch of cs work in the styles.css file, and a bit of javascript to make the animaiton of on the ship.
          <br><br>Alright now we need to create some Javascript to make a HTTP request to an Azure Function, requesting any available episodes.
+         <br>
+         <br>
+         <img src="/images/rockingship.gif" alt="Rocking ship" style="width: 70%;">
+         <br><br>
+         God dam it's so cute and charming, this might be my favorite part of the entire website!
+         <br><br>
          <h3>The JavaScript Code</h3>
          <pre class="line-numbers"><code class="language-javascript">
          async function fetchEpisodes(page = 1, itemsPerPage = 10) {
