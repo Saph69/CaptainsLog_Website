@@ -1917,17 +1917,74 @@ await transporter.sendMail({
 };
                 </code></pre>
                 <br> We have a fully automated system that sends emails to all users in the database when a new episode goes live!
-                <h2>Omg, i'ts Finally Done</h2>
-                Wow, that was alot of work!
-                <BR></BR>
-                Lets summerize what we have done, and how everything works!
-                <br>
-                <br>
-                We have a fully automated system that sends emails to users when a new episode goes live.
-                <br>
-                <br>
-                <h2>The doubt...</h2>
-                <br>
+                <h2>Testing testing and more testing</h2>
+                WOW! I made it - I finally built this thing!</i>
+                <br><br>An entire tech stack, but the question is, does everything work?
+                <br><br>Amazingly enough, YES! Everything seems to be working flawlessly.
+                <br><br>There is only one issue i've noticed so far!
+                <br><br>If you recall way back when i first talked about fuctions, i mentioned some of the caveats of using the free tier of Azure functions 
+                <br>Namely, "Cold Start Latency: Infrequently used functions may experience delays during startup, potentially impacting performance for time-sensitive applications"
+                <br>This is definitely noticable with regards to the function that loads the episodes to the site. Sometimes it can take up to 30 seconds to display the episosdes....
+                <br><br>It's not because the website is slow, it's simplely because the function is "sleeping" and it takes a few seconds to wake up.
+                <br><span style="color: red;">(Doesn't this inherantly just mean the website is actaully slow?)</span>
+                <br>SHUT UP FUTURE JAKE!!!!!!  WHO IS ONLY HERE BEACAUSE HE HAS TO PROOF READ THIS ENTIRE GOD DAM BLOG!!!!!!
+                <br><br>Other than this, the majourity of my time spent testing, has been generating stories, testing different prompts, styles and AI settings.
+                <br>Oh, and experimenting with epicly themed pirate voices, narrated by yours truely! (Wink Wink)
+                <br><br>This is without a doubt the most important part of the entire project!
+                <br>If the story and charcacters are not fun/entertaining, and i can't control the AI Agent from going completely rouge, the entire website, the Azure functions, the AI agent, and the absurde amount of time i spent on that stupid subscriber function, exsists for nothing.
+                <br><br>PLEASE FOR THE LOVE OF GOD, SOMEONE PLEASE SUBSCRIBE, JUST ONE PERSON, JUST LET ME SEE THAT SWEET PROCESS RUN ONCE!!
+                <br><br>Ahhhhh... i digress, I will be spending the next few days trying to get this as dialed in as best as possible. I want to bring you guys the best pirating squash buckeling adventure, ye land lubbers could ever ask for...FOR I AM NOT CALLED CAPTAIN ADMIRAL FANCYBOOTS THE THIRD FOR NOTHING!!
+                <br><br>HMMPHEE *Cough Cough" *Clears throat* *Cough Cough* - sorry, i'm not quite sure what happened there...
+                <br><br>Anyhow, on to some housekeeping...
+                <h2>Housekeeping</h2>
+                Now that the website is built, there is a few housekeeping things I need to take care of.
+                <h4>Creating a personal email adddress for the captain</h4>
+                Being a Microsoft 365 guy, and since everything is allready hosted in Azure, the logical option here is to just create a new email address using Microsoft 365.
+                <br>So i added the "captains-journal" domain to my M365 tenant, and created the email address thecaptain@captains-journal.com
+                <br>Gave the account an exchange online license, and we're good to go!
+                <br>Had a few issues with emails ending up in spam folders when i tested with some personal accounts, so i ended up fixing SPF, DKIM, and DMARC for the domain, which will hopefully sort that out.
+                <br>This will be the email address used to send out the notifications when a new episode goes live.
+                <br><br>Feel free to use this e-mail address to contact me if you have any questions, or just want to say hi!
+                <h4>Meta data - Website tweaks</h4>
+                The next part of the housecleaning process was adding all the meta data to the website.
+                <br>Nothing really exciiting here, but feel it's worth mentioning, since it's pretty important these days.
+                <br>Just simple stuff like - If a user links the site in a whatsapp group, or a facebook/instagram post, it displays the correct image, title, description etc.
+                <br> Just trying to make things look a bit more professional, and help with SEO.
+                <br><br>I'll also spend some time making a few tweaks, making sure performance is good, and maybe, just maybe, i'll get around to building that character bios page i mentioned a while back.
+                <h4>Function keys</h4>
+                This ones a big one.
+                <br><br> A lot of the functions i built when testing, used function keys which were visable in pain text in the client side javascript.
+                <br>This is a big no-no, so i'll need to fix this before i go live.
+                <br></BR>It's not really a big security concern, given the content of my website, and the functions i'm using, but it could be a big conern for my wallet!
+                <br><br>If someone got access to my functions, they could potentially just constantly call the funcitons, sending API calls to OPENAI and creating runs in Azure, which could ultimately end up costing me a lot of money!
+                <br>Ethier way, i'm doing things right, so that will be fixed before launch!
+                <<h2>The final chapter - Doubt.....</h2>
+                It's time, i can't run from it any longer, it's time to release the website to the rest of the world.
+                <br><br>What a weird feeling......
+                <br><br>I've been so consumed by this for weeks now, the thought of openly putting my work out to the public is a scary one.
+                <br>Some people know i've been working on something, but nobody has actually seen anything - It's been my own little secret getaway.
+                <br>It's a strange combination of excitment and anxiety. I'm excited to see peoples reactions, but on the other hand, i'm nervous about the feedback i'll get.
+                <br><br>I guess this is only natural when you've been working on something for a while, and it's finally time to let it out into the wild.
+                <br><br>But yet, i can't shake certain doubts....
+                <br><br>What if the first episode the AI generates is completely wild, and it goes completely off the rails?- If the first episode is bad, it's not going to bring people in.
+                <br> Will the website suddenly crash and burn if it starts to get a lot of traffic?
+                <br>Is there something critcal i've overseen?
+                <br>Did i leave sensitive information visable in code?
+                <br><br>Will people even care?
+                <br><br>But then i remind myself how this all started.....
+                <br><br>I didn't build this to impress anyone. I didn't build this for my CV, and I certainly didn't build this to make a quick buck. It all stemmed from a simple curiosity about AI Agents—just a spark of an idea that grew into something bigger than I ever expected.
+                <br> Along the way, I've learned so much, not just about AI and building things, but about the process of creating something from nothing. And the best part? This is just the beginning. I already have a ton of ideas for future projects, and I can't wait to explore them.
+                <br><br>Oh, and to circle all the way back to the start of this blog… YUP!! SAS is most definitely in trouble. AI Agents are going to change the game.
+                <br><br>But for now, i've rambled on long enough—it's time to actually do it.
+                <br><br>If you've made it this far, thank you.
+                <br> I hope you've enjoyed reading this blog, and maybe, just maybe, my journey will inspire you to build something of your own—just like Microsoft CEO interview inspired me.
+                <br><br>Every great adventure starts with uncertainty, and every captain has to take that first step onto the deck, not knowing what the seas ahead may bring.
+                <br><br>So, here we go. The anchor is up, the wind is in the sails, and The Captain's Journal is officially setting course for the world.
+                <br><br>I hope you'll come aboard and join me on this journey. Let's see where the tide takes us. ⚓🏴‍☠️
+
+
+               
+                
                
                 
             </div>
