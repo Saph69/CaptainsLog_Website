@@ -850,3 +850,47 @@ pre[class*="language-"] {
   display: inline-block;
   margin-bottom: 10px;
 }
+.subscribe-cta {
+  margin-top: 30px;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  background-color: #d4af37;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: "Pirata One", cursive;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+}
+
+.subscribe-cta:hover {
+  transform: scale(1.05);
+  animation: none;
+  background-color: #c4a030;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(212, 175, 55, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+  }
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+  .subscribe-cta {
+    font-size: 1rem;
+    padding: 12px 25px;
+    margin-top: 20px;
+  }
+}

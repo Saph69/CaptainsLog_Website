@@ -30,6 +30,10 @@ html {
   padding-bottom: 0;
 }
 
+.hero-banner[data-character="fancyboots"] {
+  background-image: url("/images/characters/fancyboots-bg.jpg");
+}
+
 .hero-banner[data-character="farack"] {
   background-image: url("/images/characters/farack-bg.jpg");
 }
@@ -60,10 +64,6 @@ html {
 
 .hero-banner[data-character="isabella"] {
   background-image: url("/images/characters/isabella-bg.jpg");
-}
-
-.hero-banner[data-character="fancyboots"] {
-  background-image: url("/images/characters/fancyboots-bg.jpg");
 }
 
 /* Background overlay */
