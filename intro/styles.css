@@ -11,66 +11,68 @@ html {
 }
 
 /* Character-specific backgrounds */
+.hero-banner {
+  position: relative;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  transition: background-image 0.3s ease-in-out;
+}
+
 .hero-banner[data-character="farack"] {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/characters/farack-bg.jpg") center center/cover no-repeat;
+  background-image: url("/images/characters/farack-bg.jpg");
 }
 
 .hero-banner[data-character="fuyu"] {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/characters/fuyu-bg.jpg") center center/cover no-repeat;
-}
-
-.hero-banner[data-character="tezza"] {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/characters/tezza-bg.jpg") center center/cover no-repeat;
-}
-
-.hero-banner[data-character="saph"] {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/characters/saph-bg.jpg") center center/cover no-repeat;
+  background-image: url("/images/characters/fuyu-bg.jpg");
 }
 
 .hero-banner[data-character="bertha"] {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/characters/bertha-bg.jpg") center center/cover no-repeat;
+  background-image: url("/images/characters/bertha-bg.jpg");
 }
 
 .hero-banner[data-character="soulslayer"] {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/characters/soulslayer-bg.jpg") center center/cover no-repeat;
+  background-image: url("/images/characters/soulslayer-bg.jpg");
+}
+
+.hero-banner[data-character="tezza"] {
+  background-image: url("/images/characters/tezza-bg.jpg");
+}
+
+.hero-banner[data-character="saph"] {
+  background-image: url("/images/characters/saph-bg.jpg");
 }
 
 .hero-banner[data-character="jimmy"] {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/characters/jimmy-bg.jpg") center center/cover no-repeat;
+  background-image: url("/images/characters/jimmy-bg.jpg");
 }
 
 .hero-banner[data-character="isabella"] {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/characters/isabella-bg.jpg") center center/cover no-repeat;
+  background-image: url("/images/characters/isabella-bg.jpg");
 }
 
 .hero-banner[data-character="fancyboots"] {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("/images/characters/fancyboots-bg.jpg") center center/cover no-repeat;
+  background-image: url("/images/characters/fancyboots-bg.jpg");
 }
-/* Add more character backgrounds as needed */
 
-/* Add smooth transition for background changes */
-.hero-banner {
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  transition: background-image 0.5s ease-in-out;
-  padding-top: 80px;
+/* Fallback background color */
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+/* Ensure content stays above the overlay */
+.hero-banner > * {
   position: relative;
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  z-index: 2;
 }
 
 /* Main Navigation */
@@ -1164,4 +1166,89 @@ html {
   .character-name {
     margin-top: -5px; /* Slightly less negative margin for mobile */
   }
+}
+
+/* Reset container styles */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Main container styles */
+.main-content,
+.container,
+.content-wrapper,
+main,
+.character-profiles-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Character Profile Base Styles */
+.character-profile {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.profile-section {
+  width: 100%;
+  margin: 0 0 1rem 0;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 768px) {
+  .character-profile {
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+  }
+
+  .profile-section {
+    width: 100%;
+    margin: 0 0 1rem 0;
+    padding: 1rem;
+  }
+
+  .profile-section p,
+  .trait-list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .trait-list li {
+    width: 100%;
+    margin: 0 0 1rem 0;
+    padding: 0;
+  }
+
+  .character-name,
+  .character-role {
+    width: 100%;
+    text-align: center;
+    margin: 0 0 1rem 0;
+    padding: 0;
+  }
+}
+
+/* Fix any potential horizontal scroll */
+* {
+  max-width: 100%;
+  box-sizing: border-box;
 }
