@@ -894,3 +894,29 @@ pre[class*="language-"] {
     margin-top: 20px;
   }
 }
+
+.whats-this-container {
+  padding-top: 120px; /* Increased from 90px to 120px for more clearance */
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .whats-this-container {
+    padding-top: 90px; /* Increased from 70px to 90px for mobile */
+  }
+}
+
+.whats-this-container .nav-link.active {
+  color: #d4af37;
+  border-bottom: 2px solid #d4af37;
+  background-color: rgba(212, 175, 55, 0.1);
+}
+
+.whats-this-container .nav-link:hover {
+  color: #d4af37;
+  background-color: rgba(212, 175, 55, 0.1);
+}
