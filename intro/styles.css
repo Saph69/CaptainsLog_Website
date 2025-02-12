@@ -1,7 +1,10 @@
 /* Global Styles */
-body {
+body,
+html {
   margin: 0;
   padding: 0;
+  width: 100%;
+  overflow-x: hidden;
   font-family: "Montserrat", sans-serif;
   background: #1a1a1a;
   color: #e0e0e0;
@@ -56,9 +59,18 @@ body {
 
 /* Add smooth transition for background changes */
 .hero-banner {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   transition: background-image 0.5s ease-in-out;
   padding-top: 80px;
   position: relative;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .character-nav {
@@ -70,9 +82,11 @@ body {
 }
 
 .character-profile {
+  width: 100%;
   max-width: 1200px;
-  margin: 2rem auto;
+  margin: 0 auto;
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 .character-profile.active {
@@ -243,11 +257,6 @@ body {
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     url("/images/thecrew.png") center center/cover no-repeat;
   position: relative;
-
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
 }
 
 .hero-content {
@@ -968,31 +977,38 @@ html {
 /* Remove bullet points from trait lists */
 .trait-list {
   list-style: none;
-  padding-left: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 .trait-list li {
-  margin-bottom: 1rem;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Content Background Panel */
 .profile-section {
-  background-color: rgba(0, 0, 0, 0.85); /* Dark, semi-transparent background */
-  border-radius: 8px;
+  width: 100%;
+  margin: 0 0 1.5rem 0;
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  backdrop-filter: blur(5px); /* Adds a slight blur to the background */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Character Name and Role */
 .character-name {
-  color: #d4af37; /* Gold color */
+  color: #d4af37;
   font-size: 2.5rem;
   margin-bottom: 0.5rem;
   font-family: "Pirata One", cursive;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for better readability */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .character-role {
@@ -1031,14 +1047,70 @@ html {
   transition: all 0.3s ease;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
+/* Mobile Optimization */
+@media screen and (max-width: 768px) {
+  .hero-banner {
+    padding: 0;
+  }
+
   .character-profile {
     padding: 1rem;
-    margin: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .profile-section {
+    margin: 0 0 1rem 0;
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .character-name,
+  .character-role,
+  .profile-section h3 {
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+  }
+
+  .profile-section p {
+    margin: 1rem 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  /* Ensure proper text wrapping */
+  .trait-list li {
+    width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Smaller screens */
+@media screen and (max-width: 480px) {
+  .character-profile {
+    padding: 0.5rem;
   }
 
   .profile-section {
     padding: 1rem;
+    margin-bottom: 0.8rem;
+  }
+}
+
+/* Ensure touch targets are large enough */
+@media (hover: none) {
+  .character-nav-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .trait-list li {
+    min-height: 44px;
   }
 }
