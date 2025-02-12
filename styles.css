@@ -307,18 +307,23 @@ audio {
   text-align: center;
   padding: 20px;
   margin: 20px auto;
-  max-width: 300px;
+  max-width: 100%;
   position: relative;
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  border: 1px solid #d4af37;
 }
 
 .pirate-ship {
   animation: rockingBoat 3s ease-in-out infinite;
   transform-origin: center bottom;
   position: relative;
+  max-width: 150px;
+  margin: 0 auto;
 }
 
 .pirate-ship img {
-  width: 200px;
+  width: 100%;
   height: auto;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
 }
@@ -326,8 +331,8 @@ audio {
 .loading-text {
   color: #d4af37;
   font-family: "Pirata One", cursive;
-  font-size: 1.5rem;
-  margin-top: 20px;
+  font-size: 1.2rem;
+  margin-top: 15px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   animation: fadeInOut 2s infinite;
 }

@@ -155,9 +155,16 @@ async function fetchEpisodes(page = 1, itemsPerPage = 10) {
 
         // Sort episodes
         const episodes = data.blobs.sort((a, b) => {
-            const dayA = parseInt(a.name.match(/day (\d+)/i)[1]);
-            const dayB = parseInt(b.name.match(/day (\d+)/i)[1]);
-            return dayB - dayA;
+            // Extract day numbers using a safer approach
+            const getDayNumber = (name) => {
+                const match = name.match(/day (\d+)/i);
+                return match ? parseInt(match[1]) : 0;
+            };
+            
+            const dayA = getDayNumber(a.name);
+            const dayB = getDayNumber(b.name);
+            
+            return dayB - dayA;  // Sort in descending order (newest first)
         });
 
         // Calculate pagination
