@@ -48,12 +48,24 @@
         // Update background
         const heroBanner = document.querySelector(".hero-banner");
         heroBanner.setAttribute("data-character", characterId);
+
+        // Prevent default anchor behavior and set scroll position
+        event.preventDefault();
+
+        // Force scroll to top
+        requestAnimationFrame(() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "instant",
+          });
+        });
       }
 
-      // Show default character on page load
+      // Handle initial load
       document.addEventListener("DOMContentLoaded", () => {
         const hash = window.location.hash.slice(1) || "farack";
         showCharacter(hash);
+        window.scrollTo(0, 0);
       });
     </script>
     <!-- Schema.org markup for Google -->

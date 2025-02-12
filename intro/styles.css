@@ -14,6 +14,7 @@ html {
 .hero-banner {
   position: relative;
   min-height: 100vh;
+  width: 100%;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -34,7 +35,7 @@ html {
 }
 
 .hero-banner[data-character="soulslayer"] {
-  background-image: url("/images/characters/soulslayer-bg.jpg");
+  background-image: url("/images/characters/Soulslayer-bg.jpg");
 }
 
 .hero-banner[data-character="tezza"] {
@@ -46,7 +47,7 @@ html {
 }
 
 .hero-banner[data-character="jimmy"] {
-  background-image: url("/images/characters/jimmy-bg.jpg");
+  background-image: url("/images/characters/Jimmy-bg.jpg");
 }
 
 .hero-banner[data-character="isabella"] {
@@ -57,10 +58,10 @@ html {
   background-image: url("/images/characters/fancyboots-bg.jpg");
 }
 
-/* Fallback background color */
+/* Background overlay */
 .hero-banner::before {
   content: "";
-  position: absolute;
+  position: fixed; /* Changed from absolute */
   top: 0;
   left: 0;
   right: 0;
@@ -89,23 +90,31 @@ html {
 /* Character Navigation Bar */
 .character-nav {
   position: sticky;
-  top: 60px; /* Adjusted to match main nav height */
+  top: 60px;
   z-index: 900;
   background-color: rgba(0, 0, 0, 0.95);
   width: 100%;
   margin: 0;
   padding: 0;
-  border-top: none; /* Remove any potential border */
+  border-top: none;
 }
 
-/* Character Profile Spacing */
+/* Character Profile Container */
 .character-profile {
-  padding-top: 100px; /* Reduced from 120px */
+  position: relative;
+  padding-top: 100px;
   margin-bottom: 100px;
+  z-index: 1; /* Ensure content is below nav but above background */
+  min-height: 100vh; /* Ensure full viewport height for scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 
-.character-profile.active {
-  display: block;
+/* Profile Content */
+.character-name,
+.character-role,
+.profile-section {
+  position: relative;
+  z-index: 2; /* Keep content above background overlay */
 }
 
 /* Smooth transition between profiles */
@@ -121,6 +130,8 @@ html {
   opacity: 1;
   position: relative;
 }
+
+
 
 .character-nav-container {
   max-width: 1200px;
@@ -287,17 +298,7 @@ html {
   margin-top: 40px; /* Added margin-top */
 }
 
-.hero-content h1 {
-  font-family: "Pirata One", cursive;
-  font-size: 4rem; /* Increased size */
-  color: #d4af37;
-  margin-bottom: 30px;
-  text-shadow: 3px 3px 0 #1a1a1a, -1px -1px 0 #1a1a1a, 1px -1px 0 #1a1a1a,
-    -1px 1px 0 #1a1a1a, 1px 1px 0 #1a1a1a;
-  letter-spacing: 2px;
-  position: relative;
-  animation: titleFloat 3s ease-in-out infinite;
-}
+
 
 .hero-content h1::before,
 .hero-content h1::after {
@@ -306,6 +307,7 @@ html {
   margin: 0 15px;
   vertical-align: middle;
 }
+
 
 .hero-content h2 {
   font-family: "Pirata One", cursive;
@@ -353,90 +355,9 @@ html {
   padding: 40px 20px;
 }
 
-.episode-container {
-  background-color: rgba(28, 28, 28, 0.9);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.episode {
-  background-color: #2a2a2a;
-  border-radius: 8px;
-  padding: 25px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  border: 1px solid #d4af37;
-  position: relative;
-  transition: transform 0.3s ease;
-}
-
-.episode:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(212, 175, 55, 0.2);
-}
-
-.episode::before {
-  content: "⚓";
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 1.2rem;
-  opacity: 0.5;
-}
-
-.episode h2 {
-  color: #d4af37;
-  margin-bottom: 15px;
-  font-family: "Pirata One", cursive;
-  font-size: 1.8rem;
-}
-
-.episode-meta {
-  display: flex;
-  justify-content: space-between;
-  color: #888;
-  margin-bottom: 15px;
-  font-size: 0.9rem;
-}
-
-.audio-player {
-  width: 100%;
-}
-
-audio {
-  width: 100%;
-  filter: invert(100%);
-}
-
-/* Loading and Error States */
-.loading-spinner {
-  text-align: center;
-  padding: 20px;
-  font-style: italic;
-  display: none;
-  color: #888;
-}
-
-.error-container {
-  color: #ff6b6b;
-  text-align: center;
-  padding: 20px;
-  display: none;
-}
 
 /* Keep your existing media queries at the bottom */
 
-.banner-footer {
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  padding: 20px;
-  margin-top: 40px;
-  background-color: rgba(0, 0, 0, 0.85);
-  text-align: center;
-  clear: both;
-}
 
 .creator-credit {
   font-size: 1rem;
@@ -450,57 +371,9 @@ audio {
   font-style: italic;
 }
 
-.pagination {
-  margin: 20px 0;
-  text-align: center;
-}
 
-.pagination button {
-  padding: 8px 16px;
-  margin: 0 5px;
-  background-color: #c4a030;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
-.pagination button:hover {
-  background-color: #a38528;
-}
 
-.pagination span {
-  margin: 0 10px;
-}
-
-.loading-container {
-  text-align: center;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 300px;
-  position: relative;
-}
-
-.pirate-ship {
-  animation: rockingBoat 3s ease-in-out infinite;
-  transform-origin: center bottom;
-  position: relative;
-}
-
-.pirate-ship img {
-  width: 200px;
-  height: auto;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
-}
-
-.loading-text {
-  color: #d4af37;
-  font-family: "Pirata One", cursive;
-  font-size: 1.5rem;
-  margin-top: 20px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  animation: fadeInOut 2s infinite;
-}
 
 .author-link {
   color: #007bff;
@@ -593,6 +466,11 @@ pre[class*="language-"] {
 @media screen and (max-width: 768px) {
   .hero-banner {
     padding-top: 100px; /* Slightly less padding on mobile */
+    background-attachment: scroll; /* Better mobile performance */
+  }
+
+  .hero-banner::before {
+    position: absolute; /* Better for mobile */
   }
 
   .story-intro {
@@ -1251,4 +1129,37 @@ main,
 * {
   max-width: 100%;
   box-sizing: border-box;
+}
+
+/* Mobile Optimizations */
+@media screen and (max-width: 768px) {
+  body {
+    position: relative;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .hero-banner {
+    min-height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+
+  .character-profile {
+    padding-top: 85px;
+    padding-bottom: 60px; /* Add space at bottom for mobile */
+    height: auto;
+    overflow-y: visible;
+  }
+
+  .profile-section:last-child {
+    margin-bottom: 80px; /* Ensure last section is fully scrollable */
+  }
+}
+
+/* Fix iOS Safari scrolling */
+@supports (-webkit-touch-callout: none) {
+  .hero-banner {
+    background-attachment: scroll;
+  }
 }
