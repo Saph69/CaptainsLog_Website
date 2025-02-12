@@ -105,6 +105,17 @@ async function handleRefreshClick() {
     refreshButton.disabled = false;
 }
 
+// In your client.js where you render episodes
+const episodeElement = document.createElement('article');
+episodeElement.className = `episode ${index === 0 ? 'featured' : ''}`;
+// Add this before the episode content
+if (index === 0) {
+  const featuredLabel = document.createElement('div');
+  featuredLabel.className = 'featured-label';
+  featuredLabel.textContent = 'Latest Episode';
+  episodeElement.appendChild(featuredLabel);
+}
+
 async function fetchEpisodes(page = 1, itemsPerPage = 10) {
     console.log(`Fetching episodes for page ${page} with ${itemsPerPage} items per page`);
     const loadingSpinner = document.getElementById('loadingSpinner');

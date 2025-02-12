@@ -106,16 +106,14 @@ body {
   background-color: rgba(255, 107, 107, 0.1);
 }
 
-/* Hero Banner */
+/* Hero Banner - Adjusted size and spacing */
 .hero-banner {
   text-align: center;
-  padding: 120px 20px 100px; /* Increased top padding from 80px to 120px */
+  padding: 80px 20px 60px; /* Reduced padding */
   background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
     url("/images/thecrew.png") center center/cover no-repeat;
   position: relative;
-
-
-  min-height: 60vh;
+  min-height: 40vh; /* Reduced from 60vh */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -123,39 +121,24 @@ body {
 
 .hero-content {
   position: absolute;
-  top: 45%; /* Adjusted from 35% to 45% */
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  padding: 2rem;
+  padding: 1.5rem; /* Reduced padding */
   z-index: 2;
   width: 90%;
   max-width: 800px;
-  margin-top: 40px; /* Added margin-top */
+  margin-top: 20px; /* Reduced margin */
 }
 
 .hero-content h1 {
-  font-family: "Pirata One", cursive;
-  font-size: 4rem; /* Increased size */
-  color: #d4af37;
-  margin-bottom: 30px;
-  text-shadow: 3px 3px 0 #1a1a1a, -1px -1px 0 #1a1a1a, 1px -1px 0 #1a1a1a,
-    -1px 1px 0 #1a1a1a, 1px 1px 0 #1a1a1a;
-  letter-spacing: 2px;
-  position: relative;
-  animation: titleFloat 3s ease-in-out infinite;
-}
-
-.hero-content h1::before,
-.hero-content h1::after {
-  content: "☠️";
-  font-size: 2.5rem;
-  margin: 0 15px;
-  vertical-align: middle;
+  font-size: 3.5rem; /* Slightly reduced size */
+  margin-bottom: 20px; /* Reduced margin */
 }
 
 .hero-content h2 {
-  font-family: 'Pirata One', cursive;
+  font-family: "Pirata One", cursive;
   color: #c4a030;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   margin-top: 10px;
@@ -193,18 +176,21 @@ body {
   background-color: #c4a030;
 }
 
-/* Content Section */
+/* Content Section - New layout improvements */
 .content-wrapper {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
+  margin: -40px auto 0; /* Negative margin to overlap with banner */
+  padding: 0 20px 40px;
+  position: relative;
+  z-index: 10;
 }
 
 .episode-container {
-  background-color: rgba(28, 28, 28, 0.9);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  background-color: rgba(28, 28, 28, 0.95);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .episode {
@@ -359,7 +345,7 @@ audio {
 pre[class*="language-"] {
   border-radius: 6px;
   margin: 1.5em 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .code-block-header {
@@ -436,7 +422,20 @@ pre[class*="language-"] {
 /* Mobile adjustments */
 @media screen and (max-width: 768px) {
   .hero-banner {
-    padding-top: 100px; /* Slightly less padding on mobile */
+    padding-top: 80px;
+    min-height: 35vh; /* Even smaller on mobile */
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .content-wrapper {
+    margin-top: -30px;
+  }
+
+  .episode-container {
+    padding: 25px;
   }
 
   .story-intro {
@@ -458,15 +457,6 @@ pre[class*="language-"] {
 
   .tagline {
     font-size: 0.8rem; /* Slightly smaller on mobile */
-  }
-
-  .hero-content h1 {
-    font-size: 2.5rem;
-  }
-
-  .hero-content h1::before,
-  .hero-content h1::after {
-    font-size: 1.8rem;
   }
 
   .pirate-ship img {
@@ -829,4 +819,24 @@ pre[class*="language-"] {
 
 .footer-section a[href^="mailto"]:hover::after {
   opacity: 1;
+}
+
+/* New featured episode styling */
+.episode.featured {
+  background: linear-gradient(45deg, #2a2a2a, #3a3a3a);
+  border: 2px solid #d4af37;
+  padding: 30px;
+  margin: -20px -20px 30px;
+  border-radius: 10px;
+}
+
+.featured-label {
+  background-color: #d4af37;
+  color: #1a1a1a;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 10px;
 }
