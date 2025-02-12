@@ -58,12 +58,9 @@
   font-size: 1rem; /* Consistent font size */
 }
 
-.nav-link:hover {
-  background-color: rgba(212, 175, 55, 0.2);
-}
-
-.nav-link.active {
-  background-color: rgba(212, 175, 55, 0.2);
+.nav-link.active[href*="blog"] {
+  color: #d4af37; /* Changes the text color to gold */
+  background-color: transparent;
 }
 
 .nav-link.active::after {
@@ -141,11 +138,10 @@ html {
   min-height: 40vh;
   width: 100%;
 
-  
   background-repeat: no-repeat;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
     url("/images/blog-bg.jpg");
-    background-attachment: fixed; /* Creates a parallax effect */
+  background-attachment: fixed; /* Creates a parallax effect */
   display: flex;
   flex-direction: column;
   justify-content: center;
