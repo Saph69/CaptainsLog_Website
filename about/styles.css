@@ -140,10 +140,12 @@ html {
   position: relative;
   min-height: 40vh;
   width: 100%;
-  background-size: cover;
-  background-position: center;
+
+  
   background-repeat: no-repeat;
-  background-image: url("/images/about-bg.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+    url("/images/blog-bg.jpg");
+    background-attachment: fixed; /* Creates a parallax effect */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -152,15 +154,9 @@ html {
   padding: 60px 20px;
 }
 
+/* Remove the ::before pseudo-element since we're using gradient in background-image */
 .about-banner::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1;
+  display: none;
 }
 
 .hero-content {
@@ -248,5 +244,9 @@ img {
 
   .about-section {
     padding: 20px;
+  }
+
+  .about-banner {
+    background-attachment: scroll; /* Disable parallax on mobile for better performance */
   }
 }
