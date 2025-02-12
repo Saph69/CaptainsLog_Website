@@ -64,8 +64,13 @@
   border-bottom: 2px solid #d4af37;
 }
 
+
 /* Mobile Adjustments */
 @media screen and (max-width: 768px) {
+  .nav-links {
+    display: none; /* Hide navigation links on mobile */
+  }
+
   .main-nav {
     height: 50px;
   }
@@ -80,10 +85,6 @@
 
   .nav-logo img {
     height: 30px;
-  }
-
-  .nav-links {
-    height: 50px;
   }
 
   .nav-logo span {
