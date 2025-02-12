@@ -23,10 +23,11 @@ html {
   min-height: auto;
   height: auto;
   width: 100%;
+  overflow: visible; /* Changed from auto */
+  background-attachment: scroll; /* Better performance on mobile */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
   transition: background-image 0.3s ease-in-out;
   display: flex;
   flex-direction: column;
@@ -114,15 +115,10 @@ html {
 /* Character Profile Container */
 .character-profile {
   position: relative;
-  overflow: visible;
   height: auto;
-  flex: 1;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 120px 1rem 60px;
-  box-sizing: border-box;
-  position: relative;
+  overflow: visible; /* Changed from auto/scroll */
+  padding: 20px;
 }
 
 /* Profile Content */
@@ -143,8 +139,11 @@ html {
 }
 
 .character-profile.active {
+  display: block;
   opacity: 1;
   position: relative;
+  height: auto;
+  overflow: visible;
 }
 
 .character-nav-container {
@@ -902,6 +901,10 @@ html {
 
 /* Content Background Panel */
 .profile-section {
+  position: relative;
+  height: auto;
+  overflow: visible; /* Remove any scroll containers */
+  margin-bottom: 30px;
   width: 100%;
   margin: 0 0 1.5rem 0;
   padding: 1.5rem;
@@ -1167,5 +1170,25 @@ main,
 @supports (-webkit-touch-callout: none) {
   .hero-banner {
     background-attachment: scroll;
+  }
+}
+
+/* Ensure the page scrolls as one unit */
+body {
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  height: auto;
+  min-height: 100vh;
+}
+
+/* Mobile specific fixes */
+@media screen and (max-width: 768px) {
+  .hero-banner,
+  .character-profile,
+  .profile-section {
+    overflow: visible;
+    height: auto;
+    transform: none;
   }
 }
