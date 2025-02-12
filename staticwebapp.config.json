@@ -1,0 +1,27 @@
+{
+  "navigationFallback": {
+    "rewrite": "index.html",
+    "exclude": ["/images/*.{png,jpg,gif,ico,svg}", "/*.{css,scss,js}"]
+  },
+  "routes": [
+    {
+      "route": "/intro",
+      "rewrite": "/intro/index.html"
+    },
+    {
+      "route": "/intro/",
+      "rewrite": "/intro/index.html"
+    },
+    {
+      "route": "/about",
+      "rewrite": "/about/index.html"
+    },
+    {
+      "route": "/about/",
+      "rewrite": "/about/index.html"
+    }
+  ],
+  "globalHeaders": {
+    "content-security-policy": "default-src https: 'unsafe-eval' 'unsafe-inline'; object-src 'none'"
+  }
+}
