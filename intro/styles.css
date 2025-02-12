@@ -73,20 +73,33 @@ html {
   justify-content: flex-start;
 }
 
-.character-nav {
-  background-color: #1a1a1a;
-  border-bottom: 2px solid gold;
-  position: sticky;
-  top: 60px;
+/* Main Navigation */
+.main-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
   z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.95);
+  margin: 0;
+  padding: 0;
 }
 
-.character-profile {
+/* Character Navigation Bar */
+.character-nav {
+  position: sticky;
+  top: 60px; /* Adjusted to match main nav height */
+  z-index: 900;
+  background-color: rgba(0, 0, 0, 0.95);
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-top: none; /* Remove any potential border */
+}
+
+/* Character Profile Spacing */
+.character-profile {
+  padding-top: 100px; /* Reduced from 120px */
+  margin-bottom: 100px;
 }
 
 .character-profile.active {
@@ -413,11 +426,14 @@ audio {
 /* Keep your existing media queries at the bottom */
 
 .banner-footer {
-  position: absolute;
-  bottom: 20px;
-  left: 0;
-  right: 0;
-  padding: 0 20px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  padding: 20px;
+  margin-top: 40px;
+  background-color: rgba(0, 0, 0, 0.85);
+  text-align: center;
+  clear: both;
 }
 
 .creator-credit {
@@ -587,7 +603,8 @@ pre[class*="language-"] {
   }
 
   .banner-footer {
-    bottom: 15px;
+    margin-top: 60px;
+    padding: 15px;
   }
 
   .creator-credit {
@@ -619,23 +636,31 @@ pre[class*="language-"] {
     top: 40%; /* Adjusted for mobile */
     margin-top: 20px; /* Less margin on mobile */
   }
+
+  .character-profile {
+    padding-top: 85px; /* Reduced from 100px */
+    margin-bottom: 120px; /* Increase footer spacing on mobile */
+  }
+
+  /* Ensure last section has enough space */
+  .profile-section:last-of-type {
+    margin-bottom: 40px;
+  }
+
+  .character-nav {
+    top: 50px; /* Adjusted for mobile main nav height */
+  }
+
+  html {
+    scroll-padding-top: 120px; /* Adjust for mobile nav heights */
+  }
 }
 
 /* Navigation Styles */
-.main-nav {
-  background-color: rgba(26, 26, 26, 0.95);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  border-bottom: 2px solid #d4af37;
-}
-
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 15px 20px;
+  padding: 10px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -971,7 +996,7 @@ pre[class*="language-"] {
 /* Optional: Add smooth scroll behavior */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 140px; /* Adjust based on combined height of both nav bars */
+  scroll-padding-top: 160px; /* Combined height of both nav bars plus some padding */
 }
 
 /* Remove bullet points from trait lists */
@@ -1006,6 +1031,8 @@ html {
 .character-name {
   color: #d4af37;
   font-size: 2.5rem;
+  margin-top: -10px; /* Negative margin to pull it up */
+  padding-top: 0;
   margin-bottom: 0.5rem;
   font-family: "Pirata One", cursive;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -1014,6 +1041,7 @@ html {
 .character-role {
   color: #fff;
   font-size: 1.2rem;
+  margin-top: 0;
   margin-bottom: 2rem;
   font-style: italic;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -1112,5 +1140,28 @@ html {
 
   .trait-list li {
     min-height: 44px;
+  }
+}
+
+/* Character Name Spacing */
+.character-name {
+  margin-top: -10px; /* Negative margin to pull it up */
+  padding-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.character-role {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+/* Mobile Adjustments */
+@media screen and (max-width: 768px) {
+  .character-profile {
+    padding-top: 85px; /* Reduced from 100px */
+  }
+
+  .character-name {
+    margin-top: -5px; /* Slightly less negative margin for mobile */
   }
 }
