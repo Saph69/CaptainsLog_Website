@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             errorDiv.textContent = '';
             errorDiv.className = 'error-message';
             
-            const response = await fetch('https://func-website-backend.azurewebsites.net/api/SaveEmail?code=RQdbP3X1HQVIzQlNIYUMUViEYWOMlCB3XyyolliyZEhpAzFualSqnQ==', {
+            const response = await fetch('https://func-website-backend.azurewebsites.net/api/SaveEmail?', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -250,7 +250,7 @@ async function handleEmailSubmission(event) {
         submitButton.disabled = true;
         submitButton.textContent = 'Subscribing...';
         
-        const response = await fetch('https://func-website-backend.azurewebsites.net/api/SaveEmail?code=RQdbP3X1HQVIzQlNIYUMUViEYWOMlCB3XyyolliyZEhpAzFualSqnQ==', {
+        const response = await fetch('https://func-website-backend.azurewebsites.net/api/SaveEmail?', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
