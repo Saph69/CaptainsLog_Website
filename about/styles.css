@@ -64,7 +64,6 @@
   border-bottom: 2px solid #d4af37;
 }
 
-
 /* Mobile Adjustments */
 @media screen and (max-width: 768px) {
   .nav-links {
@@ -135,7 +134,9 @@ html {
   background-repeat: no-repeat;
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
     url("/images/blog-bg.jpg");
-  background-attachment: fixed; /* Creates a parallax effect */
+  background-position: center center;
+  background-size: auto;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   justify-content: center;
